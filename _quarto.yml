@@ -1,0 +1,48 @@
+project:
+  type: book
+  output-dir: ./docs
+
+bookdown::gitbook:
+   
+book:
+  title: "Lab Book"
+  author: "Bradley Day"
+  date: "2025/05/19"
+  downloads:
+    - pdf
+  chapters:
+    - index.qmd
+
+bibliography: references.bib
+csl: american-physical-society-et-al.csl
+lightbox: true
+
+format:
+  html:
+    code-fold: true
+    html-math-method: mathjax
+    include-in-header:
+      - text: |
+          <script>
+          window.MathJax = {
+            loader: {
+              load: ['[tex]/boldsymbol', '[tex]/physics']
+            },
+            tex: {
+              packages: {
+                '[+]': ['boldsymbol', 'physics']
+              }
+            }
+          };
+          </script>
+  pdf:
+    include-in-header:
+      - text: |
+          \usepackage{amsmath, gensymb, physics}
+          \usepackage[margin=15mm]{geometry}
+
+jupyter: python3
+
+theme:
+    light: flatly
+    dark: darkly
