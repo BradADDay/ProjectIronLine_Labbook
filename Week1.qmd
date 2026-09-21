@@ -1,0 +1,9 @@
+# Week 1
+
+## 2026/09/21
+
+Lab book set up and initialised as a Github page. Meeting with supervisor arranged for 2026/09/21. Plans/questions for meeting:
+
+- Confirm that Quarto is valid for writing lab book
+- Get connected to `solva`
+- Confirm scope of project and form initial plan with Jacob
