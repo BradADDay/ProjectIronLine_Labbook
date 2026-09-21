@@ -8,5 +8,25 @@
     "crumbs": [
       "Preface"
     ]
+  },
+  {
+    "objectID": "Week1.html",
+    "href": "Week1.html",
+    "title": "1  Week 1",
+    "section": "",
+    "text": "1.1 2026/09/21\nLab book set up and initialised as a Github page. Meeting with supervisor arranged for 2026/09/21. Plans/questions for meeting:",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Week 1</span>"
+    ]
+  },
+  {
+    "objectID": "Week1.html#section",
+    "href": "Week1.html#section",
+    "title": "1  Week 1",
+    "section": "",
+    "text": "Confirm that Quarto is valid for writing lab book\nGet connected to solva\nConfirm scope of project and form initial plan with Jacob",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Week 1</span>"
+    ]
   }
 ]

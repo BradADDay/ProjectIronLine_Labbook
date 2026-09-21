@@ -12,6 +12,31 @@ book:
     - pdf
   chapters:
     - index.qmd
+    - Week1.qmd
+    - Week2.qmd
+    - Week3.qmd
+    - Week4.qmd
+    - Week5.qmd
+    - Week6.qmd
+    - Week7.qmd
+    - Week8.qmd
+    - Week9.qmd
+    - Week10.qmd
+    - Week11.qmd
+    - Week12.qmd
+    - Week13.qmd
+    - Week14.qmd
+    - Week15.qmd
+    - Week16.qmd
+    - Week17.qmd
+    - Week18.qmd
+    - Week19.qmd
+    - Week20.qmd
+    - Week21.qmd
+    - Week22.qmd
+    - Week23.qmd
+    - Week24.qmd
+    - references.qmd
 
 bibliography: references.bib
 csl: american-physical-society-et-al.csl
