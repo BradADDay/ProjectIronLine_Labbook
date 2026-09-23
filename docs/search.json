@@ -10,23 +10,57 @@
     ]
   },
   {
-    "objectID": "Week1.html",
-    "href": "Week1.html",
-    "title": "1  Week 1",
+    "objectID": "Background.html",
+    "href": "Background.html",
+    "title": "1  Work Done Over the Summer Break",
     "section": "",
-    "text": "1.1 2026/09/21\nLab book set up and initialised as a Github page. Meeting with supervisor arranged for 2026/09/21. Plans/questions for meeting:",
+    "text": "Some reading and meetings occured over the summer break prior to the start of the project, here I detail notes from meetings and will note key points from reading.\nThis project will be based on emission line fitting to the Iron K\\(\\alpha\\) emission line seen when looking at black holes. The focus will be on Active Galactic Nuclei (AGN).",
     "crumbs": [
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Week 1</span>"
+      "Summer Reading",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Work Done Over the Summer Break</span>"
     ]
   },
   {
-    "objectID": "Week1.html#section",
-    "href": "Week1.html#section",
-    "title": "1  Week 1",
+    "objectID": "Week1.html",
+    "href": "Week1.html",
+    "title": "2  Week 1",
     "section": "",
-    "text": "Confirm that Quarto is valid for writing lab book\nGet connected to solva\nConfirm scope of project and form initial plan with Jacob",
+    "text": "2.1 2026/09/21\nLab book set up and initialised as a Github page. Meeting with supervisor arranged for 2026/09/22.",
     "crumbs": [
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Week 1</span>"
+      "Teaching Block 1",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Week 1</span>"
+    ]
+  },
+  {
+    "objectID": "Week1.html#section-1",
+    "href": "Week1.html#section-1",
+    "title": "2  Week 1",
+    "section": "2.2 2026/09/22",
+    "text": "2.2 2026/09/22\nPlans/questions for meeting:\n\nConfirm that Quarto is allowed for writing lab book\nGet connected to solva\n\nThis will need to be after Rhys has set things up\nNote 2026-09-23 have connected to solva, however will wait until Rhys has given an induction to use\n\nMake sure GitHub set up properly so we can commit/push to it\nConfirm scope of project and form initial plan with Jacob\n\nFitting models?\n\nXSPEC?\nJulia (SpectralFitting.jl)?\nOther?\n\nData Reduction\n\nUsing XMM-Newton data so will need to become familiar with XMM SAS\nAre we using this on solva?\nNote to self: see project plan on Github for more resources\n\n\n\n\n2.2.1 Meeting Minutes\n\nXMM is not a survey telescope so even random selections will usually be interesting objects\nAndy will add a link to Nandra’s paper on the Github repo for bright sources\n\nRead this paper\n\nBrowse paper(s) to find interesting sources\n\nNGC4151?\nMake sure to note when and how long observations were taken\nHEASARC archive should let us search for particular objects\nDownload data and go through the ABC guide\n\nBefore next meeting:\n\nLook into candiadate AGN\n\nLook at Tartarus database?",
+    "crumbs": [
+      "Teaching Block 1",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Week 1</span>"
+    ]
+  },
+  {
+    "objectID": "Week1.html#section-2",
+    "href": "Week1.html#section-2",
+    "title": "2  Week 1",
+    "section": "2.3 2026/09/23",
+    "text": "2.3 2026/09/23\n\n2.3.1 Reading - K. Nandra (2007)  [1]\n\nCovers 37 observations of 26 Seyfert galaxies from XMM-Newton\n\n\n\n\n\n[1] K. Nandra et al., Monthly Notices of the Royal Astronomical Society 382, 194 (2007).",
+    "crumbs": [
+      "Teaching Block 1",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Week 1</span>"
+    ]
+  },
+  {
+    "objectID": "references.html",
+    "href": "references.html",
+    "title": "References",
+    "section": "",
+    "text": "[1] K. Nandra et\nal., Monthly Notices of the Royal Astronomical Society\n382, 194 (2007).",
+    "crumbs": [
+      "References"
     ]
   }
 ]

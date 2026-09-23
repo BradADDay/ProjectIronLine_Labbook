@@ -1,0 +1,5 @@
+# Work Done Over the Summer Break
+
+Some reading and meetings occured over the summer break prior to the start of the project, here I detail notes from meetings and will note key points from reading. 
+
+This project will be based on emission line fitting to the Iron K$\alpha$ emission line seen when looking at black holes. The focus will be on Active Galactic Nuclei (AGN). 

@@ -2,8 +2,43 @@
 
 ## 2026/09/21
 
-Lab book set up and initialised as a Github page. Meeting with supervisor arranged for 2026/09/21. Plans/questions for meeting:
+Lab book set up and initialised as a Github page. Meeting with supervisor arranged for 2026/09/22. 
 
-- Confirm that Quarto is valid for writing lab book
+## 2026/09/22
+
+Plans/questions for meeting:
+
+- Confirm that Quarto is allowed for writing lab book
 - Get connected to `solva`
+    - This will need to be after Rhys has set things up
+    - Note 2026-09-23 have connected to solva, however will wait until Rhys has given an induction to use
+- Make sure GitHub set up properly so we can commit/push to it
 - Confirm scope of project and form initial plan with Jacob
+    - Fitting models?
+        - XSPEC?
+        - Julia (SpectralFitting.jl)?
+        - Other?
+    - Data Reduction
+        - Using XMM-Newton data so will need to become familiar with [XMM SAS](https://www.cosmos.esa.int/web/xmm-newton/sas)
+        - Are we using this on solva?
+        - Note to self: see project plan on Github for more resources
+
+### Meeting Minutes
+
+- XMM is not a survey telescope so even random selections will usually be interesting objects
+- Andy will add a link to Nandra's paper on the Github repo for bright sources
+    - Read this paper
+- Browse paper(s) to find interesting sources
+    - NGC4151?
+    - Make sure to note when and how long observations were taken
+    - HEASARC archive should let us search for particular objects
+    - Download data and go through the ABC guide
+- Before next meeting:
+    - Look into candiadate AGN
+        - Look at Tartarus database?
+
+## 2026/09/23
+
+### Reading - K. Nandra (2007) @nandra_xmm-newton_2007
+
+- Covers 37 observations of 26 Seyfert galaxies from XMM-Newton  
