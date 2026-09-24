@@ -109,6 +109,35 @@ window.MathJax = {
 };
 </script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -548,7 +577,10 @@ window.MathJax = {
 <h2 data-number="2.2" class="anchored" data-anchor-id="section-1"><span class="header-section-number">2.2</span> 2026/09/22</h2>
 <p>Plans/questions for meeting:</p>
 <ul>
-<li>Confirm that Quarto is allowed for writing lab book</li>
+<li>Confirm that Quarto is allowed for writing lab book
+<ul>
+<li>Yes</li>
+</ul></li>
 <li>Get connected to <code>solva</code>
 <ul>
 <li>This will need to be after Rhys has set things up</li>
@@ -592,6 +624,8 @@ window.MathJax = {
 <ul>
 <li>Look at Tartarus database?</li>
 </ul></li>
+<li>Read papers provided by Andy</li>
+<li>Look through XMM SAS ABC guide</li>
 </ul></li>
 </ul>
 </section>
@@ -601,7 +635,61 @@ window.MathJax = {
 <section id="reading---k.-nandra-2007-nandra_xmm-newton_2007" class="level3" data-number="2.3.1">
 <h3 data-number="2.3.1" class="anchored" data-anchor-id="reading---k.-nandra-2007-nandra_xmm-newton_2007"><span class="header-section-number">2.3.1</span> Reading - K. Nandra (2007) <span class="citation" data-cites="nandra_xmm-newton_2007">&nbsp;[<a href="references.html#ref-nandra_xmm-newton_2007" role="doc-biblioref">1</a>]</span></h3>
 <ul>
-<li>Covers 37 observations of 26 Seyfert galaxies from XMM-Newton</li>
+<li>Covers 37 observations of 26 Seyfert galaxies from XMM-Newton
+<ul>
+<li>All show Iron K emission, which makes this paper useful for candidate selection for our research</li>
+<li>Around 45% of the data was best fit with a relativistically blurred reflection model
+<ul>
+<li>Some objects may not show the broadening?</li>
+</ul></li>
+</ul></li>
+<li>General background information
+<ul>
+<li>Iron line emission broadening predicted in Fabian et al (1989)</li>
+<li>This was alongside the discovery that the emission likely comes from the accretion disk</li>
+<li>Useful reads?
+<ul>
+<li>Fabian (1989)</li>
+<li>George, Nandra &amp; Fabian (1990)</li>
+<li>Tanaka et al.&nbsp;(1995)</li>
+</ul></li>
+</ul></li>
+<li>Data Reduction
+<ul>
+<li>They give a lot of detail on their data reduction which may be useful further down the line</li>
+<li>Source taken from a circle with radius 700 detector pixels</li>
+<li>There are several windowing modes on the CCD which will be important to note</li>
+</ul></li>
+<li>Model
+<ul>
+<li>They found that the minimum set of models was:
+<ul>
+<li>Power law continuum (modelling the corona)</li>
+<li>Reflection model (e.g.&nbsp;XILLVER)</li>
+<li>Can use relativistic blurring on this however not necessarily needed</li>
+<li>Ionized absorber model</li>
+</ul></li>
+<li>The models used are covered in depth, including how they selected if and how to apply the absorber models
+<ul>
+<li>This will be useful later down the line to give some direction when fitting</li>
+</ul></li>
+<li>They modelled the emission using a broad and narrow component, this may be useful to consider?</li>
+</ul></li>
+<li>Potential candiadate list (from Figure 3 of Nandra et al.)
+<ul>
+<li>NGC3516(2)
+<ul>
+<li>Very broad emission centred around the Fe K<span class="math inline">\(\alpha\)</span> line</li>
+</ul></li>
+<li>NGC3783(2)
+<ul>
+<li>Quite a clean spectrum with low noise/small errors</li>
+</ul></li>
+<li>NGC4151(2) or NGC4151(3)
+<ul>
+<li>Clean spectrum with broad emission</li>
+</ul></li>
+</ul></li>
 </ul>
 
 

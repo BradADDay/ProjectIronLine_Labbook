@@ -9,6 +9,7 @@ Lab book set up and initialised as a Github page. Meeting with supervisor arrang
 Plans/questions for meeting:
 
 - Confirm that Quarto is allowed for writing lab book
+    - Yes
 - Get connected to `solva`
     - This will need to be after Rhys has set things up
     - Note 2026-09-23 have connected to solva, however will wait until Rhys has given an induction to use
@@ -36,9 +37,41 @@ Plans/questions for meeting:
 - Before next meeting:
     - Look into candiadate AGN
         - Look at Tartarus database?
+    - Read papers provided by Andy
+    - Look through XMM SAS ABC guide
 
 ## 2026/09/23
 
 ### Reading - K. Nandra (2007) @nandra_xmm-newton_2007
 
 - Covers 37 observations of 26 Seyfert galaxies from XMM-Newton  
+    - All show Iron K emission, which makes this paper useful for candidate selection for our research
+    - Around 45% of the data was best fit with a relativistically blurred reflection model
+        - Some objects may not show the broadening?
+- General background information
+    - Iron line emission broadening predicted in Fabian et al (1989)
+    - This was alongside the discovery that the emission likely comes from the accretion disk
+    - Useful reads?
+        - Fabian (1989)
+        - George, Nandra & Fabian (1990)
+        - Tanaka et al. (1995)
+- Data Reduction
+    - They give a lot of detail on their data reduction which may be useful further down the line
+    - Source taken from a circle with radius 700 detector pixels
+    - There are several windowing modes on the CCD which will be important to note
+- Model
+    - They found that the minimum set of models was:
+        - Power law continuum (modelling the corona)
+        - Reflection model (e.g. XILLVER)
+        - Can use relativistic blurring on this however not necessarily needed
+        - Ionized absorber model
+    - The models used are covered in depth, including how they selected if and how to apply the absorber models
+        - This will be useful later down the line to give some direction when fitting
+    - They modelled the emission using a broad and narrow component, this may be useful to consider?
+- Potential candiadate list (from Figure 3 of Nandra et al.)
+    - NGC3516(2)
+        - Very broad emission centred around the Fe K$\alpha$ line
+    - NGC3783(2)
+        - Quite a clean spectrum with low noise/small errors
+    - NGC4151(2) or NGC4151(3)
+        - Clean spectrum with broad emission
