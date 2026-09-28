@@ -75,3 +75,61 @@ Plans/questions for meeting:
         - Quite a clean spectrum with low noise/small errors
     - NGC4151(2) or NGC4151(3)
         - Clean spectrum with broad emission
+
+## 2026/09/26
+
+### Reading - Fabian et al. (2002) @fabian_long_2002
+
+#### Background
+
+- Presents preliminary results from a 325 ks observation of MCG-6-30-15
+    - Data taken from both the EPIC MOS cameras and the EPIC pn camera in small window mode with a medium filter
+- Very clear detection of a strong, broad, and skewed iron line
+- Spectrum characterised well by a steep emissivity profile within 6$r_g$ and a flatter profile beyond
+- Inner radius of emission appears to lie around 2$r_g$
+    - This was measured from the fit, where the inner radius of the disc was a fitting parameter
+    - The measurements are dependent on an assumed power-law continuum and lack of complex absorption above 2.5 keV 
+- ASCA observation showed emission from an accretion disc extending from $6-40r_g$ with an inclination of around $30^\circ$
+    - Measured from Fe-k$\alpha$ line
+- The red wing of the line extends below 4 keV which can be explained by the disc extending within 6 $r_g$
+    - <span style="color:red;">Why is this??</span>
+    - This implies rapidly spinning black hole (as ISCO shrinks with $a_*$)
+
+#### Fitting
+
+- Several models were used to fit the data, including a phenomenological model (parametersing the iron line with power law, Compton reflection, a narrow Gaussian at 6.4 keV and a broad Gaussian which was free)
+    - This provided a good overall fit with $\chi^2=984.1$ for 1034 degrees of freedom
+        - How are the number of dof determined?
+    - This was improved by allowing the narrow Gaussian to have some width, giving an "excellent" fit
+- Second model used the Laor (1991) emission line profile
+    - Fits were insensitive to the outer radius of the disc, which was thus fixed at 400$r_g$
+    - Free parameters were $R_\text{in}$, the inclination, and the emissivity as a function of radius (parametrised as $R^{-q}$)
+    - Almost comparable $\chi^2$ to the first model with two broad Gaussians
+        - This falls short as with a simple power law emissivity, the red wing and narrow core of the line cannot be modelled simultaneously
+- Further improvements were made including
+    - Addition of an iron K-edge
+        - The K-edge is a sudden increase in x-ray absorption [FIND CITATION FOR THIS, [wiki for now](https://en.wikipedia.org/wiki/K-edge)]
+        - This significantly improved the fit
+        - The K-edge however must be explained physically, several attempts were made
+            1. Neutral iron along the line of sight
+                - This would require strong iron-L absorption, which is not present
+            2. Neutral iron outside the line of sight
+                - Reflection off of distant material which would require strong reflection
+                - This is inconsistent with the weak, narrow 6.4 keV iron line
+            3. Thick material partially covering the line of sight
+                - This gave a comparable fit to the edge
+            4. Sako et al. (2002) suggested significant absorption due to inner-shell transitions of ionised iron
+                - Explored using an absorption line model, giving a good fit
+            5. The complexity around 7.0 keV is emission
+                - Recombination emission by H-like iron
+
+        - It was not possible to determine whether the complexity was due to absorption or emission and both were thus considered
+    - Use of a broken power law
+        - This is not physically self-consistent
+            - Ignores Fe K$\beta$ at 7.05 keV
+            - The high EW is not consistent with $R_\text{refl}=1,\; i=30^\circ$, solar abundances and neutral
+            - High abundance was investigated using 3$\times$ the solar abundances which improved the fit significantly
+- Spectral variability was investigated by taking the ratio of the spectra resulting from two 10 ks intervals from the maximum and minimum flux periods
+    - Taking the ratio of the two spectra showed clear signs
+    - The iron line core is stronger in the low-flux spectrum
+- The models assume that the effects of ionized absorption are negligible above 2.5 keV, correct for absorption rising from low-Z elements, but may not be true if e.g. Si, S are present
