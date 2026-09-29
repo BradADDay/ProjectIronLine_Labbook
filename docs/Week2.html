@@ -538,6 +538,8 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#first-investigations-into-data-reduction" id="toc-first-investigations-into-data-reduction" class="nav-link" data-scroll-target="#first-investigations-into-data-reduction"><span class="header-section-number">3.1.1</span> First Investigations Into Data Reduction</a></li>
   <li><a href="#meeting-with-supervisor" id="toc-meeting-with-supervisor" class="nav-link" data-scroll-target="#meeting-with-supervisor"><span class="header-section-number">3.1.2</span> Meeting with Supervisor</a></li>
+  <li><a href="#meeting-minutes" id="toc-meeting-minutes" class="nav-link" data-scroll-target="#meeting-minutes"><span class="header-section-number">3.1.3</span> Meeting Minutes</a></li>
+  <li><a href="#misc-notes" id="toc-misc-notes" class="nav-link" data-scroll-target="#misc-notes"><span class="header-section-number">3.1.4</span> Misc Notes</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -579,6 +581,17 @@ window.Quarto = {
 <li>Need to check with Rhys Morris whether Julia is installed, if so how can we access it, and if not whether we can install it</li>
 <li>For now will proceed with manual reduction to learn the process, as the script may not cover all of our needs, so worth learning how it works under the hood</li>
 </ul></li>
+<li>Using the XMM-SAS ABC guide
+<ul>
+<li>Using dataset with OBSID 0761670101</li>
+<li>Following instructions for EPIC (IMAGING Mode)</li>
+<li>The first set of commands are <code>cd ODF    setenv SAS_ODF /full/path/to/ODF/directory/   setenv SAS_ODFPATH /full/path/to/ODF/directory/   cifbuild</code></li>
+<li>This does not currently work, the <code>setenv</code> command seems to be for a <code>csh</code> shell, while solva uses <code>bash</code>
+<ul>
+<li>This can be worked around by using e.g. <code>export SAS_ODF="/full/path/to/ODF/directory/"</code></li>
+</ul></li>
+<li>The <code>cifbuild</code> command also does not currently work, with the terminal giving the error that the command was not found</li>
+</ul></li>
 </ul>
 </section>
 <section id="meeting-with-supervisor" class="level3" data-number="3.1.2">
@@ -604,6 +617,40 @@ window.Quarto = {
 </ul></li>
 </ul></li>
 </ul></li>
+</ul>
+</section>
+<section id="meeting-minutes" class="level3" data-number="3.1.3">
+<h3 data-number="3.1.3" class="anchored" data-anchor-id="meeting-minutes"><span class="header-section-number">3.1.3</span> Meeting Minutes</h3>
+<ul>
+<li>When fitting, will use XSPEC
+<ul>
+<li>Can create a table model if we need to use more abstract metrics etc.</li>
+<li>Group working on catalogue of metrics have managed to get Gradus working for naked singularities (superspinning black holes)
+<ul>
+<li>May be able to use this to fit non-standard descriptions to the data, and collaboratively investigate the cosmic censorship conjecture</li>
+</ul></li>
+</ul></li>
+<li>Downloading data from XMM-Newton Archive
+<ul>
+<li>Through legacy interface, create download script (gives <code>wget</code> script)</li>
+<li>May be able to enter RA/DEC to find OBSIDs</li>
+</ul></li>
+<li>Meeting was successful with Andy’s other group
+<ul>
+<li>They are working on cataloguing spacetimes and investigating the cosmic censorship conjecture
+<ul>
+<li>This is the conjecture that naked singularities do not exist</li>
+<li>They may be able to compute iron line profiles with this, allowing us to fit this supposedly unphysical model to observations</li>
+<li>If doing this we will need to construct a table model for XSPEC</li>
+</ul></li>
+<li>Groupchat set up with Fionn &amp; Max which should allow us to compare notes and collaborate on issues</li>
+</ul></li>
+</ul>
+</section>
+<section id="misc-notes" class="level3" data-number="3.1.4">
+<h3 data-number="3.1.4" class="anchored" data-anchor-id="misc-notes"><span class="header-section-number">3.1.4</span> Misc Notes</h3>
+<ul>
+<li>Recurring meeting set for 11:00 on Fridays with Jacob to keep each other in the loop and discuss issues</li>
 </ul>
 
 

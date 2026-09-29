@@ -14,6 +14,22 @@
         ```
     - Need to check with Rhys Morris whether Julia is installed, if so how can we access it, and if not whether we can install it
     - For now will proceed with manual reduction to learn the process, as the script may not cover all of our needs, so worth learning how it works under the hood
+- Using the XMM-SAS ABC guide
+    - Using dataset with OBSID 0761670101
+    - Following instructions for EPIC (IMAGING Mode)
+    - The first set of commands are
+        ```
+        cd ODF 
+        setenv SAS_ODF /full/path/to/ODF/directory/
+        setenv SAS_ODFPATH /full/path/to/ODF/directory/
+        cifbuild
+        ```
+    - This does not currently work, the `setenv` command seems to be for a `csh` shell, while solva uses `bash`
+        - This can be worked around by using e.g.
+            ```
+            export SAS_ODF="/full/path/to/ODF/directory/"
+            ```
+    - The `cifbuild` command also does not currently work, with the terminal giving the error that the command was not found
 
 ### Meeting with Supervisor
 
@@ -27,3 +43,23 @@
             - Or something else?
         - If using Julia, would it be worth designing our model?
             - Is there anything we can gain from this? More freedom in the parameters etc?
+
+### Meeting Minutes
+
+- When fitting, will use XSPEC
+    - Can create a table model if we need to use more abstract metrics etc.
+    - Group working on catalogue of metrics have managed to get Gradus working for naked singularities (superspinning black holes)
+        - May be able to use this to fit non-standard descriptions to the data, and collaboratively investigate the cosmic censorship conjecture
+- Downloading data from XMM-Newton Archive
+    - Through legacy interface, create download script (gives `wget` script)
+    - May be able to enter RA/DEC to find OBSIDs
+- Meeting was successful with Andy's other group
+    - They are working on cataloguing spacetimes and investigating the cosmic censorship conjecture
+        - This is the conjecture that naked singularities do not exist
+        - They may be able to compute iron line profiles with this, allowing us to fit this supposedly unphysical model to observations
+        - If doing this we will need to construct a table model for XSPEC
+    - Groupchat set up with Fionn & Max which should allow us to compare notes and collaborate on issues
+
+### Misc Notes
+
+- Recurring meeting set for 11:00 on Fridays with Jacob to keep each other in the loop and discuss issues
