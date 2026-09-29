@@ -63,3 +63,4 @@
 ### Misc Notes
 
 - Recurring meeting set for 11:00 on Fridays with Jacob to keep each other in the loop and discuss issues
+
