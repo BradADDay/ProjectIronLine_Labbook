@@ -1,0 +1,29 @@
+# Week 2
+
+## 2026/09/29
+
+### First Investigations Into Data Reduction
+
+- Can now use solva, and XMM-SAS is installed.
+- Have got a script to automate the reduction thanks to Darius Michienzi
+    - [GitHub](https://github.com/astro-group-bristol/reduction-scripts)
+    - This script is written in Julia so requires a Julia installation on solva
+    - Currently running the command `julia` yields the error
+        ```
+        -bash: julia: command not found
+        ```
+    - Need to check with Rhys Morris whether Julia is installed, if so how can we access it, and if not whether we can install it
+    - For now will proceed with manual reduction to learn the process, as the script may not cover all of our needs, so worth learning how it works under the hood
+
+### Meeting with Supervisor
+
+- Questions
+    - In Fabian et al. (2002) @fabian_long_2002 it says that the red wing of the line extending below 4 keV can be explained by the disc extending within 6 $r_g$ 
+        - Why is this?
+        - Is this just what their fit says?
+    - Maybe start considering how we are going to fit the data? 
+        - It may be possible to get a headstart setting up pipelines for it
+        - Discuss with Supervisor/Jacob if its worth using Julia (`SpectralFitting.jl`) or `xspec`?
+            - Or something else?
+        - If using Julia, would it be worth designing our model?
+            - Is there anything we can gain from this? More freedom in the parameters etc?

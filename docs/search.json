@@ -65,6 +65,28 @@
     ]
   },
   {
+    "objectID": "Week2.html",
+    "href": "Week2.html",
+    "title": "3  Week 2",
+    "section": "",
+    "text": "3.1 2026/09/29",
+    "crumbs": [
+      "Teaching Block 1",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Week 2</span>"
+    ]
+  },
+  {
+    "objectID": "Week2.html#section",
+    "href": "Week2.html#section",
+    "title": "3  Week 2",
+    "section": "",
+    "text": "3.1.1 First Investigations Into Data Reduction\n\nCan now use solva, and XMM-SAS is installed.\nHave got a script to automate the reduction thanks to Darius Michienzi\n\nGitHub\nThis script is written in Julia so requires a Julia installation on solva\nCurrently running the command julia yields the error -bash: julia: command not found\nNeed to check with Rhys Morris whether Julia is installed, if so how can we access it, and if not whether we can install it\nFor now will proceed with manual reduction to learn the process, as the script may not cover all of our needs, so worth learning how it works under the hood\n\n\n\n\n3.1.2 Meeting with Supervisor\n\nQuestions\n\nIn Fabian et al. (2002)  [1] it says that the red wing of the line extending below 4 keV can be explained by the disc extending within 6 \\(r_g\\)\n\nWhy is this?\nIs this just what their fit says?\n\nMaybe start considering how we are going to fit the data?\n\nIt may be possible to get a headstart setting up pipelines for it\nDiscuss with Supervisor/Jacob if its worth using Julia (SpectralFitting.jl) or xspec?\n\nOr something else?\n\nIf using Julia, would it be worth designing our model?\n\nIs there anything we can gain from this? More freedom in the parameters etc?\n\n\n\n\n\n\n\n\n[1] A. C. Fabian et al., (2002).",
+    "crumbs": [
+      "Teaching Block 1",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Week 2</span>"
+    ]
+  },
+  {
     "objectID": "references.html",
     "href": "references.html",
     "title": "References",

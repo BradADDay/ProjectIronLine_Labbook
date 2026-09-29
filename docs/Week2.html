@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>week2 – Lab Book</title>
+<title>3&nbsp; Week 2 – Lab Book</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -23,7 +23,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -89,10 +109,39 @@ window.MathJax = {
 };
 </script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
-<body class="nav-sidebar floating fullcontent quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+<body class="nav-sidebar floating quarto-light"><script id="quarto-html-before-body" type="application/javascript">
     const toggleBodyColorMode = (bsSheetEl) => {
       const mode = bsSheetEl.getAttribute("data-mode");
       const bodyEl = window.document.querySelector("body");
@@ -263,7 +312,7 @@ window.MathJax = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Week1.html">Teaching Block 1</a></li><li class="breadcrumb-item"><a href="./Week2.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Week2.html</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Week1.html">Teaching Block 1</a></li><li class="breadcrumb-item"><a href="./Week2.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Week 2</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -333,7 +382,7 @@ window.MathJax = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./Week2.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Week2.html</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Week 2</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -480,16 +529,91 @@ window.MathJax = {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#section" id="toc-section" class="nav-link active" data-scroll-target="#section"><span class="header-section-number">3.1</span> 2026/09/29</a>
+  <ul class="collapse">
+  <li><a href="#first-investigations-into-data-reduction" id="toc-first-investigations-into-data-reduction" class="nav-link" data-scroll-target="#first-investigations-into-data-reduction"><span class="header-section-number">3.1.1</span> First Investigations Into Data Reduction</a></li>
+  <li><a href="#meeting-with-supervisor" id="toc-meeting-with-supervisor" class="nav-link" data-scroll-target="#meeting-with-supervisor"><span class="header-section-number">3.1.2</span> Meeting with Supervisor</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Week1.html">Teaching Block 1</a></li><li class="breadcrumb-item"><a href="./Week2.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Week2.html</span></a></li></ol></nav></header>
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Week1.html">Teaching Block 1</a></li><li class="breadcrumb-item"><a href="./Week2.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Week 2</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Week 2</span></h1>
+</div>
 
 
 
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
 
 
+</header>
 
 
+<section id="section" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="section"><span class="header-section-number">3.1</span> 2026/09/29</h2>
+<section id="first-investigations-into-data-reduction" class="level3" data-number="3.1.1">
+<h3 data-number="3.1.1" class="anchored" data-anchor-id="first-investigations-into-data-reduction"><span class="header-section-number">3.1.1</span> First Investigations Into Data Reduction</h3>
+<ul>
+<li>Can now use solva, and XMM-SAS is installed.</li>
+<li>Have got a script to automate the reduction thanks to Darius Michienzi
+<ul>
+<li><a href="https://github.com/astro-group-bristol/reduction-scripts">GitHub</a></li>
+<li>This script is written in Julia so requires a Julia installation on solva</li>
+<li>Currently running the command <code>julia</code> yields the error <code>-bash: julia: command not found</code></li>
+<li>Need to check with Rhys Morris whether Julia is installed, if so how can we access it, and if not whether we can install it</li>
+<li>For now will proceed with manual reduction to learn the process, as the script may not cover all of our needs, so worth learning how it works under the hood</li>
+</ul></li>
+</ul>
+</section>
+<section id="meeting-with-supervisor" class="level3" data-number="3.1.2">
+<h3 data-number="3.1.2" class="anchored" data-anchor-id="meeting-with-supervisor"><span class="header-section-number">3.1.2</span> Meeting with Supervisor</h3>
+<ul>
+<li>Questions
+<ul>
+<li>In Fabian et al.&nbsp;(2002) <span class="citation" data-cites="fabian_long_2002">&nbsp;[<a href="references.html#ref-fabian_long_2002" role="doc-biblioref">1</a>]</span> it says that the red wing of the line extending below 4 keV can be explained by the disc extending within 6 <span class="math inline">\(r_g\)</span>
+<ul>
+<li>Why is this?</li>
+<li>Is this just what their fit says?</li>
+</ul></li>
+<li>Maybe start considering how we are going to fit the data?
+<ul>
+<li>It may be possible to get a headstart setting up pipelines for it</li>
+<li>Discuss with Supervisor/Jacob if its worth using Julia (<code>SpectralFitting.jl</code>) or <code>xspec</code>?
+<ul>
+<li>Or something else?</li>
+</ul></li>
+<li>If using Julia, would it be worth designing our model?
+<ul>
+<li>Is there anything we can gain from this? More freedom in the parameters etc?</li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+
+
+<div id="refs" class="references csl-bib-body" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-fabian_long_2002" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline">A. C. Fabian <em>et al.</em>, (2002).</div>
+</div>
+</div>
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
