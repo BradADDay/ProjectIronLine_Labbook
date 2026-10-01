@@ -54,7 +54,7 @@
     - Through legacy interface, create download script (gives `wget` script)
     - May be able to enter RA/DEC to find OBSIDs
 - Meeting was successful with Andy's other group
-    - They are working on cataloguing spacetimes and investigating the cosmic censorship conjecture
+    - They are working on cataloguing spacetimes and investigating the cosmic censorshsolvaip conjecture
         - This is the conjecture that naked singularities do not exist
         - They may be able to compute iron line profiles with this, allowing us to fit this supposedly unphysical model to observations
         - If doing this we will need to construct a table model for XSPEC
@@ -64,3 +64,53 @@
 
 - Recurring meeting set for 11:00 on Fridays with Jacob to keep each other in the loop and discuss issues
 
+## 2026/09/30
+
+### Intro to Linux Meeting (w/Rhys Morris)
+
+- [star.bris.ac.uk/project_access](https://www.star.bris.ac.uk/project_access/)
+
+## 2026/10/01
+
+### XMM-SAS and Julia Setup
+
+Once logged into solva, XMM-SAS and Julia can be set up by running:
+
+```{.bash  .code-overflow-wrap}
+module load julia/1.9.2
+```
+
+for Julia, which can be tested by simply running `julia`. XMM-SAS requires a few more lines of setup:
+
+```{.bash  .code-overflow-wrap}
+# First initialise HEASOFT
+
+export HEADAS=/opt/local/rocky8/heasoft-6.36/x86_64-pc-linux-gnu-libc2.28/
+alias heainit=". $HEADAS/headas-init.sh"
+heainit
+
+# Then initialise XMM-SAS
+module load anaconda/3-2024
+export SAS_DIR=/opt/local/rocky8/xmmsas_20230412_1735
+source $SAS_DIR/sas-setup.sh
+```
+
+Running `sasversion` should output
+
+```
+sasversion:- Executing (routine): sasversion  -w 1 -V 4
+sasversion:- sasversion (sasversion-1.3)  [xmmsas_20230412_1735-21.0.0] started:  2026-10-01T10:13:30.000
+sasversion:- XMM-Newton SAS release and build information:
+
+SAS release: xmmsas_20230412_1735-21.0.0
+Compiled on: Sun Apr 16 21:03:42 CEST 2023
+Compiled by: sasbuild@sasbld05.iuser.lan
+Platform   : RHEL8.6
+
+SAS-related environment variables that are set:
+
+SAS_DIR = /opt/local/rocky8/xmmsas_20230412_1735
+SAS_PATH = /opt/local/rocky8/xmmsas_20230412_1735
+
+sasversion:- sasversion (sasversion-1.3)  [xmmsas_20230412_1735-21.0.0] ended:    2026-10-01T10:13:30.000
+```
