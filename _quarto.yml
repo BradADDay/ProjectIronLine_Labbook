@@ -12,9 +12,9 @@ book:
     - pdf
   chapters:
     - index.qmd
-    - part: Summer Reading
-      chapters:
-        - Background.qmd
+    # - part: Summer Reading
+    #   chapters:
+    #     - Background.qmd
     - part: Teaching Block 1
       chapters:
         - Week1.qmd

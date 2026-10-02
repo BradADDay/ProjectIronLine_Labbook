@@ -114,3 +114,120 @@ SAS_PATH = /opt/local/rocky8/xmmsas_20230412_1735
 
 sasversion:- sasversion (sasversion-1.3)  [xmmsas_20230412_1735-21.0.0] ended:    2026-10-01T10:13:30.000
 ```
+
+## 2026/10/02
+
+### XMM-Newton Data Reduction
+
+In order to avoid running all of the above commands upon every login session, the following was completed:
+
+With Julia and anaconda loaded, the `module save` command was run, which saves the loaded module configuration to a file. Then, editing `.bashrc` via `nano .bashrc`, the following lines were added to the file:
+
+```{.bash .code-overflow-wrap}
+#========ADDED BY USER========#
+
+# Load Modules
+module restore
+
+# Environment variables
+export HEADAS=/opt/local/rocky8/heasoft-6.36/x86_64-pc-linux-gnu-libc2.28/
+export SAS_DIR=/opt/local/rocky8/xmmsas_20230412_1735
+
+# Init HEASOFT
+alias heainit=". $HEADAS/headas-init.sh"
+heainit
+
+# Init SAS
+alias sasinit="source $SAS_DIR/sas-setup.sh"
+
+#========ADDED BY USER========#
+```
+
+This initialises all of the environment variables upon login, and all that is needed to do is to run `sasinit`.
+
+Data was downloaded using a `wget` command as follows:
+
+```{.bash .code-overflow-wrap}
+wget -v -q -nH --no-check-certificate --cut-dirs=4 -r -l0 -w1 -c -N -np -R 'index*' -erobots=off https://heasarc.gsfc.nasa.gov/FTP/xmm/data/rev0//0123700101/ODF/
+```
+
+It is currently believed that this can be reused 
+
+#### Pipeline Reprocessing
+
+With this working, I began working through the XMM-SAS ABC guide for data reduction. Everything up to the end of the making a Light Curve section of the [ABC guide](https://heasarc.gsfc.nasa.gov/docs/xmm/sl/epic/image/sas_cl.html) is automated by the script provided by Darius Michienzi.
+
+Run the script using 
+```{.bash .code-overflow-wrap}
+# Unzip any zipped files
+gzip -d *.gz
+
+# Run the script
+julia /home/jq23394/XMM-data-reduction.jl
+```
+
+in the ODF directory. Set useful environment variables using:
+```{.bash .code-overflow-wrap}
+export SAS_ODFPATH="$(pwd)"
+export SAS_CCFPATH="/opt/local/XMM/ccf/"
+export SAS_CCF="$SAS_ODFPATH/ccf.cif"
+export SAS_ODF="$SAS_ODFPATH/$(ls *SUM.SAS)"
+```
+
+#### Time Filtering
+
+The next step is to apply time filters, which can be done by looking at either the rate or the time intervals. To filter by rate, use the syntax
+
+```{.bash .code-overflow-wrap}
+tabgtigen table=mos1_ltcrv.fits gtiset=gtiset.fits expression='RATE<=6' 
+```
+
+where the expression `RATE<=6` selects all regions with a rate below 6 ct/s. To filter by time, use the syntax 
+
+```{.bash .code-overflow-wrap}
+tabgtigen table=mos1_ltcrv.fits gtiset=gtiset.fits timecolumn=TIME expression='TIME <= 73227600'
+```
+
+where the expression `TIME<=73227600` selects the region below a given timestamp. Conditions can be combined using e.g. `(EXP1)&&(EXP2)&&!(EXP3)` which means that regions will be taken from expressions 1 and 2, and ignore anything that matches expresssion 3.
+
+Either of these methods will generate a gti file, which can be used as
+
+```{.bash .code-overflow-wrap}
+evselect table=mos1_filt.fits filtertype=expression filteredset=mos1_filt_time.fits expression='GTI(gtiset.fits,TIME)'
+```
+
+#### Image and Source Detection
+
+After this, run 
+
+```{.bash .code-overflow-wrap}
+atthkgen atthkset=attitude.fits
+```
+
+Next, we produce images using binsizes of 22 or 82 for the MOS or PN cameras respectively. This corresponds to the size of the pixels of each on the sky, being 1.1" and 4.1", respectively.
+
+```{.bash .code-overflow-wrap}
+evselect table=mos1_filt_time.fits withimageset=yes imageset=mos1-s.fits imagebinning=binSize xcolumn=X ximagebinsize=22 ycolumn=Y yimagebinsize=22 filtertype=expression expression='(FLAG == 0)&&(PI in [300:2000])'
+
+evselect table=mos1_filt_time.fits withimageset=yes imageset=mos1-h.fits imagebinning=binSize xcolumn=X ximagebinsize=22 ycolumn=Y yimagebinsize=22 filtertype=expression expression='(FLAG == 0)&&(PI in [2000:10000])'
+
+evselect table=mos1_filt_time.fits withimageset=yes imageset=mos1-all.fits imagebinning=binSize xcolumn=X ximagebinsize=22 ycolumn=Y yimagebinsize=22 filtertype=expression expression='(FLAG == 0)&&(PI in [300:10000])'
+```
+
+replacing the options `mos1_filt_time.fits` and the image bin sizes as necessary.
+
+Initial runs of this resulted in the error 
+
+```{.code-overflow-wrap}
+** evselect: error (ExprColGenError), Error: UnknownColumn: No column named `X' in table `/tmp/fileYpufn0:EVENTS'
+Column `X' does not exist in table `/tmp/fileYpufn0:EVENTS'
+```
+
+Using `ftlist` on the filtered events file showed that the columns `X` and `Y` did not exist. Due to this the data used in the ABC guide was downloaded to test that the instructions work in the first place. It was noticed that during the reprocessing steps `emproc` and `epproc`, the messages 
+
+```
+Column X does not exist - creating
+Column X does not exist - creating
+```
+
+would frequently appear. The issue may thus be an error during this step.
