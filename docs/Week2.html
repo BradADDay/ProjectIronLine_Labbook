@@ -104,6 +104,9 @@ div.csl-indent {
 <link href="site_libs/bootstrap/bootstrap-382dad073c37032be9e988f92f56c479.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="site_libs/bootstrap/bootstrap-dark-bd29a33bb155b7791116d1c9ba40c699.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <link href="site_libs/bootstrap/bootstrap-382dad073c37032be9e988f92f56c479.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -571,6 +574,7 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#xmm-newton-data-reduction" id="toc-xmm-newton-data-reduction" class="nav-link" data-scroll-target="#xmm-newton-data-reduction"><span class="header-section-number">2.4.1</span> XMM-Newton Data Reduction</a></li>
   </ul></li>
+  <li><a href="#section-4" id="toc-section-4" class="nav-link" data-scroll-target="#section-4"><span class="header-section-number">2.5</span> 2026/10/03</a></li>
   </ul>
 </nav>
     </div>
@@ -769,6 +773,7 @@ sasversion:- sasversion (sasversion-1.3)  [xmmsas_20230412_1735-21.0.0] ended:  
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">SAS_CCFPATH</span><span class="op">=</span><span class="st">"/opt/local/XMM/ccf/"</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">SAS_CCF</span><span class="op">=</span><span class="st">"</span><span class="va">$SAS_ODFPATH</span><span class="st">/ccf.cif"</span></span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">SAS_ODF</span><span class="op">=</span><span class="st">"</span><span class="va">$SAS_ODFPATH</span><span class="st">/</span><span class="va">$(</span><span class="fu">ls</span> <span class="pp">*</span>SUM.SAS<span class="va">)</span><span class="st">"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>evselect table=mos1_filt.fits withrateset=Y rateset=mos1_ltcrv.fits maketimecolumn=Y timebinsize=100 makeratecolumn=yes</p>
 </section>
 <section id="time-filtering" class="level4" data-number="2.4.1.2">
 <h4 data-number="2.4.1.2" class="anchored" data-anchor-id="time-filtering"><span class="header-section-number">2.4.1.2</span> Time Filtering</h4>
@@ -797,7 +802,68 @@ Column `X' does not exist in table `/tmp/fileYpufn0:EVENTS'</code></pre>
 <p>Using <code>ftlist</code> on the filtered events file showed that the columns <code>X</code> and <code>Y</code> did not exist. Due to this the data used in the ABC guide was downloaded to test that the instructions work in the first place. It was noticed that during the reprocessing steps <code>emproc</code> and <code>epproc</code>, the messages</p>
 <pre><code>Column X does not exist - creating
 Column X does not exist - creating</code></pre>
-<p>would frequently appear. The issue may thus be an error during this step.</p>
+<p>would frequently appear. The issue may thus be an error during this step. Following through the instructions for the example dataset yielded successful results, thus more investigation is required.</p>
+</section>
+</section>
+</section>
+<section id="section-4" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="section-4"><span class="header-section-number">2.5</span> 2026/10/03</h2>
+<p>With the confirmation that the instructions work for the example dataset (OBSID=0123700101), I returned to a MCG-6-30-15 dataset (OBSID=0693781301) and manually ran each command rather than using the script. I also attempted the process with the observation 0111570101, however this data seemed much less promising. The process was as follows:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode bash code-overflow-wrap code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Enter the ODF directory</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ODF</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Unzip</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="fu">gzip</span> <span class="at">-d</span> <span class="pp">*</span>.gz</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Set environment variables and build cif file</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">SAS_ODFPATH</span><span class="op">=</span><span class="st">"</span><span class="va">$(</span><span class="bu">pwd</span><span class="va">)</span><span class="st">"</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">SAS_ODF</span><span class="op">=</span><span class="st">"</span><span class="va">$(</span><span class="bu">pwd</span><span class="va">)</span><span class="st">"</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">SAS_CCFPATH</span><span class="op">=</span><span class="st">"/opt/local/XMM/ccf/"</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="ex">cifbuild</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">SAS_CCF</span><span class="op">=</span><span class="st">"</span><span class="va">$SAS_ODFPATH</span><span class="st">/ccf.cif"</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a><span class="ex">odfingest</span></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">SAS_ODF</span><span class="op">=</span><span class="st">"</span><span class="va">$SAS_ODFPATH</span><span class="st">/</span><span class="va">$(</span><span class="fu">ls</span> <span class="pp">*</span>SUM.SAS<span class="va">)</span><span class="st">"</span></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Make and enter processing directory</span></span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> ../PROC</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ../PROC</span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Reprocessing pipelines</span></span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a><span class="ex">emproc</span></span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a><span class="ex">epproc</span></span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Make a symbolic link</span></span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-s</span> <span class="pp">*</span>_EMOS1_<span class="pp">*</span>ImagingEvts.ds mos1.fits</span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply standard filters</span></span>
+<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a><span class="ex">evselect</span> table=mos1.fits filtertype=expression filteredset=mos1_filt.fits expression=<span class="st">'(PATTERN &lt;= 12) &amp;&amp; (PI in [200:12000]) &amp;&amp; #XMMEA_EM'</span>  </span>
+<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Make a light curve</span></span>
+<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a><span class="ex">evselect</span> table=mos1_filt.fits withrateset=Y rateset=mos1_ltcrv.fits maketimecolumn=Y timebinsize=100 makeratecolumn=yes </span>
+<span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-34"><a href="#cb15-34" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the light curve</span></span>
+<span id="cb15-35"><a href="#cb15-35" aria-hidden="true" tabindex="-1"></a><span class="ex">fplot</span> mos1_ltcrv.fits TIME RATE <span class="at">-</span> /PS EXIT</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The lightcurve is shown below</p>
+<p><a href="images/0693781301_Lightcurve.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="images/0693781301_Lightcurve.png" class="img-fluid"></a></p>
+<p>There was a big flare at the end of the observation, which were filtered out with the condition that RATE must be <span class="math inline">\(\leq 15\)</span>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode bash code-overflow-wrap code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating the GTI (Good Time Interval) file for time filtering</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="ex">tabgtigen</span> table=mos1_ltcrv.fits gtiset=gtiset.fits expression=<span class="st">'RATE&lt;=15'</span> </span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Filtering the events file using the GTI</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="ex">evselect</span> table=mos1_filt.fits filtertype=expression filteredset=mos1_filt_time.fits expression=<span class="st">'GTI(gtiset.fits,TIME)'</span> </span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating an attitude file</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="ex">atthkgen</span> atthkset=attitude.fits</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="ex">evselect</span> table=mos1_filt_time.fits withimageset=yes imageset=mos1-s.fits imagebinning=binSize xcolumn=X ximagebinsize=22 ycolumn=Y yimagebinsize=22 filtertype=expression expression=<span class="st">'(FLAG == 0)&amp;&amp;(PI in [300:2000])'</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="ex">evselect</span> table=mos1_filt_time.fits withimageset=yes imageset=mos1-h.fits imagebinning=binSize xcolumn=X ximagebinsize=22 ycolumn=Y yimagebinsize=22 filtertype=expression expression=<span class="st">'(FLAG == 0)&amp;&amp;(PI in [2000:10000])'</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a><span class="ex">evselect</span> table=mos1_filt_time.fits withimageset=yes imageset=mos1-all.fits imagebinning=binSize xcolumn=X ximagebinsize=22 ycolumn=Y yimagebinsize=22 filtertype=expression expression=<span class="st">'(FLAG == 0)&amp;&amp;(PI in [300:10000])'</span></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a><span class="ex">edetect_chain</span> imagesets=<span class="st">'mos1-s.fits mos1-h.fits'</span> eventsets=<span class="st">'mos1_filt_time.fits'</span> attitudeset=attitude.fits pimin=<span class="st">'300 2000'</span> pimax=<span class="st">'2000 10000'</span> ecf=<span class="st">'0.878 0.220'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The process is currently getting stuck on the <code>edetect_chain</code> step.</p>
 
 
 <div id="refs" class="references csl-bib-body" data-entry-spacing="0" role="list" style="display: none">
@@ -805,8 +871,6 @@ Column X does not exist - creating</code></pre>
 <div class="csl-left-margin">[1] </div><div class="csl-right-inline">A. C. Fabian <em>et al.</em>, (2002).</div>
 </div>
 </div>
-</section>
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -1236,6 +1300,38 @@ Column X does not exist - creating</code></pre>
   </div>
 </nav>
 </div> <!-- /content -->
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 
 
 

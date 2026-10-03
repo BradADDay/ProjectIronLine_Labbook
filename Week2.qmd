@@ -151,6 +151,7 @@ Data was downloaded using a `wget` command as follows:
 wget -v -q -nH --no-check-certificate --cut-dirs=4 -r -l0 -w1 -c -N -np -R 'index*' -erobots=off https://heasarc.gsfc.nasa.gov/FTP/xmm/data/rev0//0123700101/ODF/
 ```
 
+
 It is currently believed that this can be reused 
 
 #### Pipeline Reprocessing
@@ -173,6 +174,8 @@ export SAS_CCFPATH="/opt/local/XMM/ccf/"
 export SAS_CCF="$SAS_ODFPATH/ccf.cif"
 export SAS_ODF="$SAS_ODFPATH/$(ls *SUM.SAS)"
 ```
+
+evselect table=mos1_filt.fits withrateset=Y rateset=mos1_ltcrv.fits maketimecolumn=Y timebinsize=100 makeratecolumn=yes 
 
 #### Time Filtering
 
@@ -230,4 +233,73 @@ Column X does not exist - creating
 Column X does not exist - creating
 ```
 
-would frequently appear. The issue may thus be an error during this step.
+would frequently appear. The issue may thus be an error during this step. Following through the instructions for the example dataset yielded successful results, thus more investigation is required.
+
+## 2026/10/03
+
+With the confirmation that the instructions work for the example dataset (OBSID=0123700101), I returned to a MCG-6-30-15 dataset (OBSID=0693781301) and manually ran each command rather than using the script. I also attempted the process with the observation 0111570101, however this data seemed much less promising. The process was as follows:
+
+```{.bash .code-overflow-wrap}
+# Enter the ODF directory
+cd ODF
+
+# Unzip
+gzip -d *.gz
+
+# Set environment variables and build cif file
+export SAS_ODFPATH="$(pwd)"
+export SAS_ODF="$(pwd)"
+export SAS_CCFPATH="/opt/local/XMM/ccf/"
+cifbuild
+
+export SAS_CCF="$SAS_ODFPATH/ccf.cif"
+odfingest
+export SAS_ODF="$SAS_ODFPATH/$(ls *SUM.SAS)"
+
+# Make and enter processing directory
+mkdir ../PROC
+cd ../PROC
+
+# Reprocessing pipelines
+emproc
+epproc
+
+# Make a symbolic link
+ln -s *_EMOS1_*ImagingEvts.ds mos1.fits
+
+# Apply standard filters
+evselect table=mos1.fits filtertype=expression filteredset=mos1_filt.fits expression='(PATTERN <= 12) && (PI in [200:12000]) && #XMMEA_EM'  
+
+# Make a light curve
+evselect table=mos1_filt.fits withrateset=Y rateset=mos1_ltcrv.fits maketimecolumn=Y timebinsize=100 makeratecolumn=yes 
+
+# Plot the light curve
+fplot mos1_ltcrv.fits TIME RATE - /PS EXIT
+```
+
+The lightcurve is shown below
+
+![](images/0693781301_Lightcurve.png)
+
+There was a big flare at the end of the observation, which were filtered out with the condition that RATE must be $\leq 15$. 
+
+```{.bash .code-overflow-wrap}
+# Creating the GTI (Good Time Interval) file for time filtering
+tabgtigen table=mos1_ltcrv.fits gtiset=gtiset.fits expression='RATE<=15' 
+
+# Filtering the events file using the GTI
+evselect table=mos1_filt.fits filtertype=expression filteredset=mos1_filt_time.fits expression='GTI(gtiset.fits,TIME)' 
+
+# Creating an attitude file
+atthkgen atthkset=attitude.fits
+
+evselect table=mos1_filt_time.fits withimageset=yes imageset=mos1-s.fits imagebinning=binSize xcolumn=X ximagebinsize=22 ycolumn=Y yimagebinsize=22 filtertype=expression expression='(FLAG == 0)&&(PI in [300:2000])'
+
+evselect table=mos1_filt_time.fits withimageset=yes imageset=mos1-h.fits imagebinning=binSize xcolumn=X ximagebinsize=22 ycolumn=Y yimagebinsize=22 filtertype=expression expression='(FLAG == 0)&&(PI in [2000:10000])'
+
+evselect table=mos1_filt_time.fits withimageset=yes imageset=mos1-all.fits imagebinning=binSize xcolumn=X ximagebinsize=22 ycolumn=Y yimagebinsize=22 filtertype=expression expression='(FLAG == 0)&&(PI in [300:10000])'
+
+edetect_chain imagesets='mos1-s.fits mos1-h.fits' eventsets='mos1_filt_time.fits' attitudeset=attitude.fits pimin='300 2000' pimax='2000 10000' ecf='0.878 0.220'
+```
+
+The process is currently getting stuck on the `edetect_chain` step.
