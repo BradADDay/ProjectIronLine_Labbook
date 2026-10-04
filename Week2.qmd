@@ -252,8 +252,11 @@ export SAS_ODF="$(pwd)"
 export SAS_CCFPATH="/opt/local/XMM/ccf/"
 cifbuild
 
+# Storing the ccf file and running odfingest
 export SAS_CCF="$SAS_ODFPATH/ccf.cif"
 odfingest
+
+# Storing the odf file as an environment variable
 export SAS_ODF="$SAS_ODFPATH/$(ls *SUM.SAS)"
 
 # Make and enter processing directory
@@ -264,7 +267,7 @@ cd ../PROC
 emproc
 epproc
 
-# Make a symbolic link
+# Make a symbolic link for easy command use
 ln -s *_EMOS1_*ImagingEvts.ds mos1.fits
 
 # Apply standard filters
@@ -281,7 +284,7 @@ The lightcurve is shown below
 
 ![](images/0693781301_Lightcurve.png)
 
-There was a big flare at the end of the observation, which were filtered out with the condition that RATE must be $\leq 15$. 
+There was a big flare at the end of the observation, which was filtered out with the condition that RATE must be $\leq 15$. 
 
 ```{.bash .code-overflow-wrap}
 # Creating the GTI (Good Time Interval) file for time filtering
@@ -293,13 +296,111 @@ evselect table=mos1_filt.fits filtertype=expression filteredset=mos1_filt_time.f
 # Creating an attitude file
 atthkgen atthkset=attitude.fits
 
+# Creating an image for soft X-ray detections
 evselect table=mos1_filt_time.fits withimageset=yes imageset=mos1-s.fits imagebinning=binSize xcolumn=X ximagebinsize=22 ycolumn=Y yimagebinsize=22 filtertype=expression expression='(FLAG == 0)&&(PI in [300:2000])'
 
+# Creating an image for hard X-ray detections
 evselect table=mos1_filt_time.fits withimageset=yes imageset=mos1-h.fits imagebinning=binSize xcolumn=X ximagebinsize=22 ycolumn=Y yimagebinsize=22 filtertype=expression expression='(FLAG == 0)&&(PI in [2000:10000])'
 
+# Creating an image for all X-ray detections
 evselect table=mos1_filt_time.fits withimageset=yes imageset=mos1-all.fits imagebinning=binSize xcolumn=X ximagebinsize=22 ycolumn=Y yimagebinsize=22 filtertype=expression expression='(FLAG == 0)&&(PI in [300:10000])'
 
+# Running the source detection algorithm on the data
 edetect_chain imagesets='mos1-s.fits mos1-h.fits' eventsets='mos1_filt_time.fits' attitudeset=attitude.fits pimin='300 2000' pimax='2000 10000' ecf='0.878 0.220'
 ```
 
 The process is currently getting stuck on the `edetect_chain` step.
+
+## 2026/10/03
+
+Due to the process getting stuck on the source detection `edetect_chain` step, it was decided to skip this step and manually select the source region, given it was easy to find in this data. The selection was done in ds9 via
+
+```{.bash .code-overflow-wrap}
+ds9 mos1_filt_time.fits & 
+```
+
+The image, alongside the source and background regions, were selected as shown below
+
+![The regions used for spectrum extraction. The outer two circles were used to select an annulus for the background. The inner circle was used for the source region. The regions were centered at (25631.2,23903,300) with radii of 300, 500, and 1500 pixels.](images/ds9.png)
+
+An exposure map was made from the hard X-ray image via
+
+```{.bash .code-overflow-wrap}
+# Generate Exposure Map
+eexpmap imageset=mos1-h.fits attitudeset=attitude.fits eventset=mos1_filt_time.fits expimageset=mos1_expmap_2-10keV.fits pimin=2000 pimax=10000
+```
+
+The spectra could then be extracted as
+
+```{.bash .code-overflow-wrap}
+# Extract the Source Spectrum
+evselect table='mos1_filt_time.fits' energycolumn='PI' filteredset='mos1_filtered.fits' filtertype='expression' expression='((X,Y) in CIRCLE(25631.2,23903,300))' spectrumset='mos1_pi.fits' spectralbinsize=5 withspecranges=yes specchannelmin=0 specchannelmax=11999 
+
+# Extract the Background Spectrum
+evselect table=mos1_filt_time.fits energycolumn='PI' filteredset='bkg_filtered.fits' filtertype='expression' spectrumset='bkg_pi.fits' spectralbinsize=5 expression='((X,Y) in CIRCLE(25631.2,23903,1500))&&!((X,Y) in CIRCLE(25631.2,23903,500))' withspecranges=yes specchannelmin=0 specchannelmax=11999
+```
+
+The spectrum was checked for pileup with
+
+```{.bash .code-overflow-wrap}
+# Check for Pileup
+epatplot set=mos1_filtered.fits plotfile=mos1_epat.ps useplotfile=yes withbackgroundset=yes backgroundset=bkg_filtered.fits
+```
+
+which output the following graph
+
+![The output of `epatplot`. The modelled distributions agree well with the observed distributions (as seen in the lower panel) and therefore pileup can be neglected here.](images/mos1_epat.png)
+
+
+```{.bash .code-overflow-wrap}
+# Find the source and background region areas for the ancillary file
+backscale spectrumset=mos1_pi.fits badpixlocation=mos1_filt_time.fits
+backscale spectrumset=bkg_pi.fits badpixlocation=mos1_filt_time.fits
+
+# Generate the Photon Redistribution Matrix
+rmfgen rmfset=mos1_rmf.fits spectrumset=mos1_pi.fits 
+
+# Generate the Ancillary File
+arfgen arfset=mos1_arf.fits spectrumset=mos1_pi.fits withrmfset=yes rmfset=mos1_rmf.fits withbadpixcorr=yes badpixlocation=mos1_filt_time.fits 
+```
+
+With these files successfully generated, it was possible to plot the spectrum through a quick Julia script, making use of the `SpectralFitting.jl` package
+
+```{.julia}
+using SpectralFitting, Plots
+
+function LoadData(
+    spectrum::String, background::String, response::String, ancillary::String; 
+    dataRange::Tuple{Real, Real}=(3,10)
+    )
+
+    data = OGIPDataset(
+        spectrum; 
+        background = background, 
+        response = response, 
+        ancillary = ancillary
+    )
+
+    # Regrouping, normalising, dropping bad channels and curtailing
+    regroup!(data)
+    normalize!(data)
+    drop_bad_channels!(data)
+    mask_energies!(data, dataRange...)
+end
+
+# Setting the instrument as a variable for generaliseability
+instrument = "mos1"
+
+data = LoadData(
+    "$(instrument)_pi.fits",
+    "bkg_pi.fits",
+    "$(instrument)_rmf.fits",
+    "$(instrument)_arf.fits"
+)
+
+plot(data)
+```
+
+Using the data reduced here, the spectrum below was produced
+
+![The spectrum extracted from the data.](images/FirstSpectrum.jpeg)
