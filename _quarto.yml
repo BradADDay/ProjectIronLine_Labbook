@@ -66,11 +66,13 @@ format:
           };
           </script>
   pdf:
-    code-overflow-wrap: true
     include-in-header:
       - text: |
           \usepackage{amsmath, gensymb, physics}
           \usepackage[margin=15mm]{geometry}
+          \usepackage{fvextra}
+          \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
+
 
 jupyter: python3
 
