@@ -311,7 +311,7 @@ edetect_chain imagesets='mos1-s.fits mos1-h.fits' eventsets='mos1_filt_time.fits
 
 The process is currently getting stuck on the `edetect_chain` step.
 
-## 2026/10/03
+## 2026/10/04
 
 Due to the process getting stuck on the source detection `edetect_chain` step, it was decided to skip this step and manually select the source region, given it was easy to find in this data. The selection was done in ds9 via
 

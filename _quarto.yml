@@ -66,6 +66,7 @@ format:
           };
           </script>
   pdf:
+    code-overflow-wrap: true
     include-in-header:
       - text: |
           \usepackage{amsmath, gensymb, physics}

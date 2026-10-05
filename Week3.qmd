@@ -1,0 +1,60 @@
+# Week 3
+
+## 2026/10/05
+
+Given that the Julia script was written by somebody else, it was difficult to debug. It was therefore decided that it would be more efficient to rewrite the script in `bash` The script goes to the point of plotting the lightcurves for all three instruments.
+
+The script was added to the shared GitHub repository to download onto solva for testing. A useful command to remember to download a single file from GitHub is:
+
+```{.bash .code-overflow-wrap}
+wget --no-check-certificate --content-disposition https://raw.githubusercontent.com/phajy/project-iron-lines/main/code/XMM-Pipeline.sh
+```
+
+### Comparing the bash script to Julia
+
+The script was tested successfully and the outputs compared to the Julia script. This was tested by looking at the event file produced from the mos1 instrument using `ftlist`. 
+
+#### Output from the bash script
+
+```{.code-overflow-wrap}
+        Name               Type       Dimensions
+        ----               ----       ----------
+HDU 1   Primary Array      Null Array                               
+HDU 2   EVENTS             BinTable    12 cols x 70972 rows         
+
+  Col  Name             Format[Units](Range)      Comment
+    1 TIME               D [s]                time of the center of the frame
+    2 RAWX               I [PIXELS] (-4:605)  X in node coordinates
+    3 RAWY               I [PIXELS] (1:602)   Y in node coordinates
+    4 DETX               I [pixel] (-19830:19899) X in linearised camera coordinat
+    5 DETY               I [pixel] (-20296:19829) Y in linearised camera coordinat
+    6 X                  J [pixel] (1.00000000000000E+00:5.18400000000000E+04) X in projected sky coordinates
+    7 Y                  J [pixel] (1.00000000000000E+00:5.18400000000000E+04) Y in projected sky coordinates
+    8 PHA                I [CHAN] (0:32767)   total charge of the event (uncor
+    9 PI                 I [CHAN] (0:15000)   measured energy in eV (gain corr
+   10 FLAG               J                    quality flag
+   11 PATTERN            B (0:31)             pattern or grade defining the ev
+   12 CCDNR              B (1:17)             1st digit=node (0/1), 2nd digit=CCD (1/7)
+```
+
+#### Output from the Julia Script
+
+```{.code-overflow-wrap}
+        Name               Type       Dimensions
+        ----               ----       ----------
+HDU 1   Primary Array      Null Array                               
+HDU 2   EVENTS             BinTable     7 cols x 164117 rows        
+
+  Col  Name             Format[Units](Range)      Comment
+    1 TIME               D [s]                time of the center of the frame
+    2 RAWX               I [PIXELS] (-4:605)  X in node coordinates
+    3 PHA                I [CHAN] (0:4095)    total charge of the event (uncor
+    4 PI                 I [CHAN] (0:15000)   measured energy in eV (gain corr
+    5 FLAG               J                    quality flag
+    6 PATTERN            B (0:31)             pattern or grade defining the ev
+    7 CCDNR              B (1:17)             1st digit=node (0/1), 2nd digit=CCD (1/7)
+```
+
+#### Conclusions
+
+It is clear that the Julia script does not compute a step, or does not do so correctly and thus in further analysis the bash script will be used.
