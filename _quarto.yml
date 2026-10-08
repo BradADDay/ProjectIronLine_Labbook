@@ -5,7 +5,7 @@ project:
 bookdown::gitbook:
    
 book:
-  title: "Lab Book"
+  title: "X-Raying AGN - Lab Notes"
   author: "Bradley Day"
   date: "2025/05/19"
   downloads:

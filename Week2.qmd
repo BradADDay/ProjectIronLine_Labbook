@@ -18,12 +18,12 @@
     - Using dataset with OBSID 0761670101
     - Following instructions for EPIC (IMAGING Mode)
     - The first set of commands are
-        ```
-        cd ODF 
-        setenv SAS_ODF /full/path/to/ODF/directory/
-        setenv SAS_ODFPATH /full/path/to/ODF/directory/
-        cifbuild
-        ```
+```{.bash .text-overflow-wrap}
+cd ODF 
+setenv SAS_ODF /full/path/to/ODF/directory/
+setenv SAS_ODFPATH /full/path/to/ODF/directory/
+cifbuild
+```
     - This does not currently work, the `setenv` command seems to be for a `csh` shell, while solva uses `bash`
         - This can be worked around by using e.g.
             ```

@@ -58,3 +58,27 @@ HDU 2   EVENTS             BinTable     7 cols x 164117 rows
 #### Conclusions
 
 It is clear that the Julia script does not compute a step, or does not do so correctly and thus in further analysis the bash script will be used.
+
+## 2026/10/07
+
+### Meeting with Supervisor
+
+- Suggestions for improving spectrum
+	- Plot with more counts per bin
+    	- Can rebin with `grppha`
+  	- Plot with a log-log scales
+  	- Fit with power law and plot ratio of model to data
+    	- Fabian figure 1
+- PN data may have better energy resolution
+- Look at more papers on MCG-6-30-15
+	- See what authors have done recently
+	- Consider the calibration to see if we need to adjust
+- Pileup is not important for PN
+  	- Small-window mode, 70% live time
+- MOS may have nicer signal to noise
+- CTI - charge transfer inefficiency
+  	- Some charge gets left behind causing readout streaks
+- PSF - shape that a point source takes on the detector
+  	- XMM relatively blurry
+  	- Pileup depends on multiple photons hitting the same pixel in a given frame
+  	- Can exclude the centre of the psf to check for pileup and see if that improves
