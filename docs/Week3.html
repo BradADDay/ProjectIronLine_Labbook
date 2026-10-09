@@ -81,9 +81,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-382dad073c37032be9e988f92f56c479.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-bd29a33bb155b7791116d1c9ba40c699.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-382dad073c37032be9e988f92f56c479.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-425553c36040c1099010492eb981ac19.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-f54aaf1fc312c7daf8794a58702dfd11.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-425553c36040c1099010492eb981ac19.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -124,6 +127,35 @@ window.MathJax = {
 };
 </script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -511,6 +543,10 @@ window.MathJax = {
   <ul class="collapse">
   <li><a href="#meeting-with-supervisor" id="toc-meeting-with-supervisor" class="nav-link" data-scroll-target="#meeting-with-supervisor"><span class="header-section-number">3.2.1</span> Meeting with Supervisor</a></li>
   </ul></li>
+  <li><a href="#section-2" id="toc-section-2" class="nav-link" data-scroll-target="#section-2"><span class="header-section-number">3.3</span> 2026/10/07</a>
+  <ul class="collapse">
+  <li><a href="#reprocessing-the-0693781301-dataset-using-the-pn-instrument" id="toc-reprocessing-the-0693781301-dataset-using-the-pn-instrument" class="nav-link" data-scroll-target="#reprocessing-the-0693781301-dataset-using-the-pn-instrument"><span class="header-section-number">3.3.1</span> Reprocessing the 0693781301 Dataset Using the PN Instrument</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -547,7 +583,7 @@ window.MathJax = {
 <p>The script was tested successfully and the outputs compared to the Julia script. This was tested by looking at the event file produced from the mos1 instrument using <code>ftlist</code>.</p>
 <section id="output-from-the-bash-script" class="level4" data-number="3.1.1.1">
 <h4 data-number="3.1.1.1" class="anchored" data-anchor-id="output-from-the-bash-script"><span class="header-section-number">3.1.1.1</span> Output from the bash script</h4>
-<pre class="code-overflow-wrap"><code>        Name               Type       Dimensions
+<pre><code>        Name               Type       Dimensions
         ----               ----       ----------
 HDU 1   Primary Array      Null Array                               
 HDU 2   EVENTS             BinTable    12 cols x 70972 rows         
@@ -568,7 +604,7 @@ HDU 2   EVENTS             BinTable    12 cols x 70972 rows
 </section>
 <section id="output-from-the-julia-script" class="level4" data-number="3.1.1.2">
 <h4 data-number="3.1.1.2" class="anchored" data-anchor-id="output-from-the-julia-script"><span class="header-section-number">3.1.1.2</span> Output from the Julia Script</h4>
-<pre class="code-overflow-wrap"><code>        Name               Type       Dimensions
+<pre><code>        Name               Type       Dimensions
         ----               ----       ----------
 HDU 1   Primary Array      Null Array                               
 HDU 2   EVENTS             BinTable     7 cols x 164117 rows        
@@ -627,6 +663,104 @@ HDU 2   EVENTS             BinTable     7 cols x 164117 rows
 <li>Can exclude the centre of the psf to check for pileup and see if that improves</li>
 </ul></li>
 </ul>
+</section>
+</section>
+<section id="section-2" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="section-2"><span class="header-section-number">3.3</span> 2026/10/07</h2>
+<section id="reprocessing-the-0693781301-dataset-using-the-pn-instrument" class="level3" data-number="3.3.1">
+<h3 data-number="3.3.1" class="anchored" data-anchor-id="reprocessing-the-0693781301-dataset-using-the-pn-instrument"><span class="header-section-number">3.3.1</span> Reprocessing the 0693781301 Dataset Using the PN Instrument</h3>
+<p>Given the recommendation to use data from the PN instrument, the data was reprocessed. First the bash script was ran with the command</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">/data/cluster4/BradleyAndJacob/Scripts/XMM-Pipeline.sh</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The resulting lightcurve is shown below</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/pn_ltcrv.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="The pn lightcurve of the observation. A large flare is again observed at the end of the observation, which was filtered out from the data analysis."><img src="images/pn_ltcrv.png" class="img-fluid figure-img" alt="The pn lightcurve of the observation. A large flare is again observed at the end of the observation, which was filtered out from the data analysis."></a></p>
+<figcaption>The pn lightcurve of the observation. A large flare is again observed at the end of the observation, which was filtered out from the data analysis.</figcaption>
+</figure>
+</div>
+<p>There is once again a flare towards the end so the GTI was set such that RATE is always less than 30</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Setting Environment Variables</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">SAS_ODFPATH</span><span class="op">=</span><span class="st">"</span><span class="va">$(</span><span class="bu">pwd</span><span class="va">)</span><span class="st">"</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">SAS_CCFPATH</span><span class="op">=</span><span class="st">"/opt/local/XMM/ccf/"</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">SAS_CCF</span><span class="op">=</span><span class="st">"</span><span class="va">$SAS_ODFPATH</span><span class="st">/ccf.cif"</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">SAS_ODF</span><span class="op">=</span><span class="st">"</span><span class="va">$SAS_ODFPATH</span><span class="st">/</span><span class="va">$(</span><span class="fu">ls</span> <span class="pp">*</span>SUM.SAS<span class="va">)</span><span class="st">"</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating the GTI (Good Time Interval) file for time filtering</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="ex">tabgtigen</span> table=pn_ltcrv.fits gtiset=gtiset.fits expression=<span class="st">'RATE&lt;=30'</span> </span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Filtering the events file using the GTI</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="ex">evselect</span> table=pn_filt.fits filtertype=expression filteredset=pn_filt_time.fits expression=<span class="st">'GTI(gtiset.fits,TIME)'</span> </span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating an attitude file</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="ex">atthkgen</span> atthkset=attitude.fits</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating an image for soft X-ray detections</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="ex">evselect</span> table=pn_filt_time.fits withimageset=yes imageset=pn-s.fits imagebinning=binSize xcolumn=X ximagebinsize=82 ycolumn=Y yimagebinsize=82 filtertype=expression expression=<span class="st">'(FLAG == 0)&amp;&amp;(PI in [300:2000])'</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating an image for hard X-ray detections</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="ex">evselect</span> table=pn_filt_time.fits withimageset=yes imageset=pn-h.fits imagebinning=binSize xcolumn=X ximagebinsize=82 ycolumn=Y yimagebinsize=82 filtertype=expression expression=<span class="st">'(FLAG == 0)&amp;&amp;(PI in [2000:10000])'</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating an image for all X-ray detections</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="ex">evselect</span> table=pn_filt_time.fits withimageset=yes imageset=pn-all.fits imagebinning=binSize xcolumn=X ximagebinsize=82 ycolumn=Y yimagebinsize=82 filtertype=expression expression=<span class="st">'(FLAG == 0)&amp;&amp;(PI in [300:10000])'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The regions selected for source and background extraction were centred on (25628, 23912). The source region was a circle with radius 1000 pixels, and the background was an annulus with inner/outer radii 2000/4000 pixels, respectively.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/0693781301_regions.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="The regions selected for source and background extraction. The scale at the bottom denotes how many events were detected in each pixel."><img src="images/0693781301_regions.png" class="img-fluid figure-img" alt="The regions selected for source and background extraction. The scale at the bottom denotes how many events were detected in each pixel."></a></p>
+<figcaption>The regions selected for source and background extraction. The scale at the bottom denotes how many events were detected in each pixel.</figcaption>
+</figure>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">eexpmap</span> imageset=pn-h.fits attitudeset=attitude.fits eventset=pn_filt_time.fits expimageset=pn_expmap_2-10keV.fits pimin=2000 pimax=10000</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the Source Spectrum</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="ex">evselect</span> table=<span class="st">'pn_filt_time.fits'</span> energycolumn=<span class="st">'PI'</span> filteredset=<span class="st">'pn_filtered.fits'</span> filtertype=<span class="st">'expression'</span> expression=<span class="st">'((X,Y) in CIRCLE(25628,23912,1000))'</span> spectrumset=<span class="st">'pn_pi.fits'</span> spectralbinsize=5 withspecranges=yes specchannelmin=0 specchannelmax=20479</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the Background Spectrum</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="ex">evselect</span> table=pn_filt_time.fits energycolumn=<span class="st">'PI'</span> filteredset=<span class="st">'bkg_filtered.fits'</span> filtertype=<span class="st">'expression'</span> spectrumset=<span class="st">'bkg_pi.fits'</span> spectralbinsize=5 expression=<span class="st">'((X,Y) in CIRCLE(25628,23912,4000))&amp;&amp;!((X,Y) in CIRCLE(25628,23912,2000))'</span> withspecranges=yes specchannelmin=0 specchannelmax=20479</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Check for Pileup</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="ex">epatplot</span> set=pn_filtered.fits plotfile=pn_epat.ps useplotfile=yes withbackgroundset=yes backgroundset=bkg_filtered.fits</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Find the source and background region areas for the ancillary file</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="ex">backscale</span> spectrumset=pn_pi.fits badpixlocation=pn_filt_time.fits</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="ex">backscale</span> spectrumset=bkg_pi.fits badpixlocation=pn_filt_time.fits</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate the Photon Redistribution Matrix</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="ex">rmfgen</span> rmfset=pn_rmf.fits spectrumset=pn_pi.fits </span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate the Ancillary File</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="ex">arfgen</span> arfset=pn_arf.fits spectrumset=pn_pi.fits withrmfset=yes rmfset=pn_rmf.fits withbadpixcorr=yes badpixlocation=pn_filt_time.fits </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The files were then moved to a products folder with</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Making a folder for the products</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> ../PRODUCTS</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Storing the observation ID as a variable</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">OBSID</span><span class="op">=</span><span class="st">"0693781301"</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Moving and renaming the product files</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> pn_pi.fits ../PRODUCTS/<span class="va">$(</span><span class="bu">echo</span> <span class="va">$OBSID)</span>_pn_pi.fits</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> bkg_pi.fits ../PRODUCTS/<span class="va">$(</span><span class="bu">echo</span> <span class="va">$OBSID)</span>_pn_bkg_pi.fits</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> pn_rmf.fits ../PRODUCTS/<span class="va">$(</span><span class="bu">echo</span> <span class="va">$OBSID)</span>_pn_rmf.fits</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> pn_arf.fits ../PRODUCTS/<span class="va">$(</span><span class="bu">echo</span> <span class="va">$OBSID)</span>_pn_arf.fits</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The products could then be plotted, which was once again done with Julia. Per our supervisor’s suggestion, the data was rebinned which was completed using the tool <code>ftgrouppha</code> as follows:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ftgrouppha</span> 0693781301_pn_pi.fits 0693781301_pn_pi_rebin.fits grouptype=min groupscale=400</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">ftgrouppha</span> 0693781301_pn_bkg_pi.fits 0693781301_pn_bkg_pi_rebin.fits grouptype=min groupscale=400</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The resulting spectrum is plotted below</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/0693781301_pn_spectrum.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="The pn spectrum of MCG-6-30-15 from observation ID 0693781301, regrouped to have at least 400 counts per bin. The red line marks 6.4 keV where the Fe K\alpha emission line is expected. A bump is observed in the expected region."><img src="images/0693781301_pn_spectrum.png" class="img-fluid figure-img" alt="The pn spectrum of MCG-6-30-15 from observation ID 0693781301, regrouped to have at least 400 counts per bin. The red line marks 6.4 keV where the Fe K\alpha emission line is expected. A bump is observed in the expected region."></a></p>
+<figcaption>The pn spectrum of MCG-6-30-15 from observation ID 0693781301, regrouped to have at least 400 counts per bin. The red line marks 6.4 keV where the Fe K<span class="math inline">\(\alpha\)</span> emission line is expected. A bump is observed in the expected region.</figcaption>
+</figure>
+</div>
+<p>The next steps are to fit a power law continuum and observe the ratio between the data and the model. This will be done through the XSPEC software, it will be necessary to mask the region around the iron line such that it doesn’t interfere with the fit. Similarly, the soft X-ray region below ~2.5 keV will need to be masked.</p>
+<p>The response and background files can be linked to the spectrum file, and the rebinning completed using the <code>ftools</code> utility <code>grppha</code> as follows:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">grppha</span> </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="ex">mos1_pi.fits</span>                    <span class="co"># input spectrum filename</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="ex">mos1_grp30.fits</span>                 <span class="co"># output spectrum filename</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="ex">chkey</span> BACKFILE bkg_pi.fits      <span class="co"># include background spectrum</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="ex">chkey</span> RESPFILE mos1_rmf.fits    <span class="co"># include the RMF</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="ex">chkey</span> ANCRFILE mos1_arf.fits    <span class="co"># include the ARF</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="ex">group</span> min 300                   <span class="co"># group the data by 300 counts/bin</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="bu">exit</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 
 </section>
@@ -1059,6 +1193,38 @@ HDU 2   EVENTS             BinTable     7 cols x 164117 rows
   </div>
 </nav>
 </div> <!-- /content -->
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 
 
 

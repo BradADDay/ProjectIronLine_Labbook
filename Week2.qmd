@@ -18,7 +18,7 @@
     - Using dataset with OBSID 0761670101
     - Following instructions for EPIC (IMAGING Mode)
     - The first set of commands are
-```{.bash .text-overflow-wrap}
+```{.bash}
 cd ODF 
 setenv SAS_ODF /full/path/to/ODF/directory/
 setenv SAS_ODFPATH /full/path/to/ODF/directory/
@@ -76,15 +76,14 @@ cifbuild
 
 Once logged into solva, XMM-SAS and Julia can be set up by running:
 
-```{.bash  .code-overflow-wrap}
+```{.bash}
 module load julia/1.9.2
 ```
 
 for Julia, which can be tested by simply running `julia`. XMM-SAS requires a few more lines of setup:
 
-```{.bash  .code-overflow-wrap}
+```{.bash}
 # First initialise HEASOFT
-
 export HEADAS=/opt/local/rocky8/heasoft-6.36/x86_64-pc-linux-gnu-libc2.28/
 alias heainit=". $HEADAS/headas-init.sh"
 heainit
@@ -123,7 +122,7 @@ In order to avoid running all of the above commands upon every login session, th
 
 With Julia and anaconda loaded, the `module save` command was run, which saves the loaded module configuration to a file. Then, editing `.bashrc` via `nano .bashrc`, the following lines were added to the file:
 
-```{.bash .code-overflow-wrap}
+```{.bash}
 #========ADDED BY USER========#
 
 # Load Modules
@@ -147,7 +146,7 @@ This initialises all of the environment variables upon login, and all that is ne
 
 Data was downloaded using a `wget` command as follows:
 
-```{.bash .code-overflow-wrap}
+```{.bash}
 wget -v -q -nH --no-check-certificate --cut-dirs=4 -r -l0 -w1 -c -N -np -R 'index*' -erobots=off https://heasarc.gsfc.nasa.gov/FTP/xmm/data/rev0//0123700101/ODF/
 ```
 
@@ -159,7 +158,7 @@ It is currently believed that this can be reused
 With this working, I began working through the XMM-SAS ABC guide for data reduction. Everything up to the end of the making a Light Curve section of the [ABC guide](https://heasarc.gsfc.nasa.gov/docs/xmm/sl/epic/image/sas_cl.html) is automated by the script provided by Darius Michienzi.
 
 Run the script using 
-```{.bash .code-overflow-wrap}
+```{.bash}
 # Unzip any zipped files
 gzip -d *.gz
 
@@ -168,7 +167,7 @@ julia /home/jq23394/XMM-data-reduction.jl
 ```
 
 in the ODF directory. Set useful environment variables using:
-```{.bash .code-overflow-wrap}
+```{.bash}
 export SAS_ODFPATH="$(pwd)"
 export SAS_CCFPATH="/opt/local/XMM/ccf/"
 export SAS_CCF="$SAS_ODFPATH/ccf.cif"
@@ -181,13 +180,13 @@ evselect table=mos1_filt.fits withrateset=Y rateset=mos1_ltcrv.fits maketimecolu
 
 The next step is to apply time filters, which can be done by looking at either the rate or the time intervals. To filter by rate, use the syntax
 
-```{.bash .code-overflow-wrap}
+```{.bash}
 tabgtigen table=mos1_ltcrv.fits gtiset=gtiset.fits expression='RATE<=6' 
 ```
 
 where the expression `RATE<=6` selects all regions with a rate below 6 ct/s. To filter by time, use the syntax 
 
-```{.bash .code-overflow-wrap}
+```{.bash}
 tabgtigen table=mos1_ltcrv.fits gtiset=gtiset.fits timecolumn=TIME expression='TIME <= 73227600'
 ```
 
@@ -195,7 +194,7 @@ where the expression `TIME<=73227600` selects the region below a given timestamp
 
 Either of these methods will generate a gti file, which can be used as
 
-```{.bash .code-overflow-wrap}
+```{.bash}
 evselect table=mos1_filt.fits filtertype=expression filteredset=mos1_filt_time.fits expression='GTI(gtiset.fits,TIME)'
 ```
 
@@ -203,13 +202,13 @@ evselect table=mos1_filt.fits filtertype=expression filteredset=mos1_filt_time.f
 
 After this, run 
 
-```{.bash .code-overflow-wrap}
+```{.bash}
 atthkgen atthkset=attitude.fits
 ```
 
 Next, we produce images using binsizes of 22 or 82 for the MOS or PN cameras respectively. This corresponds to the size of the pixels of each on the sky, being 1.1" and 4.1", respectively.
 
-```{.bash .code-overflow-wrap}
+```{.bash}
 evselect table=mos1_filt_time.fits withimageset=yes imageset=mos1-s.fits imagebinning=binSize xcolumn=X ximagebinsize=22 ycolumn=Y yimagebinsize=22 filtertype=expression expression='(FLAG == 0)&&(PI in [300:2000])'
 
 evselect table=mos1_filt_time.fits withimageset=yes imageset=mos1-h.fits imagebinning=binSize xcolumn=X ximagebinsize=22 ycolumn=Y yimagebinsize=22 filtertype=expression expression='(FLAG == 0)&&(PI in [2000:10000])'
@@ -239,7 +238,7 @@ would frequently appear. The issue may thus be an error during this step. Follow
 
 With the confirmation that the instructions work for the example dataset (OBSID=0123700101), I returned to a MCG-6-30-15 dataset (OBSID=0693781301) and manually ran each command rather than using the script. I also attempted the process with the observation 0111570101, however this data seemed much less promising. The process was as follows:
 
-```{.bash .code-overflow-wrap}
+```{.bash}
 # Enter the ODF directory
 cd ODF
 
@@ -286,7 +285,7 @@ The lightcurve is shown below
 
 There was a big flare at the end of the observation, which was filtered out with the condition that RATE must be $\leq 15$. 
 
-```{.bash .code-overflow-wrap}
+```{.bash}
 # Creating the GTI (Good Time Interval) file for time filtering
 tabgtigen table=mos1_ltcrv.fits gtiset=gtiset.fits expression='RATE<=15' 
 
@@ -315,7 +314,7 @@ The process is currently getting stuck on the `edetect_chain` step.
 
 Due to the process getting stuck on the source detection `edetect_chain` step, it was decided to skip this step and manually select the source region, given it was easy to find in this data. The selection was done in ds9 via
 
-```{.bash .code-overflow-wrap}
+```{.bash}
 ds9 mos1_filt_time.fits & 
 ```
 
@@ -325,14 +324,14 @@ The image, alongside the source and background regions, were selected as shown b
 
 An exposure map was made from the hard X-ray image via
 
-```{.bash .code-overflow-wrap}
+```{.bash}
 # Generate Exposure Map
 eexpmap imageset=mos1-h.fits attitudeset=attitude.fits eventset=mos1_filt_time.fits expimageset=mos1_expmap_2-10keV.fits pimin=2000 pimax=10000
 ```
 
 The spectra could then be extracted as
 
-```{.bash .code-overflow-wrap}
+```{.bash}
 # Extract the Source Spectrum
 evselect table='mos1_filt_time.fits' energycolumn='PI' filteredset='mos1_filtered.fits' filtertype='expression' expression='((X,Y) in CIRCLE(25631.2,23903,300))' spectrumset='mos1_pi.fits' spectralbinsize=5 withspecranges=yes specchannelmin=0 specchannelmax=11999 
 
@@ -342,7 +341,7 @@ evselect table=mos1_filt_time.fits energycolumn='PI' filteredset='bkg_filtered.f
 
 The spectrum was checked for pileup with
 
-```{.bash .code-overflow-wrap}
+```{.bash}
 # Check for Pileup
 epatplot set=mos1_filtered.fits plotfile=mos1_epat.ps useplotfile=yes withbackgroundset=yes backgroundset=bkg_filtered.fits
 ```
@@ -352,7 +351,7 @@ which output the following graph
 ![The output of `epatplot`. The modelled distributions agree well with the observed distributions (as seen in the lower panel) and therefore pileup can be neglected here.](images/mos1_epat.png)
 
 
-```{.bash .code-overflow-wrap}
+```{.bash}
 # Find the source and background region areas for the ancillary file
 backscale spectrumset=mos1_pi.fits badpixlocation=mos1_filt_time.fits
 backscale spectrumset=bkg_pi.fits badpixlocation=mos1_filt_time.fits
