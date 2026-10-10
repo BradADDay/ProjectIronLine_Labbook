@@ -83,7 +83,7 @@ It is clear that the Julia script does not compute a step, or does not do so cor
   	- Pileup depends on multiple photons hitting the same pixel in a given frame
   	- Can exclude the centre of the psf to check for pileup and see if that improves
 
-## 2026/10/07
+## 2026/10/09
 
 ### Reprocessing the 0693781301 Dataset Using the PN Instrument
 
@@ -193,3 +193,186 @@ chkey ANCRFILE mos1_arf.fits    # include the ARF
 group min 300                   # group the data by 300 counts/bin
 exit
 ```
+
+## 2026/10/10
+
+### A Julia Script for Spectrum Plotting
+
+In order to quickly view the produced spectra, a julia script was produced as shown below. Note that some formatting lines have been excluded for brevity, the full code can be found on the [Project GitHub Repository](https://github.com/phajy/project-iron-lines/tree/main/code). The code makes use of the `SpectralFitting.jl` library @baker_spectralfittingjl_2025.
+
+:::{.callout-note collapse="true" title="ViewSpectrum.jl Source Code"}
+```{.julia}
+using SpectralFitting, Plots, LaTeXStrings, ArgParse
+
+# Data loading function
+function LoadData(
+    spectrum::String; 
+    dataRange::Tuple{Real, Real}=(2,10)
+    )
+
+    # Loading in the spectrum file
+    data = OGIPDataset(spectrum)
+
+    # Regrouping, normalising, dropping bad channels and curtailing
+    regroup!(data)
+    normalize!(data)
+    drop_bad_channels!(data)
+    mask_energies!(data, dataRange...)
+end
+
+function ParseArguments()
+    s = ArgParseSettings()
+
+    #Add arguments with their default values
+    @add_arg_table s begin
+        "--OBS_ID"
+            help="The observation ID"
+            default="MISSING"
+        "--Instrument"
+            help="XMM EPIC Instrument name (pn, mos1, mos2)"
+            default="pn"
+        "--INDIR"
+            help="The input directory"
+            default=pwd()
+        "--OUTDIR"
+            help="The output directory"
+            default=pwd()
+    end
+
+    return parse_args(ARGS, s)
+end
+
+args = ParseArguments()
+
+# Loading the data (requires that the spectrum files are grouped)
+data = LoadData(
+    "$(args["INDIR"])/$(args["OBS_ID"])_$(args["Instrument"])_pi_rebinned.fits"
+)
+
+# Setting the observation id
+data.user_data.observation_id = args["OBS_ID"]
+
+# Plotting
+majorticks = collect(2:10)
+vline([6.4]; c=:red, ls=:dash, lw=0.7, label=L"Fe K$\alpha$")
+plt = plot!(
+    data; ylabel=L"Counts (s$^{-1}$ keV$^{-1}$)", 
+    xaxis=:log, yaxis=:log, xticks=(majorticks, majorticks),
+    c=:black, markercolor=:black, lc=:black, lw=0.5, msw=0.,
+    framestyle=:box, xlims=(minimum(majorticks), maximum(majorticks))
+)
+
+# Saving the figure
+savefig(
+    plt, "$(args["OUTDIR"])/$(args["OBS_ID"])_$(args["Instrument"])_spectrum.png"
+)
+```
+:::
+
+To call the script, the following is used
+
+```{.bash}
+julia PATH_TO_SCRIPT/ViewSpectrum.jl --OBS_ID --Instrument --INDIR --OUTDIR
+```
+
+The code currently assumes that the spectrum file follows the convention `[OBS_ID]_[Instrument]_pi.fits` (where `[Instrument]` can be `pn`, `mos1` or `mos2`) and that the spectrum file points to the background and response files (which can be accomplished either with `grppha`, or `specgroup`). The `specgroup` usage follows the syntax 
+
+```{.bash}
+specgroup spectrumset=srcspec.ds addfilenames=yes arfset=myarf.ds rmfset=myrmf.ds backgndset=mybgnd.ds
+```
+
+## Summary of Data Reduction Commands
+
+Two more bash scripts were made for an intermediate step (`Image-Pipeline.sh`) and the final steps (`Final-Pipeline.sh`) respectively. With these, the data reduction only requires the following commands to be run:
+
+### Reprocessing
+
+```{.bash}
+# Run the initial pipeline script
+bash /data/cluster4/BradleyAndJacob/Scripts/XMM-Pipeline.sh
+
+# Setting Environment Variables
+export SAS_ODFPATH="$(pwd)"
+export SAS_CCFPATH="/opt/local/XMM/ccf/"
+export SAS_CCF="$SAS_ODFPATH/ccf.cif"
+export SAS_ODF="$SAS_ODFPATH/$(ls *SUM.SAS)"
+export INSTRUMENT="pn"
+
+# Enter the processing directory
+cd ../PROC
+```
+
+### GTI Filtering
+
+After viewing the lightcurve and determining a filtering expression for a GTI, run
+
+```{.bash}
+# Creating the GTI (Good Time Interval) file for time filtering
+tabgtigen table="$INSTRUMENT"_ltcrv.fits gtiset=gtiset.fits expression='RATE<=30' 
+
+# Run the image generation pipeline
+bash /data/cluster4/BradleyAndJacob/Scripts/Image-Pipeline.sh $INSTRUMENT
+```
+
+### Region Selection
+
+Then, open the image in ds9 and select the source and background regions
+
+```{.bash}
+# View the image and select regions
+ds9 $INSTRUMENT-all.fits &
+
+# Set region expressions as variables, replacing X, Y and R
+export SOURCE_CENTRE="X,Y"
+export SOURCE_REGION=""$SOURCE_CENTRE",R"
+export BACKGROUND_REGION_INNER=""$SOURCE_CENTRE",R"
+export BACKGROUND_REGION_OUTER=""$SOURCE_CENTRE",R"
+```
+
+### Spectrum Extraction
+
+Then enter one of the following pairs of commands, for the relevant instrument
+
+```{.bash}
+# ========== For PN ========== 
+# Extract the Source Spectrum
+evselect table="$INSTRUMENT"_filt_time.fits energycolumn="PI" filteredset="$INSTRUMENT"_filtered.fits filtertype="expression" expression="((X,Y) in CIRCLE("$SOURCE_REGION"))&&(FLAG==0)&&(PATTERN<=4)" spectrumset=""$INSTRUMENT"_pi.fits" spectralbinsize=5 withspecranges=yes specchannelmin=0 specchannelmax=20479
+
+# Extract the Background Spectrum
+evselect table="$INSTRUMENT"_filt_time.fits energycolumn="PI" filteredset="bkg_filtered.fits" filtertype="expression" spectrumset="bkg_pi.fits" spectralbinsize=5 expression="((X,Y) in CIRCLE("$BACKGROUND_REGION_OUTER"))&&!((X,Y) in CIRCLE("$BACKGROUND_REGION_INNER"))&&(FLAG==0)&&(PATTERN<=4)" withspecranges=yes specchannelmin=0 specchannelmax=20479
+# ========== For PN ========== 
+
+# ========= For MOS  ========= 
+# Extract the Source Spectrum
+evselect table="$INSTRUMENT"_filt_time.fits energycolumn="PI" filteredset=""$INSTRUMENT"_filtered.fits" filtertype="expression" expression="((X,Y) in CIRCLE("$SOURCE_REGION"))" spectrumset=""$INSTRUMENT"_pi.fits" spectralbinsize=5 withspecranges=yes specchannelmin=0 specchannelmax=11999
+
+# Extract the Background Spectrum
+evselect table="$INSTRUMENT"_filt_time.fits energycolumn="PI" filteredset="bkg_filtered.fits" filtertype="expression" spectrumset="bkg_pi.fits" spectralbinsize=5 expression="((X,Y) in CIRCLE("$BACKGROUND_REGION_OUTER"))&&!((X,Y) in CIRCLE("$BACKGROUND_REGION_INNER"))" withspecranges=yes specchannelmin=0 specchannelmax=11999
+# ========= For MOS  ========= 
+```
+
+### Pileup Check
+
+Check the spectrum for pileup
+
+```{.bash}
+# Check for Pileup
+epatplot set="$INSTRUMENT"_filtered.fits plotfile="$INSTRUMENT"_epat.ps useplotfile=yes withbackgroundset=yes backgroundset=bkg_filtered.fits
+```
+
+### Response Files and Cleanup
+
+If there is no pileup, run the final script, otherwise reselect the source region to exclude the centre and reduce pileup
+
+```{.bash}
+# If no pileup, run the final pipeline
+bash /data/cluster4/BradleyAndJacob/Scripts/Final-Pipeline.sh [OBS_ID] $INSTRUMENT 
+```
+
+### Test Data
+
+This pipeline was tested on the MCG-6-30-15 dataset with observation ID 0111570101. The GTI was set with the expression "TIME>=79698000", abd the regions were centred at (26880,27661) with radii 1000,2000,4000. The resulting spectrum from the pn instrument (after grouping the bins in groups of 4, cutting the data to 1024 channels) is shown below.
+
+![The spectrum from obsid 0111570101. The data was once again plotted with ViewSpectrum.jl](images/0111570101_pn_spectrum.png)
+
+This showed a successful spectrum extraction, and yet another promising dataset. The next steps are to thus begin fitting to data in order to reproduce a plot similar to Figure 1 in Fabian et al. (2002) @fabian_long_2002.

@@ -21,26 +21,26 @@ book:
         - Week2.qmd
         - Week3.qmd
         - Week4.qmd
-        - Week5.qmd
-        - Week6.qmd
-        - Week7.qmd
-        - Week8.qmd
-        - Week9.qmd
-        - Week10.qmd
-        - Week11.qmd
-        - Week12.qmd
-    - part: Teaching Block 2
-      chapters:
-        - Week13.qmd
-        - Week14.qmd
-        - Week15.qmd
-        - Week16.qmd
-        - Week17.qmd
-        - Week18.qmd
-        - Week19.qmd
-        - Week20.qmd
-        - Week21.qmd
-        - Week22.qmd
+        # - Week5.qmd
+        # - Week6.qmd
+        # - Week7.qmd
+        # - Week8.qmd
+        # - Week9.qmd
+        # - Week10.qmd
+        # - Week11.qmd
+        # - Week12.qmd
+    # - part: Teaching Block 2
+    #   chapters:
+    #     - Week13.qmd
+    #     - Week14.qmd
+    #     - Week15.qmd
+    #     - Week16.qmd
+    #     - Week17.qmd
+    #     - Week18.qmd
+    #     - Week19.qmd
+    #     - Week20.qmd
+    #     - Week21.qmd
+    #     - Week22.qmd
     - references.qmd
 
 bibliography: references.bib
