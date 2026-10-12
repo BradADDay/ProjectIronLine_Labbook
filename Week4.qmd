@@ -1,0 +1,48 @@
+# Week 4
+
+## Initial Fitting Attempt Using XSPEC
+
+In order to inspect the data, it will be useful to fit a power law to the continuum excluding the region where we expect the iron line. Taking the ratio between this fit and the data will thus reveal instructive data on the presence of the Fe-K$\alpha$ line. 
+
+The data was rebinned by grouping the channels into sets of 4 via 
+
+```{.bash}
+grppha 0693781301_pn_pi.fits 0693781301_pn_pi_rebinned.fits "group 0 4095 4 & exit"
+```
+
+The fitting was then completed in XSPEC, fitting a powerlaw. Once the XSPEC session was started (via the `xspec` command), the following sequence of commands was used.
+
+```{.bash}
+# Set plotting parameters and load in the data
+cpd 0693781301.ps/CPS
+setplot energy
+data 0693781301_pn_pi_rebinned.fits
+
+# Setting fitting regions
+ignore 0.0-3.0
+ignore 15.0-**
+
+# Normalising and ignoring bad channels
+renorm
+ignore bad
+
+# Plot the data
+plot ldata
+
+# Ignore the iron line
+ignore 5.0-7.5
+
+# Fit a power law
+model powerlaw
+fit
+
+# Retrieve the iron line data and plot
+notice 5.0-7.5
+plot ldata ratio
+```
+
+The defaults were used as initial guesses for the fitting parameters (the power law index and the normalisation), and the data was curtailed to be within 3 and 15 keV to capture the best power law region. The resulting fit, and the ratio between the fit and data, are shown below.
+
+![The first fit produced using XSPEC. A clear iron line is present at near exactly 6.4 keV.](images/0693781301_first_fit.png)
+
+Further binning may improve this view of the iron line further, which is the next steps.

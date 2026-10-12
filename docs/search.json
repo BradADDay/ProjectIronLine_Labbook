@@ -197,6 +197,28 @@
     ]
   },
   {
+    "objectID": "Week4.html",
+    "href": "Week4.html",
+    "title": "4  Week 4",
+    "section": "",
+    "text": "4.1 Initial Fitting Attempt Using XSPEC\nIn order to inspect the data, it will be useful to fit a power law to the continuum excluding the region where we expect the iron line. Taking the ratio between this fit and the data will thus reveal instructive data on the presence of the Fe-K\\(\\alpha\\) line.\nThe data was rebinned by grouping the channels into sets of 4 via\nThe fitting was then completed in XSPEC, fitting a powerlaw. Once the XSPEC session was started (via the xspec command), the following sequence of commands was used.\nThe defaults were used as initial guesses for the fitting parameters (the power law index and the normalisation), and the data was curtailed to be within 3 and 15 keV to capture the best power law region. The resulting fit, and the ratio between the fit and data, are shown below.\nFurther binning may improve this view of the iron line further, which is the next steps.",
+    "crumbs": [
+      "Teaching Block 1",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Week 4</span>"
+    ]
+  },
+  {
+    "objectID": "Week4.html#initial-fitting-attempt-using-xspec",
+    "href": "Week4.html#initial-fitting-attempt-using-xspec",
+    "title": "4  Week 4",
+    "section": "",
+    "text": "grppha 0693781301_pn_pi.fits 0693781301_pn_pi_rebinned.fits \"group 0 4095 4 & exit\"\n\n# Set plotting parameters and load in the data\ncpd 0693781301.ps/CPS\nsetplot energy\ndata 0693781301_pn_pi_rebinned.fits\n\n# Setting fitting regions\nignore 0.0-3.0\nignore 15.0-**\n\n# Normalising and ignoring bad channels\nrenorm\nignore bad\n\n# Plot the data\nplot ldata\n\n# Ignore the iron line\nignore 5.0-7.5\n\n# Fit a power law\nmodel powerlaw\nfit\n\n# Retrieve the iron line data and plot\nnotice 5.0-7.5\nplot ldata ratio\n\n\n\n\nThe first fit produced using XSPEC. A clear iron line is present at near exactly 6.4 keV.",
+    "crumbs": [
+      "Teaching Block 1",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Week 4</span>"
+    ]
+  },
+  {
     "objectID": "references.html",
     "href": "references.html",
     "title": "References",
