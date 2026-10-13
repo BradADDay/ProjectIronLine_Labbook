@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>4&nbsp; Week 4 – X-Raying AGN - Lab Notes</title>
+<title>5&nbsp; Week 4 – X-Raying AGN - Lab Notes</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -69,7 +69,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./references.html" rel="next">
-<link href="./Week3.html" rel="prev">
+<link href="./DataReduction.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -330,7 +330,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Week1.html">Teaching Block 1</a></li><li class="breadcrumb-item"><a href="./Week4.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Week 4</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Week1.html">Teaching Block 1</a></li><li class="breadcrumb-item"><a href="./Week4.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Week 4</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -394,8 +394,14 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./DataReduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Data Reduction Summary</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./Week4.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Week 4</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Week 4</span></span></a>
   </div>
 </li>
       </ul>
@@ -416,7 +422,15 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#initial-fitting-attempt-using-xspec" id="toc-initial-fitting-attempt-using-xspec" class="nav-link active" data-scroll-target="#initial-fitting-attempt-using-xspec"><span class="header-section-number">4.1</span> Initial Fitting Attempt Using XSPEC</a></li>
+  <li><a href="#section" id="toc-section" class="nav-link active" data-scroll-target="#section"><span class="header-section-number">5.1</span> 2026/10/12</a>
+  <ul class="collapse">
+  <li><a href="#initial-fitting-attempt-using-xspec" id="toc-initial-fitting-attempt-using-xspec" class="nav-link" data-scroll-target="#initial-fitting-attempt-using-xspec"><span class="header-section-number">5.1.1</span> Initial Fitting Attempt Using XSPEC</a></li>
+  </ul></li>
+  <li><a href="#section-1" id="toc-section-1" class="nav-link" data-scroll-target="#section-1"><span class="header-section-number">5.2</span> 2026/10/13</a>
+  <ul class="collapse">
+  <li><a href="#second-attempt-at-fitting" id="toc-second-attempt-at-fitting" class="nav-link" data-scroll-target="#second-attempt-at-fitting"><span class="header-section-number">5.2.1</span> Second Attempt at Fitting</a></li>
+  <li><a href="#converting-postscript-files-to-png" id="toc-converting-postscript-files-to-png" class="nav-link" data-scroll-target="#converting-postscript-files-to-png"><span class="header-section-number">5.2.2</span> Converting PostScript Files to PNG</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -424,9 +438,9 @@ window.Quarto = {
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Week1.html">Teaching Block 1</a></li><li class="breadcrumb-item"><a href="./Week4.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Week 4</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Week1.html">Teaching Block 1</a></li><li class="breadcrumb-item"><a href="./Week4.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Week 4</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Week 4</span></h1>
+<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Week 4</span></h1>
 </div>
 
 
@@ -443,8 +457,10 @@ window.Quarto = {
 </header>
 
 
-<section id="initial-fitting-attempt-using-xspec" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="initial-fitting-attempt-using-xspec"><span class="header-section-number">4.1</span> Initial Fitting Attempt Using XSPEC</h2>
+<section id="section" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="section"><span class="header-section-number">5.1</span> 2026/10/12</h2>
+<section id="initial-fitting-attempt-using-xspec" class="level3" data-number="5.1.1">
+<h3 data-number="5.1.1" class="anchored" data-anchor-id="initial-fitting-attempt-using-xspec"><span class="header-section-number">5.1.1</span> Initial Fitting Attempt Using XSPEC</h3>
 <p>In order to inspect the data, it will be useful to fit a power law to the continuum excluding the region where we expect the iron line. Taking the ratio between this fit and the data will thus reveal instructive data on the presence of the Fe-K<span class="math inline">\(\alpha\)</span> line.</p>
 <p>The data was rebinned by grouping the channels into sets of 4 via</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">grppha</span> 0693781301_pn_pi.fits 0693781301_pn_pi_rebinned.fits <span class="st">"group 0 4095 4 &amp; exit"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -458,23 +474,27 @@ window.Quarto = {
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="ex">ignore</span> 0.0-3.0</span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="ex">ignore</span> 15.0-<span class="pp">**</span></span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Normalising and ignoring bad channels</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="ex">renorm</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="ex">ignore</span> bad</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the data</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="ex">plot</span> ldata</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Setting the model to a power law</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="ex">model</span> powerlaw</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Normalising and ignoring bad channels</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="ex">renorm</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="ex">ignore</span> bad</span>
 <span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Ignore the iron line</span></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="ex">ignore</span> 5.0-7.5</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the data</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="ex">plot</span> ldata</span>
 <span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit a power law</span></span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="ex">model</span> powerlaw</span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="ex">fit</span></span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Retrieve the iron line data and plot</span></span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="ex">notice</span> 5.0-7.5</span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="ex">plot</span> ldata ratio</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Ignore the iron line</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="ex">ignore</span> 5.0-7.5</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit a power law</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="ex">fit</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Retrieve the iron line data and plot</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="ex">notice</span> 5.0-7.5</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="ex">plot</span> ldata ratio</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a><span class="bu">exit</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The defaults were used as initial guesses for the fitting parameters (the power law index and the normalisation), and the data was curtailed to be within 3 and 15 keV to capture the best power law region. The resulting fit, and the ratio between the fit and data, are shown below.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -483,8 +503,36 @@ window.Quarto = {
 </figure>
 </div>
 <p>Further binning may improve this view of the iron line further, which is the next steps.</p>
+</section>
+</section>
+<section id="section-1" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="section-1"><span class="header-section-number">5.2</span> 2026/10/13</h2>
+<section id="second-attempt-at-fitting" class="level3" data-number="5.2.1">
+<h3 data-number="5.2.1" class="anchored" data-anchor-id="second-attempt-at-fitting"><span class="header-section-number">5.2.1</span> Second Attempt at Fitting</h3>
+<p>The data was rebinned once more, taking bins with a minimum of 600 counts per bin.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">grppha</span> 0693781301_pn_pi.fits 0693781301_pn_pi_rebinned_min600.fits <span class="st">"chkey BACKFILE 0693781301_pn_bkg_pi.fits &amp; chkey RESPFILE 0693781301_pn_rmf.fits &amp; chkey ANCRFILE 0693781301_pn_arf.fits &amp; group min 600 &amp; exit"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This spectrum was fit following the same method as previous, but masking the energy to be between 2-10 keV. The result is shown below</p>
+<p><a href="images/0693781301_min600_powerlaw.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="images/0693781301_min600_powerlaw.png" class="img-fluid"></a></p>
+</section>
+<section id="converting-postscript-files-to-png" class="level3" data-number="5.2.2">
+<h3 data-number="5.2.2" class="anchored" data-anchor-id="converting-postscript-files-to-png"><span class="header-section-number">5.2.2</span> Converting PostScript Files to PNG</h3>
+<p>XSPEC and many other packages output plots as <code>.ps</code> files, which cannot easily be included in this book. Thus, a bash script was produced to convert these outputs to <code>.png</code> without losing resolution.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert to pdf</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ps2pdf</span> <span class="va">$1</span>.ps</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert to png</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="ex">convert</span> <span class="at">-alpha</span> off <span class="at">-density</span> 600 <span class="va">$1</span>.pdf <span class="va">$1</span>.png</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove intermediate files</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> <span class="va">$1</span>.pdf</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This script takes one argument, which is the filename with no extension, i.e.&nbsp;for the plot file <code>0693781301_min600.ps</code> one would enter the command</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> /data/cluster4/BradleyAndJacob/Scripts/ps_to_png.sh 0693781301_min600</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The script first converts to pdf due to quality losses observed when converting straight to a png.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -903,8 +951,8 @@ window.Quarto = {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./Week3.html" class="pagination-link" aria-label="Week 3">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Week 3</span></span>
+      <a href="./DataReduction.html" class="pagination-link" aria-label="Data Reduction Summary">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Data Reduction Summary</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

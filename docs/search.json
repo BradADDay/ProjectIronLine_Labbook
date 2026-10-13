@@ -179,43 +179,131 @@
     "href": "Week3.html#section-3",
     "title": "3  Week 3",
     "section": "3.4 2026/10/10",
-    "text": "3.4 2026/10/10\n\n3.4.1 A Julia Script for Spectrum Plotting\nIn order to quickly view the produced spectra, a julia script was produced as shown below. Note that some formatting lines have been excluded for brevity, the full code can be found on the Project GitHub Repository. The code makes use of the SpectralFitting.jl library  [1].\n\n\n\n\n\n\nNoteViewSpectrum.jl Source Code\n\n\n\n\n\nusing SpectralFitting, Plots, LaTeXStrings, ArgParse\n\n# Data loading function\nfunction LoadData(\n    spectrum::String; \n    dataRange::Tuple{Real, Real}=(2,10)\n    )\n\n    # Loading in the spectrum file\n    data = OGIPDataset(spectrum)\n\n    # Regrouping, normalising, dropping bad channels and curtailing\n    regroup!(data)\n    normalize!(data)\n    drop_bad_channels!(data)\n    mask_energies!(data, dataRange...)\nend\n\nfunction ParseArguments()\n    s = ArgParseSettings()\n\n    #Add arguments with their default values\n    @add_arg_table s begin\n        \"--OBS_ID\"\n            help=\"The observation ID\"\n            default=\"MISSING\"\n        \"--Instrument\"\n            help=\"XMM EPIC Instrument name (pn, mos1, mos2)\"\n            default=\"pn\"\n        \"--INDIR\"\n            help=\"The input directory\"\n            default=pwd()\n        \"--OUTDIR\"\n            help=\"The output directory\"\n            default=pwd()\n    end\n\n    return parse_args(ARGS, s)\nend\n\nargs = ParseArguments()\n\n# Loading the data (requires that the spectrum files are grouped)\ndata = LoadData(\n    \"$(args[\"INDIR\"])/$(args[\"OBS_ID\"])_$(args[\"Instrument\"])_pi_rebinned.fits\"\n)\n\n# Setting the observation id\ndata.user_data.observation_id = args[\"OBS_ID\"]\n\n# Plotting\nmajorticks = collect(2:10)\nvline([6.4]; c=:red, ls=:dash, lw=0.7, label=L\"Fe K$\\alpha$\")\nplt = plot!(\n    data; ylabel=L\"Counts (s$^{-1}$ keV$^{-1}$)\", \n    xaxis=:log, yaxis=:log, xticks=(majorticks, majorticks),\n    c=:black, markercolor=:black, lc=:black, lw=0.5, msw=0.,\n    framestyle=:box, xlims=(minimum(majorticks), maximum(majorticks))\n)\n\n# Saving the figure\nsavefig(\n    plt, \"$(args[\"OUTDIR\"])/$(args[\"OBS_ID\"])_$(args[\"Instrument\"])_spectrum.png\"\n)\n\n\n\nTo call the script, the following is used\njulia PATH_TO_SCRIPT/ViewSpectrum.jl --OBS_ID --Instrument --INDIR --OUTDIR\nThe code currently assumes that the spectrum file follows the convention [OBS_ID]_[Instrument]_pi.fits (where [Instrument] can be pn, mos1 or mos2) and that the spectrum file points to the background and response files (which can be accomplished either with grppha, or specgroup). The specgroup usage follows the syntax\nspecgroup spectrumset=srcspec.ds addfilenames=yes arfset=myarf.ds rmfset=myrmf.ds backgndset=mybgnd.ds",
+    "text": "3.4 2026/10/10\n\n3.4.1 A Julia Script for Spectrum Plotting\nIn order to quickly view the produced spectra, a julia script was produced as shown below. Note that some formatting lines have been excluded for brevity, the full code can be found on the Project GitHub Repository. The code makes use of the SpectralFitting.jl library  [1].\nThe script is called as\njulia PATH_TO_SCRIPT/ViewSpectrum.jl --OBS_ID --Instrument --INDIR --OUTDIR\nThe code currently assumes that the spectrum file follows the convention [OBS_ID]_[Instrument]_pi.fits (where [Instrument] can be pn, mos1 or mos2) and that the spectrum file points to the background and response files (which can be accomplished either with grppha, or specgroup). The specgroup usage follows the syntax\nspecgroup spectrumset=srcspec.ds addfilenames=yes arfset=myarf.ds rmfset=myrmf.ds backgndset=mybgnd.ds\n\n\n\n\n[1] F. Baker and A. Young, (2025).",
     "crumbs": [
       "Teaching Block 1",
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Week 3</span>"
     ]
   },
   {
-    "objectID": "Week3.html#summary-of-data-reduction-commands",
-    "href": "Week3.html#summary-of-data-reduction-commands",
-    "title": "3  Week 3",
-    "section": "3.5 Summary of Data Reduction Commands",
-    "text": "3.5 Summary of Data Reduction Commands\nTwo more bash scripts were made for an intermediate step (Image-Pipeline.sh) and the final steps (Final-Pipeline.sh) respectively. With these, the data reduction only requires the following commands to be run:\n\n3.5.1 Reprocessing\n# Run the initial pipeline script\nbash /data/cluster4/BradleyAndJacob/Scripts/XMM-Pipeline.sh\n\n# Setting Environment Variables\nexport SAS_ODFPATH=\"$(pwd)\"\nexport SAS_CCFPATH=\"/opt/local/XMM/ccf/\"\nexport SAS_CCF=\"$SAS_ODFPATH/ccf.cif\"\nexport SAS_ODF=\"$SAS_ODFPATH/$(ls *SUM.SAS)\"\nexport INSTRUMENT=\"pn\"\n\n# Enter the processing directory\ncd ../PROC\n\n\n3.5.2 GTI Filtering\nAfter viewing the lightcurve and determining a filtering expression for a GTI, run\n# Creating the GTI (Good Time Interval) file for time filtering\ntabgtigen table=\"$INSTRUMENT\"_ltcrv.fits gtiset=gtiset.fits expression='RATE&lt;=30' \n\n# Run the image generation pipeline\nbash /data/cluster4/BradleyAndJacob/Scripts/Image-Pipeline.sh $INSTRUMENT\n\n\n3.5.3 Region Selection\nThen, open the image in ds9 and select the source and background regions\n# View the image and select regions\nds9 $INSTRUMENT-all.fits &\n\n# Set region expressions as variables, replacing X, Y and R\nexport SOURCE_CENTRE=\"X,Y\"\nexport SOURCE_REGION=\"\"$SOURCE_CENTRE\",R\"\nexport BACKGROUND_REGION_INNER=\"\"$SOURCE_CENTRE\",R\"\nexport BACKGROUND_REGION_OUTER=\"\"$SOURCE_CENTRE\",R\"\n\n\n3.5.4 Spectrum Extraction\nThen enter one of the following pairs of commands, for the relevant instrument\n# ========== For PN ========== \n# Extract the Source Spectrum\nevselect table=\"$INSTRUMENT\"_filt_time.fits energycolumn=\"PI\" filteredset=\"$INSTRUMENT\"_filtered.fits filtertype=\"expression\" expression=\"((X,Y) in CIRCLE(\"$SOURCE_REGION\"))&&(FLAG==0)&&(PATTERN&lt;=4)\" spectrumset=\"\"$INSTRUMENT\"_pi.fits\" spectralbinsize=5 withspecranges=yes specchannelmin=0 specchannelmax=20479\n\n# Extract the Background Spectrum\nevselect table=\"$INSTRUMENT\"_filt_time.fits energycolumn=\"PI\" filteredset=\"bkg_filtered.fits\" filtertype=\"expression\" spectrumset=\"bkg_pi.fits\" spectralbinsize=5 expression=\"((X,Y) in CIRCLE(\"$BACKGROUND_REGION_OUTER\"))&&!((X,Y) in CIRCLE(\"$BACKGROUND_REGION_INNER\"))&&(FLAG==0)&&(PATTERN&lt;=4)\" withspecranges=yes specchannelmin=0 specchannelmax=20479\n# ========== For PN ========== \n\n# ========= For MOS  ========= \n# Extract the Source Spectrum\nevselect table=\"$INSTRUMENT\"_filt_time.fits energycolumn=\"PI\" filteredset=\"\"$INSTRUMENT\"_filtered.fits\" filtertype=\"expression\" expression=\"((X,Y) in CIRCLE(\"$SOURCE_REGION\"))\" spectrumset=\"\"$INSTRUMENT\"_pi.fits\" spectralbinsize=5 withspecranges=yes specchannelmin=0 specchannelmax=11999\n\n# Extract the Background Spectrum\nevselect table=\"$INSTRUMENT\"_filt_time.fits energycolumn=\"PI\" filteredset=\"bkg_filtered.fits\" filtertype=\"expression\" spectrumset=\"bkg_pi.fits\" spectralbinsize=5 expression=\"((X,Y) in CIRCLE(\"$BACKGROUND_REGION_OUTER\"))&&!((X,Y) in CIRCLE(\"$BACKGROUND_REGION_INNER\"))\" withspecranges=yes specchannelmin=0 specchannelmax=11999\n# ========= For MOS  ========= \n\n\n3.5.5 Pileup Check\nCheck the spectrum for pileup\n# Check for Pileup\nepatplot set=\"$INSTRUMENT\"_filtered.fits plotfile=\"$INSTRUMENT\"_epat.ps useplotfile=yes withbackgroundset=yes backgroundset=bkg_filtered.fits\n\n\n3.5.6 Response Files and Cleanup\nIf there is no pileup, run the final script, otherwise reselect the source region to exclude the centre and reduce pileup\n# If no pileup, run the final pipeline\nbash /data/cluster4/BradleyAndJacob/Scripts/Final-Pipeline.sh [OBS_ID] $INSTRUMENT \n\n\n3.5.7 Test Data\nThis pipeline was tested on the MCG-6-30-15 dataset with observation ID 0111570101. The GTI was set with the expression “TIME&gt;=79698000”, abd the regions were centred at (26880,27661) with radii 1000,2000,4000. The resulting spectrum from the pn instrument (after grouping the bins in groups of 4, cutting the data to 1024 channels) is shown below.\n\n\n\nThe spectrum from obsid 0111570101. The data was once again plotted with ViewSpectrum.jl\n\n\nThis showed a successful spectrum extraction, and yet another promising dataset. The next steps are to thus begin fitting to data in order to reproduce a plot similar to Figure 1 in Fabian et al. (2002)  [2].\n\n\n\n\n[1] F. Baker and A. Young, (2025).\n\n\n[2] A. C. Fabian et al., (2002).",
+    "objectID": "DataReduction.html",
+    "href": "DataReduction.html",
+    "title": "4  Data Reduction Summary",
+    "section": "",
+    "text": "4.1 Reprocessing\nTwo more bash scripts were made for an intermediate step (Image-Pipeline.sh) and the final steps (Final-Pipeline.sh) respectively. Both of these scripts can be found on the project GitHub repository. With these, the data reduction only requires the following commands to be run:",
     "crumbs": [
       "Teaching Block 1",
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Week 3</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Data Reduction Summary</span>"
+    ]
+  },
+  {
+    "objectID": "DataReduction.html#reprocessing",
+    "href": "DataReduction.html#reprocessing",
+    "title": "4  Data Reduction Summary",
+    "section": "",
+    "text": "# Run the initial pipeline script\nbash /data/cluster4/BradleyAndJacob/Scripts/XMM-Pipeline.sh\n\n# Setting Environment Variables\nexport SAS_ODFPATH=\"$(pwd)\"\nexport SAS_CCFPATH=\"/opt/local/XMM/ccf/\"\nexport SAS_CCF=\"$SAS_ODFPATH/ccf.cif\"\nexport SAS_ODF=\"$SAS_ODFPATH/$(ls *SUM.SAS)\"\nexport INSTRUMENT=\"pn\"\n\n# Enter the processing directory\ncd ../PROC",
+    "crumbs": [
+      "Teaching Block 1",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Data Reduction Summary</span>"
+    ]
+  },
+  {
+    "objectID": "DataReduction.html#gti-filtering",
+    "href": "DataReduction.html#gti-filtering",
+    "title": "4  Data Reduction Summary",
+    "section": "4.2 GTI Filtering",
+    "text": "4.2 GTI Filtering\nAfter viewing the lightcurve and determining a filtering expression for a GTI, run\n# Creating the GTI (Good Time Interval) file for time filtering\ntabgtigen table=\"$INSTRUMENT\"_ltcrv.fits gtiset=gtiset.fits expression='RATE&lt;=30' \n\n# Run the image generation pipeline\nbash /data/cluster4/BradleyAndJacob/Scripts/Image-Pipeline.sh $INSTRUMENT",
+    "crumbs": [
+      "Teaching Block 1",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Data Reduction Summary</span>"
+    ]
+  },
+  {
+    "objectID": "DataReduction.html#region-selection",
+    "href": "DataReduction.html#region-selection",
+    "title": "4  Data Reduction Summary",
+    "section": "4.3 Region Selection",
+    "text": "4.3 Region Selection\nThen, open the image in ds9 and select the source and background regions\n# View the image and select regions\nds9 $INSTRUMENT-all.fits &\n\n# Set region expressions as variables, replacing X, Y and R\nexport SOURCE_CENTRE=\"X,Y\"\nexport SOURCE_REGION=\"\"$SOURCE_CENTRE\",R\"\nexport BACKGROUND_REGION_INNER=\"\"$SOURCE_CENTRE\",R\"\nexport BACKGROUND_REGION_OUTER=\"\"$SOURCE_CENTRE\",R\"",
+    "crumbs": [
+      "Teaching Block 1",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Data Reduction Summary</span>"
+    ]
+  },
+  {
+    "objectID": "DataReduction.html#spectrum-extraction",
+    "href": "DataReduction.html#spectrum-extraction",
+    "title": "4  Data Reduction Summary",
+    "section": "4.4 Spectrum Extraction",
+    "text": "4.4 Spectrum Extraction\nThen enter one of the following pairs of commands, for the relevant instrument\n# ========== For PN ========== \n# Extract the Source Spectrum\nevselect table=\"$INSTRUMENT\"_filt_time.fits energycolumn=\"PI\" filteredset=\"$INSTRUMENT\"_filtered.fits filtertype=\"expression\" expression=\"((X,Y) in CIRCLE(\"$SOURCE_REGION\"))&&(FLAG==0)&&(PATTERN&lt;=4)\" spectrumset=\"\"$INSTRUMENT\"_pi.fits\" spectralbinsize=5 withspecranges=yes specchannelmin=0 specchannelmax=20479\n\n# Extract the Background Spectrum\nevselect table=\"$INSTRUMENT\"_filt_time.fits energycolumn=\"PI\" filteredset=\"bkg_filtered.fits\" filtertype=\"expression\" spectrumset=\"bkg_pi.fits\" spectralbinsize=5 expression=\"((X,Y) in CIRCLE(\"$BACKGROUND_REGION_OUTER\"))&&!((X,Y) in CIRCLE(\"$BACKGROUND_REGION_INNER\"))&&(FLAG==0)&&(PATTERN&lt;=4)\" withspecranges=yes specchannelmin=0 specchannelmax=20479\n# ========== For PN ========== \n\n# ========= For MOS  ========= \n# Extract the Source Spectrum\nevselect table=\"$INSTRUMENT\"_filt_time.fits energycolumn=\"PI\" filteredset=\"\"$INSTRUMENT\"_filtered.fits\" filtertype=\"expression\" expression=\"((X,Y) in CIRCLE(\"$SOURCE_REGION\"))\" spectrumset=\"\"$INSTRUMENT\"_pi.fits\" spectralbinsize=5 withspecranges=yes specchannelmin=0 specchannelmax=11999\n\n# Extract the Background Spectrum\nevselect table=\"$INSTRUMENT\"_filt_time.fits energycolumn=\"PI\" filteredset=\"bkg_filtered.fits\" filtertype=\"expression\" spectrumset=\"bkg_pi.fits\" spectralbinsize=5 expression=\"((X,Y) in CIRCLE(\"$BACKGROUND_REGION_OUTER\"))&&!((X,Y) in CIRCLE(\"$BACKGROUND_REGION_INNER\"))\" withspecranges=yes specchannelmin=0 specchannelmax=11999\n# ========= For MOS  =========",
+    "crumbs": [
+      "Teaching Block 1",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Data Reduction Summary</span>"
+    ]
+  },
+  {
+    "objectID": "DataReduction.html#pileup-check",
+    "href": "DataReduction.html#pileup-check",
+    "title": "4  Data Reduction Summary",
+    "section": "4.5 Pileup Check",
+    "text": "4.5 Pileup Check\nCheck the spectrum for pileup\n# Check for Pileup\nepatplot set=\"$INSTRUMENT\"_filtered.fits plotfile=\"$INSTRUMENT\"_epat.ps useplotfile=yes withbackgroundset=yes backgroundset=bkg_filtered.fits",
+    "crumbs": [
+      "Teaching Block 1",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Data Reduction Summary</span>"
+    ]
+  },
+  {
+    "objectID": "DataReduction.html#response-files-and-cleanup",
+    "href": "DataReduction.html#response-files-and-cleanup",
+    "title": "4  Data Reduction Summary",
+    "section": "4.6 Response Files and Cleanup",
+    "text": "4.6 Response Files and Cleanup\nIf there is no pileup, run the final script, otherwise reselect the source region to exclude the centre and reduce pileup\n# If no pileup, run the final pipeline\nbash /data/cluster4/BradleyAndJacob/Scripts/Final-Pipeline.sh [OBS_ID] $INSTRUMENT",
+    "crumbs": [
+      "Teaching Block 1",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Data Reduction Summary</span>"
+    ]
+  },
+  {
+    "objectID": "DataReduction.html#test-data",
+    "href": "DataReduction.html#test-data",
+    "title": "4  Data Reduction Summary",
+    "section": "4.7 Test Data",
+    "text": "4.7 Test Data\nThis pipeline was tested on the MCG-6-30-15 dataset with observation ID 0111570101. The GTI was set with the expression “TIME&gt;=79698000”, abd the regions were centred at (26880,27661) with radii 1000,2000,4000. The resulting spectrum from the pn instrument (after grouping the bins in groups of 4, cutting the data to 1024 channels) is shown below.\n\n\n\nThe spectrum from obsid 0111570101. The data was once again plotted with ViewSpectrum.jl\n\n\nThis showed a successful spectrum extraction, and yet another promising dataset. The next steps are to thus begin fitting to data in order to reproduce a plot similar to Figure 1 in Fabian et al. (2002)  [1].\n\n\n\n\n[1] A. C. Fabian et al., (2002).",
+    "crumbs": [
+      "Teaching Block 1",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Data Reduction Summary</span>"
     ]
   },
   {
     "objectID": "Week4.html",
     "href": "Week4.html",
-    "title": "4  Week 4",
+    "title": "5  Week 4",
     "section": "",
-    "text": "4.1 Initial Fitting Attempt Using XSPEC\nIn order to inspect the data, it will be useful to fit a power law to the continuum excluding the region where we expect the iron line. Taking the ratio between this fit and the data will thus reveal instructive data on the presence of the Fe-K\\(\\alpha\\) line.\nThe data was rebinned by grouping the channels into sets of 4 via\nThe fitting was then completed in XSPEC, fitting a powerlaw. Once the XSPEC session was started (via the xspec command), the following sequence of commands was used.\nThe defaults were used as initial guesses for the fitting parameters (the power law index and the normalisation), and the data was curtailed to be within 3 and 15 keV to capture the best power law region. The resulting fit, and the ratio between the fit and data, are shown below.\nFurther binning may improve this view of the iron line further, which is the next steps.",
+    "text": "5.1 2026/10/12",
     "crumbs": [
       "Teaching Block 1",
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Week 4</span>"
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Week 4</span>"
     ]
   },
   {
-    "objectID": "Week4.html#initial-fitting-attempt-using-xspec",
-    "href": "Week4.html#initial-fitting-attempt-using-xspec",
-    "title": "4  Week 4",
+    "objectID": "Week4.html#section",
+    "href": "Week4.html#section",
+    "title": "5  Week 4",
     "section": "",
-    "text": "grppha 0693781301_pn_pi.fits 0693781301_pn_pi_rebinned.fits \"group 0 4095 4 & exit\"\n\n# Set plotting parameters and load in the data\ncpd 0693781301.ps/CPS\nsetplot energy\ndata 0693781301_pn_pi_rebinned.fits\n\n# Setting fitting regions\nignore 0.0-3.0\nignore 15.0-**\n\n# Normalising and ignoring bad channels\nrenorm\nignore bad\n\n# Plot the data\nplot ldata\n\n# Ignore the iron line\nignore 5.0-7.5\n\n# Fit a power law\nmodel powerlaw\nfit\n\n# Retrieve the iron line data and plot\nnotice 5.0-7.5\nplot ldata ratio\n\n\n\n\nThe first fit produced using XSPEC. A clear iron line is present at near exactly 6.4 keV.",
+    "text": "5.1.1 Initial Fitting Attempt Using XSPEC\nIn order to inspect the data, it will be useful to fit a power law to the continuum excluding the region where we expect the iron line. Taking the ratio between this fit and the data will thus reveal instructive data on the presence of the Fe-K\\(\\alpha\\) line.\nThe data was rebinned by grouping the channels into sets of 4 via\ngrppha 0693781301_pn_pi.fits 0693781301_pn_pi_rebinned.fits \"group 0 4095 4 & exit\"\nThe fitting was then completed in XSPEC, fitting a powerlaw. Once the XSPEC session was started (via the xspec command), the following sequence of commands was used.\n# Set plotting parameters and load in the data\ncpd 0693781301.ps/CPS\nsetplot energy\ndata 0693781301_pn_pi_rebinned.fits\n\n# Setting fitting regions\nignore 0.0-3.0\nignore 15.0-**\n\n# Setting the model to a power law\nmodel powerlaw\n\n# Normalising and ignoring bad channels\nrenorm\nignore bad\n\n# Plot the data\nplot ldata\n\n# Ignore the iron line\nignore 5.0-7.5\n\n# Fit a power law\nfit\n\n# Retrieve the iron line data and plot\nnotice 5.0-7.5\nplot ldata ratio\n\nexit\nThe defaults were used as initial guesses for the fitting parameters (the power law index and the normalisation), and the data was curtailed to be within 3 and 15 keV to capture the best power law region. The resulting fit, and the ratio between the fit and data, are shown below.\n\n\n\nThe first fit produced using XSPEC. A clear iron line is present at near exactly 6.4 keV.\n\n\nFurther binning may improve this view of the iron line further, which is the next steps.",
     "crumbs": [
       "Teaching Block 1",
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Week 4</span>"
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Week 4</span>"
+    ]
+  },
+  {
+    "objectID": "Week4.html#section-1",
+    "href": "Week4.html#section-1",
+    "title": "5  Week 4",
+    "section": "5.2 2026/10/13",
+    "text": "5.2 2026/10/13\n\n5.2.1 Second Attempt at Fitting\nThe data was rebinned once more, taking bins with a minimum of 600 counts per bin.\ngrppha 0693781301_pn_pi.fits 0693781301_pn_pi_rebinned_min600.fits \"chkey BACKFILE 0693781301_pn_bkg_pi.fits & chkey RESPFILE 0693781301_pn_rmf.fits & chkey ANCRFILE 0693781301_pn_arf.fits & group min 600 & exit\"\nThis spectrum was fit following the same method as previous, but masking the energy to be between 2-10 keV. The result is shown below\n\n\n\n5.2.2 Converting PostScript Files to PNG\nXSPEC and many other packages output plots as .ps files, which cannot easily be included in this book. Thus, a bash script was produced to convert these outputs to .png without losing resolution.\n#!/bin/bash\n\n# Convert to pdf\nps2pdf $1.ps\n\n# Convert to png\nconvert -alpha off -density 600 $1.pdf $1.png\n\n# Remove intermediate files\nrm $1.pdf\nThis script takes one argument, which is the filename with no extension, i.e. for the plot file 0693781301_min600.ps one would enter the command\nbash /data/cluster4/BradleyAndJacob/Scripts/ps_to_png.sh 0693781301_min600\nThe script first converts to pdf due to quality losses observed when converting straight to a png.",
+    "crumbs": [
+      "Teaching Block 1",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Week 4</span>"
     ]
   },
   {

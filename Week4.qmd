@@ -1,6 +1,8 @@
 # Week 4
 
-## Initial Fitting Attempt Using XSPEC
+## 2026/10/12
+
+### Initial Fitting Attempt Using XSPEC
 
 In order to inspect the data, it will be useful to fit a power law to the continuum excluding the region where we expect the iron line. Taking the ratio between this fit and the data will thus reveal instructive data on the presence of the Fe-K$\alpha$ line. 
 
@@ -22,6 +24,9 @@ data 0693781301_pn_pi_rebinned.fits
 ignore 0.0-3.0
 ignore 15.0-**
 
+# Setting the model to a power law
+model powerlaw
+
 # Normalising and ignoring bad channels
 renorm
 ignore bad
@@ -33,12 +38,13 @@ plot ldata
 ignore 5.0-7.5
 
 # Fit a power law
-model powerlaw
 fit
 
 # Retrieve the iron line data and plot
 notice 5.0-7.5
 plot ldata ratio
+
+exit
 ```
 
 The defaults were used as initial guesses for the fitting parameters (the power law index and the normalisation), and the data was curtailed to be within 3 and 15 keV to capture the best power law region. The resulting fit, and the ratio between the fit and data, are shown below.
@@ -46,3 +52,42 @@ The defaults were used as initial guesses for the fitting parameters (the power 
 ![The first fit produced using XSPEC. A clear iron line is present at near exactly 6.4 keV.](images/0693781301_first_fit.png)
 
 Further binning may improve this view of the iron line further, which is the next steps.
+
+## 2026/10/13
+
+### Second Attempt at Fitting
+
+The data was rebinned once more, taking bins with a minimum of 600 counts per bin. 
+
+```{.bash}
+grppha 0693781301_pn_pi.fits 0693781301_pn_pi_rebinned_min600.fits "chkey BACKFILE 0693781301_pn_bkg_pi.fits & chkey RESPFILE 0693781301_pn_rmf.fits & chkey ANCRFILE 0693781301_pn_arf.fits & group min 600 & exit"
+```
+
+This spectrum was fit following the same method as previous, but masking the energy to be between 2-10 keV. The result is shown below
+
+![](images/0693781301_min600_powerlaw.png)
+
+### Converting PostScript Files to PNG
+
+XSPEC and many other packages output plots as `.ps` files, which cannot easily be included in this book. Thus, a bash script was produced to convert these outputs to `.png` without losing resolution.
+
+```{.bash}
+#!/bin/bash
+
+# Convert to pdf
+ps2pdf $1.ps
+
+# Convert to png
+convert -alpha off -density 600 $1.pdf $1.png
+
+# Remove intermediate files
+rm $1.pdf
+```
+
+This script takes one argument, which is the filename with no extension, i.e. for the plot file `0693781301_min600.ps` one would enter the command
+
+```{.bash}
+bash /data/cluster4/BradleyAndJacob/Scripts/ps_to_png.sh 0693781301_min600
+```
+
+The script first converts to pdf due to quality losses observed when converting straight to a png.
