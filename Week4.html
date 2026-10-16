@@ -436,6 +436,7 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#rebinning-within-xspec" id="toc-rebinning-within-xspec" class="nav-link" data-scroll-target="#rebinning-within-xspec"><span class="header-section-number">5.3.1</span> Rebinning Within XSPEC</a></li>
   <li><a href="#a-naive-line-profile-fit" id="toc-a-naive-line-profile-fit" class="nav-link" data-scroll-target="#a-naive-line-profile-fit"><span class="header-section-number">5.3.2</span> A Naive Line Profile Fit</a></li>
+  <li><a href="#a-brief-look-at-another-object" id="toc-a-brief-look-at-another-object" class="nav-link" data-scroll-target="#a-brief-look-at-another-object"><span class="header-section-number">5.3.3</span> A Brief Look at Another Object</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -647,6 +648,17 @@ window.Quarto = {
 </figure>
 </div>
 <p>This is not a good fit, but clearly demonstrates that the data is well described by a continuum and a strong Fe-K<span class="math inline">\(\alpha\)</span> line.</p>
+</section>
+<section id="a-brief-look-at-another-object" class="level3" data-number="5.3.3">
+<h3 data-number="5.3.3" class="anchored" data-anchor-id="a-brief-look-at-another-object"><span class="header-section-number">5.3.3</span> A Brief Look at Another Object</h3>
+<p>In order to test the data reduction process, another object (NGC4151) was looked at with observation id 0861680201. The standard process was used with the filtering expression “RATE&lt;12” for the GTI and regions selected centred on (25863.55,23905.16) with radii 1000,2000,4000. The resulting spectrum is shown below.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/0861680201_first_look.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="The spectrum of NGC4151."><img src="images/0861680201_first_look.png" class="img-fluid figure-img" alt="The spectrum of NGC4151."></a></p>
+<figcaption>The spectrum of NGC4151.</figcaption>
+</figure>
+</div>
+<p>The iron line in this spectrum is much more prominent, and it does not present with the expected line profile. This could potentially be due to a region of emission that is not effected by the gravity of the black hole, so there are two iron lines present: a relativistic one, and a typical emission line. This spectrum seems much more complex than that of MCG-6-30-16 and is not described well with a simple power law fit. The fit shown is a power law with photoelectric absorption, and describes the fit better than a simple power law, but still fails to fit well.</p>
 
 
 </section>
