@@ -432,6 +432,11 @@ window.Quarto = {
   <li><a href="#converting-postscript-files-to-png" id="toc-converting-postscript-files-to-png" class="nav-link" data-scroll-target="#converting-postscript-files-to-png"><span class="header-section-number">5.2.2</span> Converting PostScript Files to PNG</a></li>
   <li><a href="#supervisor-meeting-notes" id="toc-supervisor-meeting-notes" class="nav-link" data-scroll-target="#supervisor-meeting-notes"><span class="header-section-number">5.2.3</span> Supervisor Meeting Notes</a></li>
   </ul></li>
+  <li><a href="#section-2" id="toc-section-2" class="nav-link" data-scroll-target="#section-2"><span class="header-section-number">5.3</span> 2026/10/16</a>
+  <ul class="collapse">
+  <li><a href="#rebinning-within-xspec" id="toc-rebinning-within-xspec" class="nav-link" data-scroll-target="#rebinning-within-xspec"><span class="header-section-number">5.3.1</span> Rebinning Within XSPEC</a></li>
+  <li><a href="#a-naive-line-profile-fit" id="toc-a-naive-line-profile-fit" class="nav-link" data-scroll-target="#a-naive-line-profile-fit"><span class="header-section-number">5.3.2</span> A Naive Line Profile Fit</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -587,6 +592,61 @@ window.Quarto = {
 </ul></li>
 </ul></li>
 </ul>
+</section>
+</section>
+<section id="section-2" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="section-2"><span class="header-section-number">5.3</span> 2026/10/16</h2>
+<section id="rebinning-within-xspec" class="level3" data-number="5.3.1">
+<h3 data-number="5.3.1" class="anchored" data-anchor-id="rebinning-within-xspec"><span class="header-section-number">5.3.1</span> Rebinning Within XSPEC</h3>
+<p>Following our supervisor’s advice, the power law fit was remade using the original spectrum file (i.e.&nbsp;not rebinned) and rebinning was done within xspec for fitting purposes only. The data was rebinned such that bins with <span class="math inline">\(&lt;40\sigma\)</span> significance were combined, which provided the plot shown below</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/0693781301_fit_xspec_rebinned.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="The data fit with a power law ignoring the iron line region. The model/data ratio shows a strong, broad iron line with the expected characteristic profile."><img src="images/0693781301_fit_xspec_rebinned.png" class="img-fluid figure-img" alt="The data fit with a power law ignoring the iron line region. The model/data ratio shows a strong, broad iron line with the expected characteristic profile."></a></p>
+<figcaption>The data fit with a power law ignoring the iron line region. The model/data ratio shows a strong, broad iron line with the expected characteristic profile.</figcaption>
+</figure>
+</div>
+<p>This plot was produced with the following commands</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set plotting parameters and load in the data</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">cpd</span> 0693781301.ps/CPS</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="ex">setplot</span> energy</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="ex">data</span> 0693781301_pn_pi.fits</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Rebinning the data to 40 sigma</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="ex">setplot</span> rebin 40 100</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Setting fitting regions</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="ex">ignore</span> 0.0-3.0</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="ex">ignore</span> 15.0-<span class="pp">**</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Setting the model to a power law</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="ex">model</span> powerlaw</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Normalising and ignoring bad channels</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="ex">renorm</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="ex">ignore</span> bad</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Ignore the iron line</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="ex">ignore</span> 5.0-7.5</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit a power law</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="ex">fit</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Retrieve the iron line data and plot</span></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a><span class="ex">notice</span> 5.0-7.5</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a><span class="ex">plot</span> ldata ratio</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a><span class="bu">exit</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="a-naive-line-profile-fit" class="level3" data-number="5.3.2">
+<h3 data-number="5.3.2" class="anchored" data-anchor-id="a-naive-line-profile-fit"><span class="header-section-number">5.3.2</span> A Naive Line Profile Fit</h3>
+<p>For demonstration purposes, it was decided to perform a basic fit using the power law as previous, and an iron line component using the model <code>kerrdisk</code>. The plot was rebinned using 40<span class="math inline">\(\sigma\)</span> confidence once again.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/0693781301_powerlaw_kerrdisk.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="The fit using the powerlaw+kerrdisk model. The model components are shown with dotted lines."><img src="images/0693781301_powerlaw_kerrdisk.png" class="img-fluid figure-img" alt="The fit using the powerlaw+kerrdisk model. The model components are shown with dotted lines."></a></p>
+<figcaption>The fit using the powerlaw+kerrdisk model. The model components are shown with dotted lines.</figcaption>
+</figure>
+</div>
+<p>This is not a good fit, but clearly demonstrates that the data is well described by a continuum and a strong Fe-K<span class="math inline">\(\alpha\)</span> line.</p>
 
 
 </section>
