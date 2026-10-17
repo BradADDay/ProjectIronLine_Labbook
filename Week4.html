@@ -725,6 +725,14 @@ window.Quarto = {
 <span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting</span></span>
 <span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a><span class="ex">plot</span> ldata ratio</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The first fit is shown below</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/0693781301_first_relxill.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="The first fit with the RELXILL model, the fit did not converge well and missed the Fe-K\alpha line."><img src="images/0693781301_first_relxill.png" class="img-fluid figure-img" alt="The first fit with the RELXILL model, the fit did not converge well and missed the Fe-K\alpha line."></a></p>
+<figcaption>The first fit with the RELXILL model, the fit did not converge well and missed the Fe-K<span class="math inline">\(\alpha\)</span> line.</figcaption>
+</figure>
+</div>
+<p>More tweaking is necessary to get this fit to converge properly.</p>
 </section>
 </section>
 <section id="section-3" class="level2" data-number="5.4">
@@ -734,14 +742,14 @@ window.Quarto = {
 <p>For demonstration purposes when presenting this project to peers, it will be useful to have a demonstration of how the line profile changes with the spin parameter, <span class="math inline">\(a_*\)</span>. To demonstrate this, line profiles were simulated with <code>Gradus.jl</code>, a relativistic raytracing software implemented in Julia. The code is hosted on the project GitHub under the file <code>LineProfileSimulation.jl</code> and produced the following plot</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="images/LineProfileSpin.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="The shape of emission line profiles for five values of the black hole spin parameter. The line profiles have been normalised such that their shapes can be compared."><img src="images/LineProfileSpin.png" class="img-fluid figure-img" alt="The shape of emission line profiles for five values of the black hole spin parameter. The line profiles have been normalised such that their shapes can be compared."></a></p>
+<p><a href="images/LineProfileSpin.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="The shape of emission line profiles for five values of the black hole spin parameter. The line profiles have been normalised such that their shapes can be compared."><img src="images/LineProfileSpin.png" class="img-fluid figure-img" alt="The shape of emission line profiles for five values of the black hole spin parameter. The line profiles have been normalised such that their shapes can be compared."></a></p>
 <figcaption>The shape of emission line profiles for five values of the black hole spin parameter. The line profiles have been normalised such that their shapes can be compared.</figcaption>
 </figure>
 </div>
 <p>In an attempt to represent the transition from the classical to relativistic regime, line profiles were also simulated for a range of inner disk radii ranging from <span class="math inline">\(2-5000 R_g\)</span> as below.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="images/LineProfileInnerRadius.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="The line profile as a function of the inner radius of the disk. For each of these the outer radius was set to be 1000 R_g larger than the inner radius."><img src="images/LineProfileInnerRadius.png" class="img-fluid figure-img" alt="The line profile as a function of the inner radius of the disk. For each of these the outer radius was set to be 1000 R_g larger than the inner radius."></a></p>
+<p><a href="images/LineProfileInnerRadius.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8" title="The line profile as a function of the inner radius of the disk. For each of these the outer radius was set to be 1000 R_g larger than the inner radius."><img src="images/LineProfileInnerRadius.png" class="img-fluid figure-img" alt="The line profile as a function of the inner radius of the disk. For each of these the outer radius was set to be 1000 R_g larger than the inner radius."></a></p>
 <figcaption>The line profile as a function of the inner radius of the disk. For each of these the outer radius was set to be <span class="math inline">\(1000 R_g\)</span> larger than the inner radius.</figcaption>
 </figure>
 </div>
