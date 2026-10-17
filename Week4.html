@@ -437,6 +437,11 @@ window.Quarto = {
   <li><a href="#rebinning-within-xspec" id="toc-rebinning-within-xspec" class="nav-link" data-scroll-target="#rebinning-within-xspec"><span class="header-section-number">5.3.1</span> Rebinning Within XSPEC</a></li>
   <li><a href="#a-naive-line-profile-fit" id="toc-a-naive-line-profile-fit" class="nav-link" data-scroll-target="#a-naive-line-profile-fit"><span class="header-section-number">5.3.2</span> A Naive Line Profile Fit</a></li>
   <li><a href="#a-brief-look-at-another-object" id="toc-a-brief-look-at-another-object" class="nav-link" data-scroll-target="#a-brief-look-at-another-object"><span class="header-section-number">5.3.3</span> A Brief Look at Another Object</a></li>
+  <li><a href="#relxill-installation-and-use" id="toc-relxill-installation-and-use" class="nav-link" data-scroll-target="#relxill-installation-and-use"><span class="header-section-number">5.3.4</span> RELXILL Installation and Use</a></li>
+  </ul></li>
+  <li><a href="#section-3" id="toc-section-3" class="nav-link" data-scroll-target="#section-3"><span class="header-section-number">5.4</span> 2026/10/17</a>
+  <ul class="collapse">
+  <li><a href="#plots-for-presentation" id="toc-plots-for-presentation" class="nav-link" data-scroll-target="#plots-for-presentation"><span class="header-section-number">5.4.1</span> Plots for Presentation</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -545,11 +550,20 @@ window.Quarto = {
 <li>Start thinking about presentation
 <ul>
 <li>General physics audience</li>
-<li>Can I reuse diagrams from my summer project</li>
+<li>Can I reuse diagrams from my summer project
+<ul>
+<li>yes although won’t get credit for it as non-examinable</li>
+</ul></li>
 <li>Jacob and I are presenting separately
 <ul>
-<li>How much can we compare notes</li>
-<li>Can we practice together?</li>
+<li>How much can we compare notes
+<ul>
+<li>Can discuss but be careful of accidental plagiarism</li>
+</ul></li>
+<li>Can we practice together?
+<ul>
+<li>Best not to for plagiarism concerns</li>
+</ul></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -569,10 +583,7 @@ window.Quarto = {
 <li>Can share results and such</li>
 </ul></li>
 </ul></li>
-<li>Fabian et al.&nbsp;Figure 3
-<ul>
-<li></li>
-</ul></li>
+<li>Fabian et al.&nbsp;Figure 3</li>
 <li>Summer project diagrams
 <ul>
 <li>Cite myself</li>
@@ -659,6 +670,81 @@ window.Quarto = {
 </figure>
 </div>
 <p>The iron line in this spectrum is much more prominent, and it does not present with the expected line profile. This could potentially be due to a region of emission that is not effected by the gravity of the black hole, so there are two iron lines present: a relativistic one, and a typical emission line. This spectrum seems much more complex than that of MCG-6-30-16 and is not described well with a simple power law fit. The fit shown is a power law with photoelectric absorption, and describes the fit better than a simple power law, but still fails to fit well.</p>
+</section>
+<section id="relxill-installation-and-use" class="level3" data-number="5.3.4">
+<h3 data-number="5.3.4" class="anchored" data-anchor-id="relxill-installation-and-use"><span class="header-section-number">5.3.4</span> RELXILL Installation and Use</h3>
+<p><a href="https://www.sternwarte.uni-erlangen.de/~dauser/research/relxill/index.html">RELXILL</a> is a model for XSPEC that models the reflection spectrum and relativistic blurring from a black hole accretion disk. This was installed to solva by running the following commands</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Download the model files</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://www.sternwarte.uni-erlangen.de/~dauser/research/relxill/relxill_model_v2.9.0.tgz</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://www.sternwarte.uni-erlangen.de/~dauser/research/relxill/relxill_tables.tgz</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the files</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="fu">tar</span> xfz relxill_tables.tgz</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="fu">tar</span> xfz relxill_model_v2.3.tgz</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Run the compilation script</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> u+x ./compile_relxill.sh</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="ex">./compile_relxill.sh</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Loading RELXILL">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Loading RELXILL
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>To import the model in an XSPEC session, run</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">lmod</span> relxill /data/cluster4/BradleyAndJacob/relxill</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+<p>With the relxill model installed, an initial attempt at fitting was conducted, following the procedure (with relxill loaded as above):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Seet plotting defaults</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="ex">cpd</span> 0693781301_relxill.ps/CPS</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="ex">setplot</span> energy</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="ex">setplot</span> rebin 40 100</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Load Data and relxill</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="ex">data</span> 0693781301_pn_pi.fits</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="ex">lmod</span> relxill /data/cluster4/BradleyAndJacob/relxill/</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Setting bounds</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="ex">ignore</span> 0.0-2.0</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="ex">ignore</span> 10.0-<span class="pp">**</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Defining the model</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="ex">model</span> relxill</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Cleanup</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="ex">renorm</span> </span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="ex">ignore</span> bad</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Fitting</span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a><span class="ex">fit</span></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting</span></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a><span class="ex">plot</span> ldata ratio</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+</section>
+<section id="section-3" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="section-3"><span class="header-section-number">5.4</span> 2026/10/17</h2>
+<section id="plots-for-presentation" class="level3" data-number="5.4.1">
+<h3 data-number="5.4.1" class="anchored" data-anchor-id="plots-for-presentation"><span class="header-section-number">5.4.1</span> Plots for Presentation</h3>
+<p>For demonstration purposes when presenting this project to peers, it will be useful to have a demonstration of how the line profile changes with the spin parameter, <span class="math inline">\(a_*\)</span>. To demonstrate this, line profiles were simulated with <code>Gradus.jl</code>, a relativistic raytracing software implemented in Julia. The code is hosted on the project GitHub under the file <code>LineProfileSimulation.jl</code> and produced the following plot</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/LineProfileSpin.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="The shape of emission line profiles for five values of the black hole spin parameter. The line profiles have been normalised such that their shapes can be compared."><img src="images/LineProfileSpin.png" class="img-fluid figure-img" alt="The shape of emission line profiles for five values of the black hole spin parameter. The line profiles have been normalised such that their shapes can be compared."></a></p>
+<figcaption>The shape of emission line profiles for five values of the black hole spin parameter. The line profiles have been normalised such that their shapes can be compared.</figcaption>
+</figure>
+</div>
+<p>In an attempt to represent the transition from the classical to relativistic regime, line profiles were also simulated for a range of inner disk radii ranging from <span class="math inline">\(2-5000 R_g\)</span> as below.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/LineProfileInnerRadius.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="The line profile as a function of the inner radius of the disk. For each of these the outer radius was set to be 1000 R_g larger than the inner radius."><img src="images/LineProfileInnerRadius.png" class="img-fluid figure-img" alt="The line profile as a function of the inner radius of the disk. For each of these the outer radius was set to be 1000 R_g larger than the inner radius."></a></p>
+<figcaption>The line profile as a function of the inner radius of the disk. For each of these the outer radius was set to be <span class="math inline">\(1000 R_g\)</span> larger than the inner radius.</figcaption>
+</figure>
+</div>
 
 
 </section>
