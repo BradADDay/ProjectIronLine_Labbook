@@ -9,7 +9,7 @@ Two more bash scripts were made for an intermediate step (`Image-Pipeline.sh`) a
 ## Reprocessing
 
 ```{.bash}
-# Run the initial pipeline script
+# Run the initial pipeline script in the ODF directory
 bash /data/cluster4/BradleyAndJacob/Scripts/XMM-Pipeline.sh
 
 # Setting Environment Variables

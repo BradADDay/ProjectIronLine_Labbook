@@ -6,9 +6,11 @@ Given that the Julia script was written by somebody else, it was difficult to de
 
 The script was added to the shared GitHub repository to download onto solva for testing. A useful command to remember to download a single file from GitHub is:
 
+:::{.callout-tip title="GitHub Download"}
 ```{.bash .code-overflow-wrap}
 wget --no-check-certificate --content-disposition https://raw.githubusercontent.com/phajy/project-iron-lines/main/code/XMM-Pipeline.sh
 ```
+:::
 
 ### Comparing the bash script to Julia
 

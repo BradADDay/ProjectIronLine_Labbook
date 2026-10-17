@@ -146,12 +146,13 @@ This initialises all of the environment variables upon login, and all that is ne
 
 Data was downloaded using a `wget` command as follows:
 
+:::{.callout-tip title="Data Download"}
 ```{.bash}
-wget -v -q -nH --no-check-certificate --cut-dirs=4 -r -l0 -w1 -c -N -np -R 'index*' -erobots=off https://heasarc.gsfc.nasa.gov/FTP/xmm/data/rev0//0123700101/ODF/
+wget -v -nH --no-check-certificate --cut-dirs=4 -r -l0 -w1 -c -N -np -R 'index*' -erobots=off https://heasarc.gsfc.nasa.gov/FTP/xmm/data/rev0//0123700101/ODF/
 ```
+:::
 
-
-It is currently believed that this can be reused 
+This command can be reused for any observation ID by simply replacing the final part.
 
 #### Pipeline Reprocessing
 
