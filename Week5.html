@@ -23,6 +23,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -49,6 +84,9 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/bootstrap/bootstrap-425553c36040c1099010492eb981ac19.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="site_libs/bootstrap/bootstrap-dark-f54aaf1fc312c7daf8794a58702dfd11.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <link href="site_libs/bootstrap/bootstrap-425553c36040c1099010492eb981ac19.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -394,7 +432,7 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#animation-for-presentation" id="toc-animation-for-presentation" class="nav-link" data-scroll-target="#animation-for-presentation"><span class="header-section-number">6.1.1</span> Animation for Presentation</a></li>
   <li><a href="#meeting-with-supervisor" id="toc-meeting-with-supervisor" class="nav-link" data-scroll-target="#meeting-with-supervisor"><span class="header-section-number">6.1.2</span> Meeting with Supervisor</a></li>
-  <li><a href="#section-1" id="toc-section-1" class="nav-link" data-scroll-target="#section-1"><span class="header-section-number">6.1.3</span> </a></li>
+  <li><a href="#improved-fitting-with-relxill" id="toc-improved-fitting-with-relxill" class="nav-link" data-scroll-target="#improved-fitting-with-relxill"><span class="header-section-number">6.1.3</span> Improved Fitting With RELXILL</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -427,7 +465,29 @@ window.Quarto = {
 <h2 data-number="6.1" class="anchored" data-anchor-id="section"><span class="header-section-number">6.1</span> 2026/10/20</h2>
 <section id="animation-for-presentation" class="level3" data-number="6.1.1">
 <h3 data-number="6.1.1" class="anchored" data-anchor-id="animation-for-presentation"><span class="header-section-number">6.1.1</span> Animation for Presentation</h3>
-<p>For the presentation, an animation was produced using Gradus of the emission line profile as a function of black hole spin <span class="math inline">\(a_*\)</span>. The animation can be viewed <a href="https://github.com/BradADDay/ProjectIronLine_Labbook/blob/main/images/LineProfileSpin.gif">here</a></p>
+<p>For the presentation, an animation was produced using Gradus of the emission line profile as a function of black hole spin <span class="math inline">\(a_*\)</span>. The animation can be viewed <a href="https://github.com/BradADDay/ProjectIronLine_Labbook/blob/main/images/LineProfileSpin.gif">here</a>.</p>
+<p>The animation was produced using an emissivity profile with index 3, rather than a lamp post model, due to an apparent insensitivity of the lamp post model to the spin parameter. A Github issue has been raised regarding this, and the comparative plots are shown below.</p>
+<div class="quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/EmissivityExample.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="The line profiles as a function of the spin parameter for a power law emissivity profile with index 3."><img src="images/EmissivityExample.png" class="img-fluid figure-img" alt="The line profiles as a function of the spin parameter for a power law emissivity profile with index 3."></a></p>
+<figcaption>The line profiles as a function of the spin parameter for a power law emissivity profile with index 3.</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/LamppostExample.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="The line profiles as a function of the spin parameter for a lamp post model with height 10R_g."><img src="images/LamppostExample.png" class="img-fluid figure-img" alt="The line profiles as a function of the spin parameter for a lamp post model with height 10R_g."></a></p>
+<figcaption>The line profiles as a function of the spin parameter for a lamp post model with height 10<span class="math inline">\(R_g\)</span>.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<p>The power law emissivity example clearly provides a much stronger dependence of the line profile on the black hole spin.</p>
 </section>
 <section id="meeting-with-supervisor" class="level3" data-number="6.1.2">
 <h3 data-number="6.1.2" class="anchored" data-anchor-id="meeting-with-supervisor"><span class="header-section-number">6.1.2</span> Meeting with Supervisor</h3>
@@ -455,8 +515,62 @@ window.Quarto = {
 </ul></li>
 </ul>
 </section>
-<section id="section-1" class="level3" data-number="6.1.3">
-<h3 data-number="6.1.3" class="anchored" data-anchor-id="section-1"><span class="header-section-number">6.1.3</span> </h3>
+<section id="improved-fitting-with-relxill" class="level3" data-number="6.1.3">
+<h3 data-number="6.1.3" class="anchored" data-anchor-id="improved-fitting-with-relxill"><span class="header-section-number">6.1.3</span> Improved Fitting With RELXILL</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Setting plotting parameters and reading data</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">setplot</span> energy</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">setplot</span> rebin 40 100</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">data</span> 0693781301_pn_pi.fits</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Ignoring regions</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="ex">ignore</span> 0.0-2.5</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="ex">ignore</span> 10.0-<span class="pp">**</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Setting the model</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="ex">model</span> phabs<span class="er">(</span><span class="ex">relxill+gaussian</span><span class="kw">)</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Fitting</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="ex">fit</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Saving the fit data</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="ex">iplot</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="ex">wd</span> ratio_plot</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="bu">exit</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="ex">cpd</span> 0693781301_phabs_relxill_gaussian.ps/CPS</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="ex">pl</span> ld ra</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The first successful fit is shown below</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/0693781301_phabs_relxill_gaussian-0.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="The first successful fit to the MCG-6-30-15 data."><img src="images/0693781301_phabs_relxill_gaussian-0.png" class="img-fluid figure-img" alt="The first successful fit to the MCG-6-30-15 data."></a></p>
+<figcaption>The first successful fit to the MCG-6-30-15 data.</figcaption>
+</figure>
+</div>
+<p>and the parameters of the fitted model are</p>
+<pre><code>========================================================================
+Model phabs&lt;1&gt;(relxill&lt;2&gt; + gaussian&lt;3&gt;) Source No.: 1   Active/On
+Model Model Component  Parameter  Unit     Value
+ par  comp
+   1    1   phabs      nH         10^22    4.06000E-02  frozen
+   2    2   relxill    Index1              5.83847      +/-  1.04543      
+   3    2   relxill    Index2              0.614270     +/-  0.826461     
+   4    2   relxill    Rbr                 15.0000      frozen
+   5    2   relxill    a                   0.986951     +/-  2.37420E-02  
+   6    2   relxill    Incl       deg      47.1032      +/-  10.1035      
+   7    2   relxill    Rin                 -1.00000     frozen
+   8    2   relxill    Rout                400.000      frozen
+   9    2   relxill    z                   7.75000E-03  frozen
+  10    2   relxill    gamma               1.85337      +/-  8.41063E-02  
+  11    2   relxill    logxi               3.14998      +/-  0.118635     
+  12    2   relxill    Afe                 1.15236      +/-  0.808068     
+  13    2   relxill    Ecut       keV      300.000      frozen
+  14    2   relxill    refl_frac           995.055      +/-  6.03775E+05  
+  15    2   relxill    norm                1.35694E-03  +/-  6.63929E-06  
+  16    3   gaussian   LineE      keV      6.41965      +/-  0.150249     
+  17    3   gaussian   Sigma      keV      7.57211E-04  +/-  3.78638E-02  
+  18    3   gaussian   norm                8.66050E-06  +/-  1.90348E-06  
+________________________________________________________________________</code></pre>
 
 
 </section>
@@ -889,6 +1003,38 @@ window.Quarto = {
   </div>
 </nav>
 </div> <!-- /content -->
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 
 
 
