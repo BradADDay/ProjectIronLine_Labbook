@@ -254,7 +254,7 @@ More tweaking is necessary to get this fit to converge properly.
 
 For demonstration purposes when presenting this project to peers, it will be useful to have a demonstration of how the line profile changes with the spin parameter, $a_*$. To demonstrate this, line profiles were simulated with `Gradus.jl`, a relativistic raytracing software implemented in Julia. The code is hosted on the project GitHub under the file `LineProfileSimulation.jl` and produced the following plot
 
-![The shape of emission line profiles for five values of the black hole spin parameter. The line profiles have been normalised such that their shapes can be compared.](images/LineProfileSpin.png)
+![The shape of emission line profiles for five values of the black hole spin parameter. The line profiles have been normalised such that their shapes can be compared. These profiles were simulated with a power law emissivity profile with index 3, and inclination 40.](images/LineProfileSpin.png)
 
 In an attempt to represent the transition from the classical to relativistic regime, line profiles were also simulated for a range of inner disk radii ranging from $2-5000 R_g$ as below.
 

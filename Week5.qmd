@@ -1,0 +1,25 @@
+# Week 5
+
+This week was primarily spent preparing to present our work so far, and introduce our project to our peers. 
+
+## 2026/10/20
+
+### Animation for Presentation
+
+For the presentation, an animation was produced using Gradus of the emission line profile as a function of black hole spin $a_*$.
+
+### Meeting with Supervisor
+
+- Fitting with RELXILL?
+    - Andy has responded to Github issues.
+- Iron line profile simulations seem to be insensitive to black hole spin for a lamp post corona model
+- NGC4151 spectrum
+- Audience won't know what an AGN is, clarify that
+- More basic intro slide?
+    - What an agn is etc.
+- RELXILL fitting
+    - Add a narrow gaussian for the iron line core
+    - Allow the two indices to vary
+- NGC4151 spectrum
+    - Narrow core
+    - is the edge an iron-k edge or the blue wing of the emission line?

@@ -6,7 +6,6 @@ bookdown::gitbook:
 book:
   title: "X-Raying AGN - Lab Notes"
   author: "Bradley Day"
-  date: "2025/05/19"
   downloads:
     - pdf
   chapters:
@@ -21,7 +20,7 @@ book:
         - Week3.qmd
         - DataReduction.qmd
         - Week4.qmd
-        # - Week5.qmd
+        - Week5.qmd
         # - Week6.qmd
         # - Week7.qmd
         # - Week8.qmd
