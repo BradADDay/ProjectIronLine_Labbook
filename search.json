@@ -351,6 +351,17 @@
     ]
   },
   {
+    "objectID": "Week5.html#section-1",
+    "href": "Week5.html#section-1",
+    "title": "6  Week 5",
+    "section": "6.2 2026/10/21",
+    "text": "6.2 2026/10/21\nThe first draft of the presentation was completed and shared with my supervisor for feedback. The power law fit was replotted in Julia and a routine made for parsing the xspec output.\n\n6.2.1 Julia Plotting of XSPEC Output\nXSPEC outputs data as a .qdp file which is similar in structure to a CSV other than a header with the structure:\nREAD SERR 1 2\n@ratio_plot.pco\n!\nand different datasets are separated with a line\nNO NO NO NO NO\nwhere there is a “NO” for each column of data. The routine produced therefore runs as follows:\n\nThe file is read as a string\nThe header is removed by taking the part of the file following the !\nThe number of columns is counted by counting the number of spaces on a single line\nThe datasets are split using the separator shown above\nEach dataset is converted into a dataframe which is stored in an array and returned\n\nThe source code is shown below\nfunction ParseQDP(filename)\n\n    # Open the file\n    fileString = open(filename) do file\n        read(file, String)\n    end\n\n    # Removing the header from the top of the file\n    fileString = fileString[findfirst(\"!\", fileString)[end]+2:end]\n\n    # Getting the number of columns\n    numcols = count(\" \", fileString[1:findfirst(\"\\n\", fileString)[1]]) + 1\n\n    # Splitting the datasets\n    splitter = join([(\"NO \"^numcols)[1:end-1], \"\\n\"])\n    strings = split(fileString, splitter)\n\n    # Generating numbered header\n    header = join([join(1:numcols, \" \"), \"\\n\"])\n\n    # Creating an empty array for each dataset\n    output = Array{DataFrame}(undef, length(strings))\n\n    # Assembling dataframes\n    for (i, string) in enumerate(strings)\n        output[i] = DataFrame(CSV.File(IOBuffer(join([header, String(string)]))))\n    end\n\n    return output\nend\nWith this parsing function, the data can simply be plotted from the dataframes, which produced the following plot:",
+    "crumbs": [
+      "Teaching Block 1",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Week 5</span>"
+    ]
+  },
+  {
     "objectID": "references.html",
     "href": "references.html",
     "title": "References",

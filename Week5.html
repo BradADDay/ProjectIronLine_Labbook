@@ -434,6 +434,10 @@ window.Quarto = {
   <li><a href="#meeting-with-supervisor" id="toc-meeting-with-supervisor" class="nav-link" data-scroll-target="#meeting-with-supervisor"><span class="header-section-number">6.1.2</span> Meeting with Supervisor</a></li>
   <li><a href="#improved-fitting-with-relxill" id="toc-improved-fitting-with-relxill" class="nav-link" data-scroll-target="#improved-fitting-with-relxill"><span class="header-section-number">6.1.3</span> Improved Fitting With RELXILL</a></li>
   </ul></li>
+  <li><a href="#section-1" id="toc-section-1" class="nav-link" data-scroll-target="#section-1"><span class="header-section-number">6.2</span> 2026/10/21</a>
+  <ul class="collapse">
+  <li><a href="#julia-plotting-of-xspec-output" id="toc-julia-plotting-of-xspec-output" class="nav-link" data-scroll-target="#julia-plotting-of-xspec-output"><span class="header-section-number">6.2.1</span> Julia Plotting of XSPEC Output</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -571,6 +575,60 @@ Model Model Component  Parameter  Unit     Value
   17    3   gaussian   Sigma      keV      7.57211E-04  +/-  3.78638E-02  
   18    3   gaussian   norm                8.66050E-06  +/-  1.90348E-06  
 ________________________________________________________________________</code></pre>
+</section>
+</section>
+<section id="section-1" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="section-1"><span class="header-section-number">6.2</span> 2026/10/21</h2>
+<p>The first draft of the presentation was completed and shared with my supervisor for feedback. The power law fit was replotted in Julia and a routine made for parsing the xspec output.</p>
+<section id="julia-plotting-of-xspec-output" class="level3" data-number="6.2.1">
+<h3 data-number="6.2.1" class="anchored" data-anchor-id="julia-plotting-of-xspec-output"><span class="header-section-number">6.2.1</span> Julia Plotting of XSPEC Output</h3>
+<p>XSPEC outputs data as a <code>.qdp</code> file which is similar in structure to a CSV other than a header with the structure:</p>
+<pre><code>READ SERR 1 2
+@ratio_plot.pco
+!</code></pre>
+<p>and different datasets are separated with a line</p>
+<pre><code>NO NO NO NO NO</code></pre>
+<p>where there is a “NO” for each column of data. The routine produced therefore runs as follows:</p>
+<ol type="1">
+<li>The file is read as a string</li>
+<li>The header is removed by taking the part of the file following the <code>!</code></li>
+<li>The number of columns is counted by counting the number of spaces on a single line</li>
+<li>The datasets are split using the separator shown above</li>
+<li>Each dataset is converted into a dataframe which is stored in an array and returned</li>
+</ol>
+<p>The source code is shown below</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">ParseQDP</span>(filename)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Open the file</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    fileString <span class="op">=</span> <span class="fu">open</span>(filename) <span class="cf">do</span> file</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>        <span class="fu">read</span>(file, <span class="dt">String</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Removing the header from the top of the file</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    fileString <span class="op">=</span> fileString[<span class="fu">findfirst</span>(<span class="st">"!"</span>, fileString)[<span class="kw">end</span>]<span class="op">+</span><span class="fl">2</span><span class="op">:</span><span class="kw">end</span>]</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Getting the number of columns</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    numcols <span class="op">=</span> <span class="fu">count</span>(<span class="st">" "</span>, fileString[<span class="fl">1</span><span class="op">:</span><span class="fu">findfirst</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>, fileString)[<span class="fl">1</span>]]) <span class="op">+</span> <span class="fl">1</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Splitting the datasets</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    splitter <span class="op">=</span> <span class="fu">join</span>([(<span class="st">"NO "</span><span class="op">^</span>numcols)[<span class="fl">1</span><span class="op">:</span><span class="kw">end</span><span class="op">-</span><span class="fl">1</span>], <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>])</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    strings <span class="op">=</span> <span class="fu">split</span>(fileString, splitter)</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Generating numbered header</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    header <span class="op">=</span> <span class="fu">join</span>([<span class="fu">join</span>(<span class="fl">1</span><span class="op">:</span>numcols, <span class="st">" "</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>])</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Creating an empty array for each dataset</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    output <span class="op">=</span> <span class="fu">Array</span><span class="dt">{DataFrame}</span>(<span class="cn">undef</span>, <span class="fu">length</span>(strings))</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Assembling dataframes</span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (i, string) <span class="kw">in</span> <span class="fu">enumerate</span>(strings)</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>        output[i] <span class="op">=</span> <span class="fu">DataFrame</span>(CSV.<span class="fu">File</span>(<span class="fu">IOBuffer</span>(<span class="fu">join</span>([header, <span class="fu">String</span>(string)]))))</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> output</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>With this parsing function, the data can simply be plotted from the dataframes, which produced the following plot:</p>
+<p><a href="images/powerlaw_fit.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="images/powerlaw_fit.png" class="img-fluid"></a></p>
 
 
 </section>
