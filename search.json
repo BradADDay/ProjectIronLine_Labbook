@@ -362,6 +362,28 @@
     ]
   },
   {
+    "objectID": "Week6.html",
+    "href": "Week6.html",
+    "title": "7  Week 6",
+    "section": "",
+    "text": "7.1 2026-10-28\nThe first half of this week was spent preparing the slides for the presentation.\nThe slides are designed for a general physics audience and follow the following structure:\nI have also prepared two appendix slides on AGN structure, and iron K\\(\\alpha\\) emission.\nA bare-bones rehearsal took 06:30 minutes, providing a lot of breathing room to cover the content in greater depth.",
+    "crumbs": [
+      "Teaching Block 1",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Week 6</span>"
+    ]
+  },
+  {
+    "objectID": "Week6.html#section",
+    "href": "Week6.html#section",
+    "title": "7  Week 6",
+    "section": "",
+    "text": "A brief overview of the project\n\nDescribing the aims and physical phenomena being observed\n\nAn introductory theory slide\n\nDefining the key terms\n\nAGN\nAccretion disk\nISCO\nBlack hole spin\n\n\nA motivations slide\n\nMotivating the project with\n\nStrong field tests of general relativity\nDirect measurements of the black hole spin\nDirect probing of the extreme environments surrounding black holes\n\n\nA theory slide describing the emission mechanisms of AGN reflection\n\nHot corona emitting in X-ray\nEmission backscattered from the accretion disk\nProduces a characterstic spectrum as shown with a diagram\nMention that we will focus on the iron K\\alpha line\n\nA theory slide describing how emission line broadening occurs\nA theory slide describing how emission line broadening depends on the spin of the AGN\nA slide covering the current work\n\nExtracting data products\nPreliminary power law fitting\nBroad iron line clearly visible\n\nA slide on future plans\n\nFitting with RELXILL\nFitting alternative model\nCompiling data and measurements\n\nSummary slide",
+    "crumbs": [
+      "Teaching Block 1",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Week 6</span>"
+    ]
+  },
+  {
     "objectID": "references.html",
     "href": "references.html",
     "title": "References",
