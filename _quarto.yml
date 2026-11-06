@@ -21,8 +21,8 @@ book:
         - DataReduction.qmd
         - Week4.qmd
         - Week5.qmd
-        # - Week6.qmd
-        # - Week7.qmd
+        - Week6.qmd
+        - Week7.qmd
         # - Week8.qmd
         # - Week9.qmd
         # - Week10.qmd

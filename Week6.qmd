@@ -1,0 +1,41 @@
+# Week 6
+
+## 2026/10/28
+
+The first half of this week was spent preparing the slides for the presentation.
+
+The slides are designed for a general physics audience and follow the following structure:
+
+1. A brief overview of the project
+    - Describing the aims and physical phenomena being observed
+2. An introductory theory slide
+    - Defining the key terms
+        - AGN
+        - Accretion disk
+        - ISCO
+        - Black hole spin
+3. A motivations slide
+    - Motivating the project with
+        - Strong field tests of general relativity
+        - Direct measurements of the black hole spin
+        - Direct probing of the extreme environments surrounding black holes
+4. A theory slide describing the emission mechanisms of AGN reflection
+    - Hot corona emitting in X-ray
+    - Emission backscattered from the accretion disk
+    - Produces a characterstic spectrum as shown with a diagram
+    - Mention that we will focus on the iron K`\alpha` line
+5. A theory slide describing how emission line broadening occurs
+6. A theory slide describing how emission line broadening depends on the spin of the AGN
+7. A slide covering the current work
+    - Extracting data products
+    - Preliminary power law fitting
+    - Broad iron line clearly visible
+8. A slide on future plans
+    - Fitting with RELXILL
+    - Fitting alternative model
+    - Compiling data and measurements
+9. Summary slide
+
+I have also prepared two appendix slides on AGN structure, and iron K$\alpha$ emission.
+
+A bare-bones rehearsal took 06:30 minutes, providing a lot of breathing room to cover the content in greater depth.
