@@ -428,6 +428,39 @@
     ]
   },
   {
+    "objectID": "Week8.html",
+    "href": "Week8.html",
+    "title": "9  Week 8",
+    "section": "",
+    "text": "9.1 2026/11/09",
+    "crumbs": [
+      "Teaching Block 1",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Week 8</span>"
+    ]
+  },
+  {
+    "objectID": "Week8.html#section",
+    "href": "Week8.html#section",
+    "title": "9  Week 8",
+    "section": "",
+    "text": "9.1.1 Continuing to Automate Data Reduction - GTI Filtering\nThe next step to automate is the GTI filtering, which can be done by looking at the distribution of the light curves. By simply finding the mean count rate, we can filter for the data to be within a given number of standard deviations as follows\nfrom astropy.io import fits\nimport numpy as np\nimport matplotlib.pyplot as plt\n\ndef FindBounds(data, sigma=1):\n\n    mean = np.mean(data)\n    std = np.std(data)\n\n    expression = f\"(RATE&lt;={mean+std})&&(RATE&gt;={mean-std})\"\n\n    return expression, mean, std\nThis code can then return a string containing the filtering expression to be passed to the evselect command. The result of this is demonstrated in the figure below\n\nThe solid red line shows the mean flux of the observation, and the dashed lines show the \\(\\pm 1\\sigma\\) boundaries. Finally the blue curve shows the data selected from this GTI filter.\n\n\n9.1.2 Source Selection\nWhile my partner continues to work on the determining of the region sizes, it was decided to test the source selection with manually set region radii of 2500,3000, and 5000 pixels such that the automation could be tested. The result of the first test of this is shown below\n\nThis test showed good results, and the source is successfully centred in the regions as intended.",
+    "crumbs": [
+      "Teaching Block 1",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Week 8</span>"
+    ]
+  },
+  {
+    "objectID": "Week8.html#section-1",
+    "href": "Week8.html#section-1",
+    "title": "9  Week 8",
+    "section": "9.2 2026/11/10",
+    "text": "9.2 2026/11/10\n\n9.2.1 Automation Continued\nThe final step of the automation is to combine the scripts into one file, for which the previously produced bash scripts were adapted. The scripts can be accessed through the shared repository here and are structured as\nXMM_Pipeline.sh\n    ├── Pipelines.sh\n    |       └── GTIFilter.py\n    └── Extraction.sh\n            └── FindSource.py\nwhere the XMM_Pipeline.sh file calls GTIFilter.py and so on. Each file has the following function:\n\nXMM_Pipeline.sh\n\nThe main script\nCalls all of the others\nRun from the ODF directory\n\nPipelines.sh\n\nRuns all of the XMM-SAS pipelines\nCalls GTIFilter.py\n\nGTIFilter.py\n\nDetermines the GTI filtering expression (output as a .txt file)\n\nExtraction.sh\n\nHandles the generation of images, spectra, and response files\nCalls FindSource.py\n\nFindSource.py\n\nDetermines the source/background regions\n\n\nThis structure was chosen as it allows for consecutive processing of each instrument without re-running unnecessary code. The script is called as\ncd /PATH/TO/ODF/DIR/\nbash /PATH/TO/SCRIPT/DIR/XMM_Pipeline.sh [OBS_ID] [INSTRUMENT]\nWhere [OBS_ID] and [INSTRUMENT] are replaced with the observation ID of the data and the instrument to be processed, respectively. To process another instrument after running the full pipeline, run\ncd /PATH/TO/PROC/DIR/\nbash /PATH/TO/SCRIPT/DIR/Extraction.sh [OBS_ID] [INSTRUMENT]\nwhere /PATH/TO/PROC/DIR/ is the processing directory produced by the main pipeline. It will be located in the same directory as the ODF directory.",
+    "crumbs": [
+      "Teaching Block 1",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Week 8</span>"
+    ]
+  },
+  {
     "objectID": "references.html",
     "href": "references.html",
     "title": "References",
