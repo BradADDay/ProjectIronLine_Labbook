@@ -152,121 +152,162 @@ ________________________________________________________________________
 
 Following the meeting with our supervisor, it was decide that the next steps should be to refine our fitting processes. The best method for fitting our data will be MCMC fitting, where a random walk is used to fit the data and estimate the error through observing the gaussian distribution around the best fit.
 
-In order to do this, it was decided to solely focus on fitting MCG-6-30-15 data, as such every dataset from the XMM archive for this object was downloaded.
+In order to do this, it was decided to focus on fitting MCG-6-30-15 data, as such every dataset from the XMM archive for this object was downloaded.
 
-The data was downloaded from the following observations:
-
-::: {.list-table}
-- - Observation ID
-  - Exposure Time (s)
-- - 0111570101
-  - 46453
-- - 0111570201
-  - 66197
-- - 0111570401
-  - 17467
-- - 0693781201
-  - 134214
-- - 0693781301*
-  - 134214
-- - 0693781401
-  - 48918
-- - 0921420101
-  - 135700
-- - 0297420101
-  - 89432
-- - 0297420701
-  - 129367
-- - 0297420801
-  - 130497
-- - 0297420901
-  - 1169
-- - 0297421001
-  - 1168
-:::
-\* Previously used data
-
-Once these are downloaded, it will be possible to fit all of them and compare the results. This will first require processing/reducing the data. The processing inputs for the pn instrument are tabulated below. This table will be completed as I work through the datasets.
+The data was downloaded from the observations tabulated below. With these downloaded, it will be possible to fit all of them and compare the results. This will first require processing/reducing the data. The processing inputs for the *pn* instrument are tabulated below. This table will be completed as I work through the datasets.
 
 ::: {.list-table}
 
 - - OBSID
-  - GTI Filt
+  - Exposure (s)
+  - GTI Filter
   - SRC Cen (px)
   - SRC Rad (px)
   - BGD Rad (px)
   - Pileup (Y/N)
+  - Notes
 - - 0111570101
+  - 46453
   - TIME>=7698000
   - 26880, 27661
   - 1000
   - 2000, 4000
   - N
 - - 0111570201
-  - 
+  - 66197
+  - RATE<=23
   - 
   - 
   - 
   - 
 - - 0111570401
-  - 
+  - 17467
+  - RATE>=0
   - 
   - 
   - 
   - 
 - - 0693781201
+  - 134214
   - 
   - 
   - 
   - 
   - 
-- - 0693781301
+- - 0693781301*
+  - 134214
   - RATE<=30
   - 25628, 23912
   - 1000
   - 2000, 4000
   - N
 - - 0693781401
+  - 48918
   - 
   - 
   - 
   - 
   - 
 - - 0921420101
+  - 135700
   - 
   - 
   - 
   - 
   - 
-- - 0297420101
+- - 0029740101
+  - 89432
+  - RATE>=0
+  - 26216.35, 27946.838
+  - 1500
+  - 2000, 4000
+  - N
+- - 0029740701
+  - 129367
+  - RATE<=35
+  - 26239.559, 27974.981
+  - 1500
+  - 2000, 4000
+  - N
+- - 0029740801
+  - 130497
+  - RATE<=40
+  - 26229.416, 28001.849
+  - 1500
+  - 2000, 4000
+  - N
+- - 0029740901
+  - 1169
   - 
   - 
   - 
   - 
   - 
-- - 0297420701
+  - No pn data
+- - 0029741001
+  - 1168
   - 
   - 
   - 
   - 
   - 
-- - 0297420801
-  - 
-  - 
-  - 
-  - 
-  - 
-- - 0297420901
-  - 
-  - 
-  - 
-  - 
-  - 
-- - 0297421001
-  - 
-  - 
-  - 
-  - 
-  - 
+  - No pn data
 :::
+\* Previously used data
 
+## 2026/11/08
+
+### Further Automating Data Reduction
+
+Given the large amount of data that needs reducing, it was decided to determine if it would be possible to further automate the data reduction. The three steps that need automation are: 
+
+1. Determining the good time interval
+2. Selecting the source and background regions
+3. Checking for pileup (and reducing the effects if pileup is present)
+
+It was decided to first tackle the source detection, which can be split into two steps:
+
+1. The centroid detection
+2. Determining the size of the regions
+
+To determine the centre, a python script was written making use of the `astropy` and `photutils` libraries. As the objects we are looking at are point sources, we can conveniently use a star finding algorithm. `astropy` was used to read in and manipulate the image, and the `DAOStarFinder` utility was used to detect the source. This works as our data currently consists of only a single source, however our procedure may need to be reconsidered if we use datasets where that is not the case. The current version of the code is currently as follows
+
+```{.python}
+import numpy as np
+
+import matplotlib.pyplot as plt
+from matplotlib.colors import LogNorm
+
+from astropy.io import fits
+from astropy.stats import sigma_clipped_stats
+from photutils.detection import DAOStarFinder
+
+def FindSource(hdu):
+    """
+    Find the centre of the brightest source in an image
+    """
+
+    # Taking the data and conversion factor between image and detector coords
+    data = hdu.data
+    factor = hdu.header["CDELT1L"]
+
+    # Detecting sources
+    mean, median, std = sigma_clipped_stats(data, sigma=3.0)
+    daofind = DAOStarFinder(fwhm=3.0, threshold=1*std)
+    sources = daofind(data - median)
+
+    # Taking the brightest source detected
+    source = sources[sources["mag"] == sources["mag"].min()]
+
+    source = np.array([source["x_centroid"].data[0], source["y_centroid"].data[0]])
+
+    return source, factor
+```
+
+This simply returns the centre coordinates (in image coordinates) and `factor` is the conversion factor between image and detector coordinates. The second step of the source region selection was produced by my partner, and these can be combined into the routine. 
+
+The pileup check is similarly trivial to automate, as we can simply assume no pileup for now and manually reprocess cases where pileup is a factor. This is currently assumed to be a valid approach as pileup does not seem to be an issue for our data, however if it becomes more prevalent in future investigations, this may need to be re-evaluated.
+
+Automating the good time interval selection will be the next step, this may be possible through simply defining a threshold (for example within a given number of $\sigma$).
+
+As each automated step will be susceptible to errors due to assumptions made, each of these steps will be written such that they produce an output which can be inspected by a human. For the source detection, this will be a plot of the regions selected, and for the GTI selection this will be a plot showing the threshold.

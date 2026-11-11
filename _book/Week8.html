@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>9&nbsp; Week 8 – X-Raying AGN - Lab Notes</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./references.html" rel="next">
+<link href="./Week7.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-0a6b7249c26820e032cb0bd839ff02b1.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-425553c36040c1099010492eb981ac19.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-f54aaf1fc312c7daf8794a58702dfd11.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-425553c36040c1099010492eb981ac19.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script>
+window.MathJax = {
+  loader: {
+    load: ['[tex]/boldsymbol', '[tex]/physics']
+  },
+  tex: {
+    packages: {
+      '[+]': ['boldsymbol', 'physics']
+    }
+  }
+};
+</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Week1.html">Teaching Block 1</a></li><li class="breadcrumb-item"><a href="./Week8.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Week 8</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">X-Raying AGN - Lab Notes</a> 
+        <div class="sidebar-tools-main">
+    <a href="./X-Raying-AGN---Lab-Notes.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Teaching Block 1</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Week1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Week 1</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Week2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Week 2</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Week3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Week 3</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./DataReduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Data Reduction Summary</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Week4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Week 4</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Week5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Week 5</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Week6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Week 6</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Week7.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Week 7</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Week8.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Week 8</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#section" id="toc-section" class="nav-link active" data-scroll-target="#section"><span class="header-section-number">9.1</span> 2026/11/09</a>
+  <ul class="collapse">
+  <li><a href="#continuing-to-automate-data-reduction---gti-filtering" id="toc-continuing-to-automate-data-reduction---gti-filtering" class="nav-link" data-scroll-target="#continuing-to-automate-data-reduction---gti-filtering"><span class="header-section-number">9.1.1</span> Continuing to Automate Data Reduction - GTI Filtering</a></li>
+  <li><a href="#source-selection" id="toc-source-selection" class="nav-link" data-scroll-target="#source-selection"><span class="header-section-number">9.1.2</span> Source Selection</a></li>
+  </ul></li>
+  <li><a href="#section-1" id="toc-section-1" class="nav-link" data-scroll-target="#section-1"><span class="header-section-number">9.2</span> 2026/11/10</a>
+  <ul class="collapse">
+  <li><a href="#automation-continued" id="toc-automation-continued" class="nav-link" data-scroll-target="#automation-continued"><span class="header-section-number">9.2.1</span> Automation Continued</a></li>
+  <li><a href="#supervisor-meeting" id="toc-supervisor-meeting" class="nav-link" data-scroll-target="#supervisor-meeting"><span class="header-section-number">9.2.2</span> Supervisor Meeting</a></li>
+  </ul></li>
+  <li><a href="#section-2" id="toc-section-2" class="nav-link" data-scroll-target="#section-2"><span class="header-section-number">9.3</span> 2026/11/11</a>
+  <ul class="collapse">
+  <li><a href="#automating-region-selection" id="toc-automating-region-selection" class="nav-link" data-scroll-target="#automating-region-selection"><span class="header-section-number">9.3.1</span> Automating Region Selection</a></li>
+  <li><a href="#pn-pipeline-script-usage" id="toc-pn-pipeline-script-usage" class="nav-link" data-scroll-target="#pn-pipeline-script-usage"><span class="header-section-number">9.3.2</span> pn Pipeline Script Usage</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Week1.html">Teaching Block 1</a></li><li class="breadcrumb-item"><a href="./Week8.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Week 8</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Week 8</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="section" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="section"><span class="header-section-number">9.1</span> 2026/11/09</h2>
+<section id="continuing-to-automate-data-reduction---gti-filtering" class="level3" data-number="9.1.1">
+<h3 data-number="9.1.1" class="anchored" data-anchor-id="continuing-to-automate-data-reduction---gti-filtering"><span class="header-section-number">9.1.1</span> Continuing to Automate Data Reduction - GTI Filtering</h3>
+<p>The next step to automate is the GTI filtering, which can be done by looking at the distribution of the light curves. By simply finding the mean count rate, we can filter for the data to be within a given number of standard deviations as follows</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> astropy.io <span class="im">import</span> fits</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> FindBounds(data, sigma<span class="op">=</span><span class="dv">1</span>):</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    mean <span class="op">=</span> np.mean(data)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    std <span class="op">=</span> np.std(data)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    expression <span class="op">=</span> <span class="ss">f"(RATE&lt;=</span><span class="sc">{</span>mean<span class="op">+</span>std<span class="sc">}</span><span class="ss">)&amp;&amp;(RATE&gt;=</span><span class="sc">{</span>mean<span class="op">-</span>std<span class="sc">}</span><span class="ss">)"</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> expression, mean, std</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This code can then return a string containing the filtering expression to be passed to the <code>evselect</code> command. The result of this is demonstrated in the figure below</p>
+<p><a href="images/pn_gti_filter.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="images/pn_gti_filter.png" class="img-fluid"></a></p>
+<p>The solid red line shows the mean flux of the observation, and the dashed lines show the <span class="math inline">\(\pm 1\sigma\)</span> boundaries. Finally the blue curve shows the data selected from this GTI filter.</p>
+</section>
+<section id="source-selection" class="level3" data-number="9.1.2">
+<h3 data-number="9.1.2" class="anchored" data-anchor-id="source-selection"><span class="header-section-number">9.1.2</span> Source Selection</h3>
+<p>While my partner continues to work on the determining of the region sizes, it was decided to test the source selection with manually set region radii of 2500,3000, and 5000 pixels such that the automation could be tested. The result of the first test of this is shown below</p>
+<p><a href="images/SourceDetection.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="images/SourceDetection.png" class="img-fluid"></a></p>
+<p>This test showed good results, and the source is successfully centred in the regions as intended.</p>
+</section>
+</section>
+<section id="section-1" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="section-1"><span class="header-section-number">9.2</span> 2026/11/10</h2>
+<section id="automation-continued" class="level3" data-number="9.2.1">
+<h3 data-number="9.2.1" class="anchored" data-anchor-id="automation-continued"><span class="header-section-number">9.2.1</span> Automation Continued</h3>
+<p>The final step of the automation is to combine the scripts into one file, for which the previously produced bash scripts were adapted. The scripts can be accessed through the shared repository <a href="https://github.com/phajy/project-iron-lines/tree/main/xmm_data_reduction">here</a> and are structured as</p>
+<pre><code>XMM_Pipeline.sh
+    ├── Pipelines.sh
+    |   └── GTIFilter.py
+    └── Extraction.sh
+        └── FindSource.py</code></pre>
+<p>where the <code>XMM_Pipeline.sh</code> file calls <code>GTIFilter.py</code> and so on. Each file has the following function:</p>
+<ol type="1">
+<li><code>XMM_Pipeline.sh</code>
+<ul>
+<li>The main script</li>
+<li>Calls all of the others</li>
+<li>Run from the <code>ODF</code> directory</li>
+</ul></li>
+<li><code>Pipelines.sh</code>
+<ul>
+<li>Runs all of the XMM-SAS pipelines</li>
+<li>Calls <code>GTIFilter.py</code></li>
+</ul></li>
+<li><code>GTIFilter.py</code>
+<ul>
+<li>Determines the GTI filtering expression (output as a <code>.txt</code> file)</li>
+</ul></li>
+<li><code>Extraction.sh</code>
+<ul>
+<li>Handles the generation of images, spectra, and response files</li>
+<li>Calls <code>FindSource.py</code></li>
+</ul></li>
+<li><code>FindSource.py</code>
+<ul>
+<li>Determines the source/background regions</li>
+</ul></li>
+</ol>
+<p>This structure was chosen as it allows for consecutive processing of each instrument without re-running unnecessary code. The script is called as</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /PATH/TO/ODF/DIR/</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> /PATH/TO/SCRIPT/DIR/XMM_Pipeline.sh <span class="pp">[</span><span class="ss">OBS_ID</span><span class="pp">]</span> <span class="pp">[</span><span class="ss">INSTRUMENT</span><span class="pp">]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Where <code>[OBS_ID]</code> and <code>[INSTRUMENT]</code> are replaced with the observation ID of the data and the instrument to be processed, respectively. To process another instrument after running the full pipeline, run</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /PATH/TO/PROC/DIR/</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> /PATH/TO/SCRIPT/DIR/Extraction.sh <span class="pp">[</span><span class="ss">OBS_ID</span><span class="pp">]</span> <span class="pp">[</span><span class="ss">INSTRUMENT</span><span class="pp">]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>where <code>/PATH/TO/PROC/DIR/</code> is the processing directory produced by the main pipeline. It will be located in the same directory as the ODF directory.</p>
+</section>
+<section id="supervisor-meeting" class="level3" data-number="9.2.2">
+<h3 data-number="9.2.2" class="anchored" data-anchor-id="supervisor-meeting"><span class="header-section-number">9.2.2</span> Supervisor Meeting</h3>
+<p>Topics</p>
+<ul>
+<li>Automation of data reduction
+<ul>
+<li>Check our process is valid</li>
+<li>Any other ideas?</li>
+</ul></li>
+<li>nDspec
+<ul>
+<li>How to add relxill?</li>
+</ul></li>
+</ul>
+<p>Minutes</p>
+<ul>
+<li>Error bars in data are poisson noise</li>
+<li>For GTI filtering increase tolerances to only clip the big flares</li>
+<li>Source selection
+<ul>
+<li>May need to select corner of chip rather than ring around it</li>
+<li>May have issues with selecting data off of chip</li>
+<li>Maybe select background regions as small circles in valid regions
+<ul>
+<li>Determine chip region</li>
+<li>Find source region</li>
+<li>Select background regions as far from source as possible</li>
+</ul></li>
+<li>Andy has recommended some papers which may be instructive</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="section-2" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="section-2"><span class="header-section-number">9.3</span> 2026/11/11</h2>
+<section id="automating-region-selection" class="level3" data-number="9.3.1">
+<h3 data-number="9.3.1" class="anchored" data-anchor-id="automating-region-selection"><span class="header-section-number">9.3.1</span> Automating Region Selection</h3>
+<p>The previous method of background region selection suffered from two main issues:</p>
+<ol type="1">
+<li>It a lot of the time included parts of the psf of the source</li>
+<li>It included unused regions of the chip, which can skew the measurements</li>
+</ol>
+<p>With this in mind, it was decided to pursue a different approach, taking the regions in the furthest corner of the chip. A geometrical approach was found as follows</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/bgdFind.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="An example source image with the regions we want to take. The green regions are background and the blue region is source. Several coordinates and lines are shown which will be the basis of the selection algorithm."><img src="images/bgdFind.png" class="img-fluid figure-img" alt="An example source image with the regions we want to take. The green regions are background and the blue region is source. Several coordinates and lines are shown which will be the basis of the selection algorithm."></a></p>
+<figcaption>An example source image with the regions we want to take. The green regions are background and the blue region is source. Several coordinates and lines are shown which will be the basis of the selection algorithm.</figcaption>
+</figure>
+</div>
+<p>To select these regions, the following algorithm is proposed</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="The new algorithm for region selection in EPIC-pn small window data">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>The new algorithm for region selection in EPIC-pn small window data
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Find the centre of the source using the previous DAOStarFinder implementation (<span class="math inline">\(P_s\)</span>)</li>
+<li>Find the corners of the window within the image (<span class="math inline">\(P_1,P_2,P_3,P_4\)</span>)
+<ul>
+<li>This can be done by finding the first/last rows/columns of the image that contain data</li>
+</ul></li>
+<li>Take the two corners furthest from the source and draw a line between them (<span class="math inline">\(\ell_{23}\)</span>)
+<ul>
+<li>This is done by finding the gradient and intercept of the line between the points: <span class="math display">\[m_{23} = \frac{P_{2,y}-P_{3,y}}{P_{2,x}-P_{3,x}}, \qquad c_{23} = P_{2,y} - mP_{2,x}\]</span></li>
+<li>Where the subscript 23 connects the value to the corresponding line (<span class="math inline">\(\ell_{23}\)</span>)</li>
+</ul></li>
+<li>Draw a line from the source (<span class="math inline">\(\ell_s\)</span>) which perpendicularly bisects the line found in the previous step and find the intercept between the two (<span class="math inline">\(P_i\)</span>)
+<ul>
+<li>This uses the gradient calculated in the previous step and calculates the y-axis intercept as <span class="math display">\[c_s = P_{s,y} + \frac{P_{s,x}}{m_{23}}\]</span></li>
+<li>These two lines then intersect at <span class="math display">\[P_i = \left(-\frac{c_{23}-c_s}{m_{23} + 1/m_{23}},\quad -m_{23}\frac{c_{23}-c_s}{m_{23} + 1/m_{23}}+c_{23}\right)\]</span></li>
+</ul></li>
+<li>The radii of the background regions can be taken from the distances between this intercept and each respective corner (<span class="math inline">\(|\vec{P}_2-\vec{P}_i|\)</span> and <span class="math inline">\(|\vec{P}_1-\vec{P}_i|\)</span>)
+<ul>
+<li>This will include some margin <span class="math inline">\(m_1\)</span> to account for PSF of the source <span class="math display">\[r_{b,j} = \frac{1}{2}\left(\left|\vec{P}_j-\vec{P}_i\right| - m_1 - m_2\right)\]</span></li>
+<li>where <span class="math inline">\(m_2\)</span> is a margin from the frame of the window</li>
+</ul></li>
+<li>The lines connecting opposing corners (<span class="math inline">\(\ell_{b,1}\)</span> and <span class="math inline">\(\ell_{b,2}\)</span>) can then be found, and the centres of the background regions can be found by moving a distance along this line from the respective corners equal to <span class="math display">\[\frac{1}{2}\sqrt{2(d_{b,j} + m_2)^2}\]</span>
+<ul>
+<li>where <span class="math inline">\(d_{b,j} = 2r_{b,j}\)</span></li>
+<li>The <span class="math inline">\(+ m_2\)</span> here ensures that the region is a distance <span class="math inline">\(m_2\)</span> from the border of the window</li>
+</ul></li>
+<li>Finally, the radius of the source region can be determined as the perpendicular distance from the source to the line connecting the two closest corners (<span class="math inline">\(\ell_{41}\)</span>) minus the margin <span class="math inline">\(m_2\)</span></li>
+</ol>
+</div>
+</div>
+<p>This algorithm was implemented in python and produced the following image upon testing:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/FoundRegions.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="The source and background regions selected using the new algorithm."><img src="images/FoundRegions.png" class="img-fluid figure-img" alt="The source and background regions selected using the new algorithm."></a></p>
+<figcaption>The source and background regions selected using the new algorithm.</figcaption>
+</figure>
+</div>
+<p>Following this success, the algorithm was implemented into the full pipeline and tested on every dataset for MCG-6-30-15. All of the tests which produced an output are shown below</p>
+<div class="quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/0029740101_pn-regions.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="The selected regions for observation ID 0029740101."><img src="images/0029740101_pn-regions.png" class="img-fluid figure-img" alt="The selected regions for observation ID 0029740101."></a></p>
+<figcaption>The selected regions for observation ID 0029740101.</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/0029740701_pn-regions.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="The selected regions for observation ID 0029740701."><img src="images/0029740701_pn-regions.png" class="img-fluid figure-img" alt="The selected regions for observation ID 0029740701."></a></p>
+<figcaption>The selected regions for observation ID 0029740701.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/0029740801_pn-regions.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="The selected regions for observation ID 0029740801."><img src="images/0029740801_pn-regions.png" class="img-fluid figure-img" alt="The selected regions for observation ID 0029740801."></a></p>
+<figcaption>The selected regions for observation ID 0029740801.</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/0111570101_pn-regions.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8" title="The selected regions for observation ID 0111570101."><img src="images/0111570101_pn-regions.png" class="img-fluid figure-img" alt="The selected regions for observation ID 0111570101."></a></p>
+<figcaption>The selected regions for observation ID 0111570101.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/0111570201_pn-regions.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9" title="The selected regions for observation ID 0111570201."><img src="images/0111570201_pn-regions.png" class="img-fluid figure-img" alt="The selected regions for observation ID 0111570201."></a></p>
+<figcaption>The selected regions for observation ID 0111570201.</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/0111570401_pn-regions.png" class="lightbox" data-gallery="quarto-lightbox-gallery-10" title="The selected regions for observation ID 0111570401."><img src="images/0111570401_pn-regions.png" class="img-fluid figure-img" alt="The selected regions for observation ID 0111570401."></a></p>
+<figcaption>The selected regions for observation ID 0111570401.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/0693781201_pn-regions.png" class="lightbox" data-gallery="quarto-lightbox-gallery-11" title="The selected regions for observation ID 0693781201."><img src="images/0693781201_pn-regions.png" class="img-fluid figure-img" alt="The selected regions for observation ID 0693781201."></a></p>
+<figcaption>The selected regions for observation ID 0693781201.</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/0693781301_pn-regions.png" class="lightbox" data-gallery="quarto-lightbox-gallery-12" title="The selected regions for observation ID 0693781301."><img src="images/0693781301_pn-regions.png" class="img-fluid figure-img" alt="The selected regions for observation ID 0693781301."></a></p>
+<figcaption>The selected regions for observation ID 0693781301.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/0693781401_pn-regions.png" class="lightbox" data-gallery="quarto-lightbox-gallery-13" title="The selected regions for observation ID 0693781401."><img src="images/0693781401_pn-regions.png" class="img-fluid figure-img" alt="The selected regions for observation ID 0693781401."></a></p>
+<figcaption>The selected regions for observation ID 0693781401.</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/0921420101_pn-regions.png" class="lightbox" data-gallery="quarto-lightbox-gallery-14" title="The selected regions for observation ID 0921420101."><img src="images/0921420101_pn-regions.png" class="img-fluid figure-img" alt="The selected regions for observation ID 0921420101."></a></p>
+<figcaption>The selected regions for observation ID 0921420101.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<p>It is clear that the algorithm is successful for all data where the image makes sense. Observation IDs 0029740901 and 0029741001 had no data for the pn instrument and are thus disregarded. Observation ID 0111570401 seemingly has either extremely noisy, or no data. The reason for this becomes clear from looking at the light curve where the count rate was seen to be low and the exposure time was short.</p>
+<p>Diagnostic plots such as these will be invaluable for the automation process, and will allow us to catch any errors in the pipeline before using the data. The current pipeline script produces diagnostic plots for the GTI filtering, region selection, and photon pileup.</p>
+</section>
+<section id="pn-pipeline-script-usage" class="level3" data-number="9.3.2">
+<h3 data-number="9.3.2" class="anchored" data-anchor-id="pn-pipeline-script-usage"><span class="header-section-number">9.3.2</span> pn Pipeline Script Usage</h3>
+<p>With the script now in working order for the pn data, it is useful to summarise its usage. The script is split into the same 5 files listed previously, two of which are set up to be called by the user.</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Pipeline Environment">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Pipeline Environment
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The pipeline scripts assume access to HEASOFT packages, the XMM-SAS software and a python distribution containing the necessary dependencies. The python dependencies can be installed as</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install astropy numpy matplotlib photutils</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+<p>The main pipeline script <code>XMM_Pipeline.sh</code> has the following usage</p>
+<pre><code>Usage: /PATH/TO/SCRIPT/XMM_Pipeline.sh [-o OBS_ID] [-i INSTRUMENT] [-s SIGMA]
+
+    Options:
+        -o, --obs-id:       Observation ID
+        -i, --instrument:   Instrument
+        -s:                 GTI standard deviation
+        --source-max:       Maximum radius of source region
+        --m1, --margin1:    Margin from primary flare of PSF
+        --m2, --margin2:    Margin from edge of window</code></pre>
+<p>This pipeline runs all of the preprocessing, GTI filtering, image generation, spectrum extraction, and response file generation commands, and calls the two sub scripts <code>Pipelines.sh</code> and <code>Extraction.sh</code>. The former is not currently designed to be called directly, and the latter has the following usage</p>
+<pre><code>Usage: /PATH/TO/SCRIPT/Extraction.sh [-o OBS_ID] [-i INSTRUMENT] [--source-max SOURCE_MAX] [--m1 MARGIN1] [--m2 MARGIN2]
+
+    Options:
+        -o, --obs-id:       Observation ID
+        -i, --instrument:   Instrument
+        --source-max:       Maximum radius of source region
+        --m1, --margin1:    Margin from primary flare of PSF
+        --m2, --margin2:    Margin from edge of window</code></pre>
+<p>This can be called after an initial processing run to re-select regions, or to run the script for a different instrument (although this is not currently implemented).</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./Week7.html" class="pagination-link" aria-label="Week 7">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Week 7</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./references.html" class="pagination-link" aria-label="References">
+        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+</body></html>
