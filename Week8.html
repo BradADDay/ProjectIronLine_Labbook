@@ -459,6 +459,7 @@ window.Quarto = {
   <li><a href="#section-2" id="toc-section-2" class="nav-link" data-scroll-target="#section-2"><span class="header-section-number">9.3</span> 2026/11/11</a>
   <ul class="collapse">
   <li><a href="#automating-region-selection" id="toc-automating-region-selection" class="nav-link" data-scroll-target="#automating-region-selection"><span class="header-section-number">9.3.1</span> Automating Region Selection</a></li>
+  <li><a href="#pn-pipeline-script-usage" id="toc-pn-pipeline-script-usage" class="nav-link" data-scroll-target="#pn-pipeline-script-usage"><span class="header-section-number">9.3.2</span> pn Pipeline Script Usage</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -609,28 +610,186 @@ window.Quarto = {
 </figure>
 </div>
 <p>To select these regions, the following algorithm is proposed</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="The new algorithm for region selection in EPIC-pn small window data">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>The new algorithm for region selection in EPIC-pn small window data
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <ol type="1">
 <li>Find the centre of the source using the previous DAOStarFinder implementation (<span class="math inline">\(P_s\)</span>)</li>
 <li>Find the corners of the window within the image (<span class="math inline">\(P_1,P_2,P_3,P_4\)</span>)
 <ul>
 <li>This can be done by finding the first/last rows/columns of the image that contain data</li>
 </ul></li>
-<li>Take the two corners furthest from the source and draw a line between them (<span class="math inline">\(\ell_{23}\)</span>)</li>
-<li>Draw a line from the source which perpendicularly bisects the line found (<span class="math inline">\(\ell_s\)</span>) in the previous step and find the intercept between the two (<span class="math inline">\(P_i\)</span>)</li>
+<li>Take the two corners furthest from the source and draw a line between them (<span class="math inline">\(\ell_{23}\)</span>)
+<ul>
+<li>This is done by finding the gradient and intercept of the line between the points: <span class="math display">\[m_{23} = \frac{P_{2,y}-P_{3,y}}{P_{2,x}-P_{3,x}}, \qquad c_{23} = P_{2,y} - mP_{2,x}\]</span></li>
+<li>Where the subscript 23 connects the value to the corresponding line (<span class="math inline">\(\ell_{23}\)</span>)</li>
+</ul></li>
+<li>Draw a line from the source (<span class="math inline">\(\ell_s\)</span>) which perpendicularly bisects the line found in the previous step and find the intercept between the two (<span class="math inline">\(P_i\)</span>)
+<ul>
+<li>This uses the gradient calculated in the previous step and calculates the y-axis intercept as <span class="math display">\[c_s = P_{s,y} + \frac{P_{s,x}}{m_{23}}\]</span></li>
+<li>These two lines then intersect at <span class="math display">\[P_i = \left(-\frac{c_{23}-c_s}{m_{23} + 1/m_{23}},\quad -m_{23}\frac{c_{23}-c_s}{m_{23} + 1/m_{23}}+c_{23}\right)\]</span></li>
+</ul></li>
 <li>The radii of the background regions can be taken from the distances between this intercept and each respective corner (<span class="math inline">\(|\vec{P}_2-\vec{P}_i|\)</span> and <span class="math inline">\(|\vec{P}_1-\vec{P}_i|\)</span>)
 <ul>
-<li>This will include some margin <span class="math inline">\(m_1\)</span> to account for point spread and error <span class="math display">\[r_{b,j} = \frac{1}{2}\left(\left|\vec{P}_j-\vec{P}_i\right| - m_1 - m_2\right)\]</span></li>
+<li>This will include some margin <span class="math inline">\(m_1\)</span> to account for PSF of the source <span class="math display">\[r_{b,j} = \frac{1}{2}\left(\left|\vec{P}_j-\vec{P}_i\right| - m_1 - m_2\right)\]</span></li>
 <li>where <span class="math inline">\(m_2\)</span> is a margin from the frame of the window</li>
 </ul></li>
-<li>The lines connecting opposing corners (<span class="math inline">\(\ell_{b,1}\)</span> and <span class="math inline">\(\ell_{b,2}\)</span>) can then be found, and the centres of the background regions can be found by moving a distance along this line equal to <span class="math display">\[\frac{1}{2}\sqrt{2(d_{b,j} + m_2)^2}\]</span>
+<li>The lines connecting opposing corners (<span class="math inline">\(\ell_{b,1}\)</span> and <span class="math inline">\(\ell_{b,2}\)</span>) can then be found, and the centres of the background regions can be found by moving a distance along this line from the respective corners equal to <span class="math display">\[\frac{1}{2}\sqrt{2(d_{b,j} + m_2)^2}\]</span>
 <ul>
 <li>where <span class="math inline">\(d_{b,j} = 2r_{b,j}\)</span></li>
-<li>The <span class="math inline">\(+ m_2\)</span> ensures that the region is a distance <span class="math inline">\(m_2\)</span> from the border of the window</li>
+<li>The <span class="math inline">\(+ m_2\)</span> here ensures that the region is a distance <span class="math inline">\(m_2\)</span> from the border of the window</li>
 </ul></li>
 <li>Finally, the radius of the source region can be determined as the perpendicular distance from the source to the line connecting the two closest corners (<span class="math inline">\(\ell_{41}\)</span>) minus the margin <span class="math inline">\(m_2\)</span></li>
 </ol>
-<p>This algorithm was implemented in python and produced the following on the test image:</p>
-<p><a href="images/FoundRegions.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="images/FoundRegions.png" class="img-fluid"></a></p>
+</div>
+</div>
+<p>This algorithm was implemented in python and produced the following image upon testing:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/FoundRegions.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="The source and background regions selected using the new algorithm."><img src="images/FoundRegions.png" class="img-fluid figure-img" alt="The source and background regions selected using the new algorithm."></a></p>
+<figcaption>The source and background regions selected using the new algorithm.</figcaption>
+</figure>
+</div>
+<p>Following this success, the algorithm was implemented into the full pipeline and tested on every dataset for MCG-6-30-15. All of the tests which produced an output are shown below</p>
+<div class="quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/0029740101_pn-regions.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="The selected regions for observation ID 0029740101."><img src="images/0029740101_pn-regions.png" class="img-fluid figure-img" alt="The selected regions for observation ID 0029740101."></a></p>
+<figcaption>The selected regions for observation ID 0029740101.</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/0029740701_pn-regions.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="The selected regions for observation ID 0029740701."><img src="images/0029740701_pn-regions.png" class="img-fluid figure-img" alt="The selected regions for observation ID 0029740701."></a></p>
+<figcaption>The selected regions for observation ID 0029740701.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/0029740801_pn-regions.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="The selected regions for observation ID 0029740801."><img src="images/0029740801_pn-regions.png" class="img-fluid figure-img" alt="The selected regions for observation ID 0029740801."></a></p>
+<figcaption>The selected regions for observation ID 0029740801.</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/0111570101_pn-regions.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8" title="The selected regions for observation ID 0111570101."><img src="images/0111570101_pn-regions.png" class="img-fluid figure-img" alt="The selected regions for observation ID 0111570101."></a></p>
+<figcaption>The selected regions for observation ID 0111570101.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/0111570201_pn-regions.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9" title="The selected regions for observation ID 0111570201."><img src="images/0111570201_pn-regions.png" class="img-fluid figure-img" alt="The selected regions for observation ID 0111570201."></a></p>
+<figcaption>The selected regions for observation ID 0111570201.</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/0111570401_pn-regions.png" class="lightbox" data-gallery="quarto-lightbox-gallery-10" title="The selected regions for observation ID 0111570401."><img src="images/0111570401_pn-regions.png" class="img-fluid figure-img" alt="The selected regions for observation ID 0111570401."></a></p>
+<figcaption>The selected regions for observation ID 0111570401.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/0693781201_pn-regions.png" class="lightbox" data-gallery="quarto-lightbox-gallery-11" title="The selected regions for observation ID 0693781201."><img src="images/0693781201_pn-regions.png" class="img-fluid figure-img" alt="The selected regions for observation ID 0693781201."></a></p>
+<figcaption>The selected regions for observation ID 0693781201.</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/0693781301_pn-regions.png" class="lightbox" data-gallery="quarto-lightbox-gallery-12" title="The selected regions for observation ID 0693781301."><img src="images/0693781301_pn-regions.png" class="img-fluid figure-img" alt="The selected regions for observation ID 0693781301."></a></p>
+<figcaption>The selected regions for observation ID 0693781301.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/0693781401_pn-regions.png" class="lightbox" data-gallery="quarto-lightbox-gallery-13" title="The selected regions for observation ID 0693781401."><img src="images/0693781401_pn-regions.png" class="img-fluid figure-img" alt="The selected regions for observation ID 0693781401."></a></p>
+<figcaption>The selected regions for observation ID 0693781401.</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/0921420101_pn-regions.png" class="lightbox" data-gallery="quarto-lightbox-gallery-14" title="The selected regions for observation ID 0921420101."><img src="images/0921420101_pn-regions.png" class="img-fluid figure-img" alt="The selected regions for observation ID 0921420101."></a></p>
+<figcaption>The selected regions for observation ID 0921420101.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<p>It is clear that the algorithm is successful for all data where the image makes sense. Observation IDs 0029740901 and 0029741001 had no data for the pn instrument and are thus disregarded. Observation ID 0111570401 seemingly has either extremely noisy, or no data. The reason for this becomes clear from looking at the light curve where the count rate was seen to be low and the exposure time was short.</p>
+<p>Diagnostic plots such as these will be invaluable for the automation process, and will allow us to catch any errors in the pipeline before using the data. The current pipeline script produces diagnostic plots for the GTI filtering, region selection, and photon pileup.</p>
+</section>
+<section id="pn-pipeline-script-usage" class="level3" data-number="9.3.2">
+<h3 data-number="9.3.2" class="anchored" data-anchor-id="pn-pipeline-script-usage"><span class="header-section-number">9.3.2</span> pn Pipeline Script Usage</h3>
+<p>With the script now in working order for the pn data, it is useful to summarise its usage. The script is split into the same 5 files listed previously, two of which are set up to be called by the user.</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Pipeline Environment">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Pipeline Environment
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The pipeline scripts assume access to HEASOFT packages, the XMM-SAS software and a python distribution containing the necessary dependencies. The python dependencies can be installed as</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install astropy numpy matplotlib photutils</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+<p>The main pipeline script <code>XMM_Pipeline.sh</code> has the following usage</p>
+<pre><code>Usage: /PATH/TO/SCRIPT/XMM_Pipeline.sh [-o OBS_ID] [-i INSTRUMENT] [-s SIGMA]
+
+    Options:
+        -o, --obs-id:       Observation ID
+        -i, --instrument:   Instrument
+        -s:                 GTI standard deviation
+        --source-max:       Maximum radius of source region
+        --m1, --margin1:    Margin from primary flare of PSF
+        --m2, --margin2:    Margin from edge of window</code></pre>
+<p>This pipeline runs all of the preprocessing, GTI filtering, image generation, spectrum extraction, and response file generation commands, and calls the two sub scripts <code>Pipelines.sh</code> and <code>Extraction.sh</code>. The former is not currently designed to be called directly, and the latter has the following usage</p>
+<pre><code>Usage: /home/jq23394/Data/Scripts/new_pipeline/Extraction.sh [-o OBS_ID] [-i INSTRUMENT] [--source-max SOURCE_MAX] [--m1 MARGIN1] [--m2 MARGIN2]
+
+    Options:
+        -o, --obs-id:       Observation ID
+        -i, --instrument:   Instrument
+        --source-max:       Maximum radius of source region
+        --m1, --margin1:    Margin from primary flare of PSF
+        --m2, --margin2:    Margin from edge of window</code></pre>
+<p>This can be called after an initial processing run to re-select regions, or to run the script for a different instrument (although this is not currently implemented).</p>
 
 
 </section>
