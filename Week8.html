@@ -454,6 +454,11 @@ window.Quarto = {
   <li><a href="#section-1" id="toc-section-1" class="nav-link" data-scroll-target="#section-1"><span class="header-section-number">9.2</span> 2026/11/10</a>
   <ul class="collapse">
   <li><a href="#automation-continued" id="toc-automation-continued" class="nav-link" data-scroll-target="#automation-continued"><span class="header-section-number">9.2.1</span> Automation Continued</a></li>
+  <li><a href="#supervisor-meeting" id="toc-supervisor-meeting" class="nav-link" data-scroll-target="#supervisor-meeting"><span class="header-section-number">9.2.2</span> Supervisor Meeting</a></li>
+  </ul></li>
+  <li><a href="#section-2" id="toc-section-2" class="nav-link" data-scroll-target="#section-2"><span class="header-section-number">9.3</span> 2026/11/11</a>
+  <ul class="collapse">
+  <li><a href="#automating-region-selection" id="toc-automating-region-selection" class="nav-link" data-scroll-target="#automating-region-selection"><span class="header-section-number">9.3.1</span> Automating Region Selection</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -516,9 +521,9 @@ window.Quarto = {
 <p>The final step of the automation is to combine the scripts into one file, for which the previously produced bash scripts were adapted. The scripts can be accessed through the shared repository <a href="https://github.com/phajy/project-iron-lines/tree/main/xmm_data_reduction">here</a> and are structured as</p>
 <pre><code>XMM_Pipeline.sh
     ├── Pipelines.sh
-    |       └── GTIFilter.py
+    |   └── GTIFilter.py
     └── Extraction.sh
-            └── FindSource.py</code></pre>
+        └── FindSource.py</code></pre>
 <p>where the <code>XMM_Pipeline.sh</code> file calls <code>GTIFilter.py</code> and so on. Each file has the following function:</p>
 <ol type="1">
 <li><code>XMM_Pipeline.sh</code>
@@ -553,6 +558,79 @@ window.Quarto = {
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /PATH/TO/PROC/DIR/</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> /PATH/TO/SCRIPT/DIR/Extraction.sh <span class="pp">[</span><span class="ss">OBS_ID</span><span class="pp">]</span> <span class="pp">[</span><span class="ss">INSTRUMENT</span><span class="pp">]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>where <code>/PATH/TO/PROC/DIR/</code> is the processing directory produced by the main pipeline. It will be located in the same directory as the ODF directory.</p>
+</section>
+<section id="supervisor-meeting" class="level3" data-number="9.2.2">
+<h3 data-number="9.2.2" class="anchored" data-anchor-id="supervisor-meeting"><span class="header-section-number">9.2.2</span> Supervisor Meeting</h3>
+<p>Topics</p>
+<ul>
+<li>Automation of data reduction
+<ul>
+<li>Check our process is valid</li>
+<li>Any other ideas?</li>
+</ul></li>
+<li>nDspec
+<ul>
+<li>How to add relxill?</li>
+</ul></li>
+</ul>
+<p>Minutes</p>
+<ul>
+<li>Error bars in data are poisson noise</li>
+<li>For GTI filtering increase tolerances to only clip the big flares</li>
+<li>Source selection
+<ul>
+<li>May need to select corner of chip rather than ring around it</li>
+<li>May have issues with selecting data off of chip</li>
+<li>Maybe select background regions as small circles in valid regions
+<ul>
+<li>Determine chip region</li>
+<li>Find source region</li>
+<li>Select background regions as far from source as possible</li>
+</ul></li>
+<li>Andy has recommended some papers which may be instructive</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="section-2" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="section-2"><span class="header-section-number">9.3</span> 2026/11/11</h2>
+<section id="automating-region-selection" class="level3" data-number="9.3.1">
+<h3 data-number="9.3.1" class="anchored" data-anchor-id="automating-region-selection"><span class="header-section-number">9.3.1</span> Automating Region Selection</h3>
+<p>The previous method of background region selection suffered from two main issues:</p>
+<ol type="1">
+<li>It a lot of the time included parts of the psf of the source</li>
+<li>It included unused regions of the chip, which can skew the measurements</li>
+</ol>
+<p>With this in mind, it was decided to pursue a different approach, taking the regions in the furthest corner of the chip. A geometrical approach was found as follows</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/bgdFind.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="An example source image with the regions we want to take. The green regions are background and the blue region is source. Several coordinates and lines are shown which will be the basis of the selection algorithm."><img src="images/bgdFind.png" class="img-fluid figure-img" alt="An example source image with the regions we want to take. The green regions are background and the blue region is source. Several coordinates and lines are shown which will be the basis of the selection algorithm."></a></p>
+<figcaption>An example source image with the regions we want to take. The green regions are background and the blue region is source. Several coordinates and lines are shown which will be the basis of the selection algorithm.</figcaption>
+</figure>
+</div>
+<p>To select these regions, the following algorithm is proposed</p>
+<ol type="1">
+<li>Find the centre of the source using the previous DAOStarFinder implementation (<span class="math inline">\(P_s\)</span>)</li>
+<li>Find the corners of the window within the image (<span class="math inline">\(P_1,P_2,P_3,P_4\)</span>)
+<ul>
+<li>This can be done by finding the first/last rows/columns of the image that contain data</li>
+</ul></li>
+<li>Take the two corners furthest from the source and draw a line between them (<span class="math inline">\(\ell_{23}\)</span>)</li>
+<li>Draw a line from the source which perpendicularly bisects the line found (<span class="math inline">\(\ell_s\)</span>) in the previous step and find the intercept between the two (<span class="math inline">\(P_i\)</span>)</li>
+<li>The radii of the background regions can be taken from the distances between this intercept and each respective corner (<span class="math inline">\(|\vec{P}_2-\vec{P}_i|\)</span> and <span class="math inline">\(|\vec{P}_1-\vec{P}_i|\)</span>)
+<ul>
+<li>This will include some margin <span class="math inline">\(m_1\)</span> to account for point spread and error <span class="math display">\[r_{b,j} = \frac{1}{2}\left(\left|\vec{P}_j-\vec{P}_i\right| - m_1 - m_2\right)\]</span></li>
+<li>where <span class="math inline">\(m_2\)</span> is a margin from the frame of the window</li>
+</ul></li>
+<li>The lines connecting opposing corners (<span class="math inline">\(\ell_{b,1}\)</span> and <span class="math inline">\(\ell_{b,2}\)</span>) can then be found, and the centres of the background regions can be found by moving a distance along this line equal to <span class="math display">\[\frac{1}{2}\sqrt{2(d_{b,j} + m_2)^2}\]</span>
+<ul>
+<li>where <span class="math inline">\(d_{b,j} = 2r_{b,j}\)</span></li>
+<li>The <span class="math inline">\(+ m_2\)</span> ensures that the region is a distance <span class="math inline">\(m_2\)</span> from the border of the window</li>
+</ul></li>
+<li>Finally, the radius of the source region can be determined as the perpendicular distance from the source to the line connecting the two closest corners (<span class="math inline">\(\ell_{41}\)</span>) minus the margin <span class="math inline">\(m_2\)</span></li>
+</ol>
+<p>This algorithm was implemented in python and produced the following on the test image:</p>
+<p><a href="images/FoundRegions.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="images/FoundRegions.png" class="img-fluid"></a></p>
 
 
 </section>
