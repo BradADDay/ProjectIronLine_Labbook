@@ -781,7 +781,7 @@ window.Quarto = {
         --m1, --margin1:    Margin from primary flare of PSF
         --m2, --margin2:    Margin from edge of window</code></pre>
 <p>This pipeline runs all of the preprocessing, GTI filtering, image generation, spectrum extraction, and response file generation commands, and calls the two sub scripts <code>Pipelines.sh</code> and <code>Extraction.sh</code>. The former is not currently designed to be called directly, and the latter has the following usage</p>
-<pre><code>Usage: /home/jq23394/Data/Scripts/new_pipeline/Extraction.sh [-o OBS_ID] [-i INSTRUMENT] [--source-max SOURCE_MAX] [--m1 MARGIN1] [--m2 MARGIN2]
+<pre><code>Usage: /PATH/TO/SCRIPT/Extraction.sh [-o OBS_ID] [-i INSTRUMENT] [--source-max SOURCE_MAX] [--m1 MARGIN1] [--m2 MARGIN2]
 
     Options:
         -o, --obs-id:       Observation ID
