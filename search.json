@@ -472,6 +472,17 @@
     ]
   },
   {
+    "objectID": "Week8.html#section-3",
+    "href": "Week8.html#section-3",
+    "title": "9  Week 8",
+    "section": "9.4 2026/11/13",
+    "text": "9.4 2026/11/13\n\n9.4.1 Meeting with Partner\n\nDiscussed the processing of mos data to develop a pipeline which Jacob is working on\nmos data in small window mode is slightly different to pn in that the window is surrounded by an anulus of detections\n\n\n\n\nThe small window mode detection region for the mos cameras.\n\n\n\nJacob will produce a pipeline to handle this\nI wrote instructions for the pipeline usage and put them on GitHub.",
+    "crumbs": [
+      "Teaching Block 1",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Week 8</span>"
+    ]
+  },
+  {
     "objectID": "references.html",
     "href": "references.html",
     "title": "References",

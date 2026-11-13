@@ -461,6 +461,10 @@ window.Quarto = {
   <li><a href="#automating-region-selection" id="toc-automating-region-selection" class="nav-link" data-scroll-target="#automating-region-selection"><span class="header-section-number">9.3.1</span> Automating Region Selection</a></li>
   <li><a href="#pn-pipeline-script-usage" id="toc-pn-pipeline-script-usage" class="nav-link" data-scroll-target="#pn-pipeline-script-usage"><span class="header-section-number">9.3.2</span> pn Pipeline Script Usage</a></li>
   </ul></li>
+  <li><a href="#section-3" id="toc-section-3" class="nav-link" data-scroll-target="#section-3"><span class="header-section-number">9.4</span> 2026/11/13</a>
+  <ul class="collapse">
+  <li><a href="#meeting-with-partner" id="toc-meeting-with-partner" class="nav-link" data-scroll-target="#meeting-with-partner"><span class="header-section-number">9.4.1</span> Meeting with Partner</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -790,6 +794,26 @@ window.Quarto = {
         --m1, --margin1:    Margin from primary flare of PSF
         --m2, --margin2:    Margin from edge of window</code></pre>
 <p>This can be called after an initial processing run to re-select regions, or to run the script for a different instrument (although this is not currently implemented).</p>
+</section>
+</section>
+<section id="section-3" class="level2" data-number="9.4">
+<h2 data-number="9.4" class="anchored" data-anchor-id="section-3"><span class="header-section-number">9.4</span> 2026/11/13</h2>
+<section id="meeting-with-partner" class="level3" data-number="9.4.1">
+<h3 data-number="9.4.1" class="anchored" data-anchor-id="meeting-with-partner"><span class="header-section-number">9.4.1</span> Meeting with Partner</h3>
+<ul>
+<li>Discussed the processing of mos data to develop a pipeline which Jacob is working on</li>
+<li>mos data in small window mode is slightly different to pn in that the window is surrounded by an anulus of detections</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/mos_small_window.png" class="lightbox" data-gallery="quarto-lightbox-gallery-15" title="The small window mode detection region for the mos cameras."><img src="images/mos_small_window.png" class="img-fluid figure-img" alt="The small window mode detection region for the mos cameras."></a></p>
+<figcaption>The small window mode detection region for the mos cameras.</figcaption>
+</figure>
+</div>
+<ul>
+<li><p>Jacob will produce a pipeline to handle this</p></li>
+<li><p>I wrote instructions for the pipeline usage and put them on GitHub.</p></li>
+</ul>
 
 
 </section>
