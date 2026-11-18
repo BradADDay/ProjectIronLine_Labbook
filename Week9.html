@@ -698,18 +698,6 @@ window.Quarto = {
 <section id="mcmc-with-relxill-in-ndspec" class="level3" data-number="10.2.3">
 <h3 data-number="10.2.3" class="anchored" data-anchor-id="mcmc-with-relxill-in-ndspec"><span class="header-section-number">10.2.3</span> MCMC with RELXILL in nDspec</h3>
 <p>Markov-Chain Monte Carlo fitting is implemented in nDspec through the emcee library. To use this with RELXILL the model was first fit as normal as given in the documentation, an example code block is shown below.</p>
-<div class="callout callout-style-default callout-note callout-titled" title="Fitting Code">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Fitting Code
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Loading models</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>model_library.add_models(<span class="st">"powerlaw"</span>, <span class="st">"relxill"</span>, <span class="st">"gaussian"</span>, <span class="st">"phabs"</span>)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -776,12 +764,9 @@ window.Quarto = {
 <span id="cb7-64"><a href="#cb7-64" aria-hidden="true" tabindex="-1"></a>    model_kwargs<span class="op">=</span>{<span class="st">"color"</span>:<span class="st">"red"</span>, <span class="st">"linewidth"</span>:<span class="dv">1</span>},</span>
 <span id="cb7-65"><a href="#cb7-65" aria-hidden="true" tabindex="-1"></a>    resid_kwargs<span class="op">=</span>{<span class="st">"color"</span>:<span class="st">"black"</span>, <span class="st">"markersize"</span>:<span class="fl">0.1</span>, <span class="st">"linewidth"</span>:<span class="fl">0.7</span>}</span>
 <span id="cb7-66"><a href="#cb7-66" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</div>
-</div>
 <p>During early testing, I experienced issues with the normalisation parameters going to zero upon every fit. To fix this I implemented the models such that the normalisation parameters are input in units of <span class="math inline">\(\log_{10}\)</span>, which allowed the fits to converge correctly. For streamlining later down the line, I input the starting parameters through a <code>.yaml</code> config file. An example of the structure of such a file is shown below.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Example yaml config file">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -790,7 +775,7 @@ window.Quarto = {
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <pre><code>Afe:
   max: 10.0
@@ -912,18 +897,6 @@ LineE:          6.350464 (fixed)
 Sigma:          0.11746293
 norm_gaussian: -4.86482110</code></pre>
 <p>At the time of writing, the first test of MCMC is running. This was done with the following code, run after the above code block for fitting.</p>
-<div class="callout callout-style-default callout-note callout-titled" title="MCMC Code">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>MCMC Code
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-5" class="callout-5-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Defining the data and model used by the sampler</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>sampling.set_sampling_data(spectrum_fit)</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>sampling.set_sampling_model(spectrum_fit)</span>
@@ -1012,9 +985,6 @@ norm_gaussian: -4.86482110</code></pre>
 <span id="cb10-86"><a href="#cb10-86" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> corner.corner(samples, labels<span class="op">=</span>labels)</span>
 <span id="cb10-87"><a href="#cb10-87" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-88"><a href="#cb10-88" aria-hidden="true" tabindex="-1"></a>gc.collect()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</div>
-</div>
 <p>A current issue is that the multiprocessing functionality does not seem to be functioning correctly. When trying to use multiprocessing through the syntax</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> Pool(<span class="dv">8</span>) <span class="im">as</span> pool:</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    sampler <span class="op">=</span> emcee.EnsembleSampler(nwalkers, ndim, sampling.mcmc_gaussian_likelihood,pool<span class="op">=</span>pool)</span>
