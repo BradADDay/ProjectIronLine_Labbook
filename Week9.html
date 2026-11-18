@@ -990,6 +990,9 @@ norm_gaussian: -4.86482110</code></pre>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    sampler <span class="op">=</span> emcee.EnsembleSampler(nwalkers, ndim, sampling.mcmc_gaussian_likelihood,pool<span class="op">=</span>pool)</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    sampler.run_mcmc(pos, steps, progress<span class="op">=</span><span class="va">True</span>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>an error occurs stating that <code>sample_params</code> does not exist. I currently believe that this is due to variables not being passed correctly when using multiple cores, however am unsure how to fix this.</p>
+<p>The resulting corner plot from the first MCMC run is shown below</p>
+<p><a href="images/FirstMCMC.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="images/FirstMCMC.png" class="img-fluid"></a></p>
+<p>A curious observation from this is that the reported value for the black hole spin is <span class="math inline">\(1.02_{-0.07}^{+0.08}\)</span> which shows that something has gone wrong given that the spin should not be allowed to go above 0.998.</p>
 
 
 </section>
