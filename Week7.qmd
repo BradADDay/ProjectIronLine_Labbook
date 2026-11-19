@@ -162,9 +162,9 @@ The data was downloaded from the observations tabulated below. With these downlo
   - Exposure (s)
   - GTI Filter
   - SRC Cen (px)
-  - SRC Rad (px)
-  - BGD Rad (px)
-  - Pileup (Y/N)
+  - SRC
+  - BGD
+  - Pileup
   - Notes
 - - 0111570101
   - 46453

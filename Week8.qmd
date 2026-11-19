@@ -216,3 +216,16 @@ Usage: /PATH/TO/SCRIPT/Extraction.sh [-o OBS_ID] [-i INSTRUMENT] [--source-max S
 ```
 
 This can be called after an initial processing run to re-select regions, or to run the script for a different instrument (although this is not currently implemented).
+
+## 2026/11/13
+
+### Meeting with Partner
+
+- Discussed the processing of mos data to develop a pipeline which Jacob is working on
+- mos data in small window mode is slightly different to pn in that the window is surrounded by an anulus of detections
+
+![The small window mode detection region for the mos cameras.](images/mos_small_window.png)
+
+- Jacob will produce a pipeline to handle this
+
+- I wrote instructions for the pipeline usage and put them on GitHub.
