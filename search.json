@@ -516,6 +516,39 @@
     ]
   },
   {
+    "objectID": "Week10.html",
+    "href": "Week10.html",
+    "title": "11  Week 10",
+    "section": "",
+    "text": "11.1 2026/11/24",
+    "crumbs": [
+      "Teaching Block 1",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Week 10</span>"
+    ]
+  },
+  {
+    "objectID": "Week10.html#section",
+    "href": "Week10.html#section",
+    "title": "11  Week 10",
+    "section": "",
+    "text": "11.1.1 Meeting with supervisor\n\nAndy will look into the issue with multithreading in nDspec\nLook at paper for calibrating X-ray telescopes\n\nCan plot fit results together for mos1, mos2 and pn to see how much they agree\n\nStill unsure how the fit is managing to get \\(a&gt;1\\)\n\nSet logXi and a to uniform priors",
+    "crumbs": [
+      "Teaching Block 1",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Week 10</span>"
+    ]
+  },
+  {
+    "objectID": "Week10.html#section-1",
+    "href": "Week10.html#section-1",
+    "title": "11  Week 10",
+    "section": "11.2 2026/11/27",
+    "text": "11.2 2026/11/27\n\n11.2.1 Merging Jacob’s reduction script into the pipeline\nJacob has written a script to select the mos background regions in python, and I will modify this slightly to be compatible with my reduction pipeline. The script requires around 8 arguments, including the image, and exposure map, the source and bacground radii, and the instrument. The remaining arguments determine if the regions should be selected manually. I have implemented these arguments using the argparser package and the script seems to work well. The code I have added looks like the below\nparser = argparse.ArgumentParser(\n    prog=\"mos_region_select.py\",\n    description=\"Selects the source and background regions for mos instruments\"\n)\n\nparser.add_argument(\"--interactive\", action=\"store_true\")\nparser.add_argument(\"--not-interactive\", dest=\"interactive\", action=\"store_false\")\nparser.set_defaults(interactive=True)\n\nparser.add_argument(\"-i\", \"--image\", default=\"mos1-all.fits\")\nparser.add_argument(\"-e\", \"--exposure-map\", default=\"mos1_expmap_2-10keV.fits\")\nparser.add_argument(\"--source-mode\", choices=[\"m\",\"a\"], default=\"a\")\nparser.add_argument(\"--back-mode\", choices=[\"m\",\"a\"], default=\"a\")\nparser.add_argument(\"--source-radius\", type=int, default=30)\nparser.add_argument(\"--back-radius\", type=int, default=15)\nparser.add_argument(\"--target-mode\", choices=[\"m\",\"a\"], default=\"a\")\nparser.add_argument(\"--instrument\", type=str, choices=[\"mos1\", \"mos2\"], default=\"mos1\")\n\nargs = parser.parse_args()\nThe argument interactive is a special inclusion to preserve the functionality Jacob implemented for a interactive terminal for the selection. The script outputs two region files for the source and background, and an image demonstrating the selected regions, which is all my script requires.",
+    "crumbs": [
+      "Teaching Block 1",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Week 10</span>"
+    ]
+  },
+  {
     "objectID": "references.html",
     "href": "references.html",
     "title": "References",
